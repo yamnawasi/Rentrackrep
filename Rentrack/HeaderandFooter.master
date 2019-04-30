@@ -1,0 +1,257 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="HeaderandFooter.master.cs" Inherits="HeaderandFooter" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+
+    <!--Bootstrap and jQuery-->
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="Content/font-awesome.min.css"/>
+    
+    <script>
+        $(document).ready(function () {
+            $("#headerourservices").active(function () {
+                $(this).addClass('selected');
+            });
+        });
+
+        
+    </script>
+
+    <style>
+        /*Header*/
+        .navbar-custom {
+            background-color: #23305D ; /*Header's dark blue*/
+            font-family: HelvLight;
+        }
+        .header-item {
+            margin-right: 20px;
+            border-bottom: 3px solid #23305D;
+            display:inline;
+        }
+        .navbar-custom {
+            color: red;
+        }
+        .headeritems {
+            margin-top: 10px;
+            margin-right: 9%;
+            margin-left: 20px;
+        }
+            .header-item:hover, .header-item:active, .header-item:active{
+                border-bottom: 3px solid #eda136;
+                transition-duration: 1s;
+            }
+
+        @media (max-width: 768px) {          
+            .header-item {              
+                margin-top: 5px;
+                padding-bottom:0px;
+                display: inline-block;
+            }
+                .header-item:hover {
+                    color: orange;
+                    border: none;
+                }
+        }
+        .navbar-nav > li > a, .navbar-brand {
+            padding-top:0px !important; padding-bottom:0 !important;
+            height: 35px;
+        }
+        .navbar {min-height:35px !important;}
+        .navbar-toggle {
+             padding: 0 0;
+             margin-top: 7px;
+             margin-bottom: 0;
+        }
+        .dropdown-menu > a:hover, .dropdown-menu > a:focus{
+            background-color: #eda136; /*Orange*/
+            color: white;
+            transition-duration: 0.6s;
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 2px 2px 10px #848484;
+        }
+        .animate {
+            animation-duration: 0.3s;
+            -webkit-animation-duration: 0.3s;
+            animation-fill-mode: both;
+            -webkit-animation-fill-mode: both;
+        }
+        @keyframes slideIn {
+          0% {
+            transform: translateY(1rem);
+            opacity: 0;
+          }
+          100% {
+            transform:translateY(0rem);
+            opacity: 1;
+          }
+          0% {
+            transform: translateY(1rem);
+            opacity: 0;
+          }
+        }
+        @-webkit-keyframes slideIn {
+          0% {
+            -webkit-transform: transform;
+            -webkit-opacity: 0;
+          }
+          100% {
+            -webkit-transform: translateY(0);
+            -webkit-opacity: 1;
+          }
+          0% {
+            -webkit-transform: translateY(1rem);
+            -webkit-opacity: 0;
+          }
+        }
+        .slideIn {
+          -webkit-animation-name: slideIn;
+          animation-name: slideIn;
+        }
+
+        .selected {
+          color: white;
+          border-bottom: 3px solid #eda136;
+        }
+
+        /*Footer*/
+        #upperfooter {
+            color: white;
+            background-color: #202b56;
+            padding: 50px 50px 20px 50px;
+        }
+            #upperfooter ul a {
+                color: white;
+            }
+            #upperfooter ul a:hover {
+                text-decoration: none;
+            }
+            #upperfooter ul {
+                list-style-type: none; 
+                font-family: Georgia;
+            }
+            #upperfooter ul a i{
+                font-size: 30px;
+            }
+        .footerheadings {
+            padding-bottom: 20px;
+            font-family: Calibri;
+            font-size: 20px;
+            font-weight: 300;
+        }
+        #lowerfooter {
+            background-color: #192347;
+            color: white;
+            padding-top: 10px;
+            font-family: Georgia;
+            text-align: center;
+        }
+        footer {
+           position:absolute;
+           bottom:0;
+           width:100%;
+        }
+        </style>
+    <asp:ContentPlaceHolder id="head" runat="server">
+        
+        
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!--Header-->
+        <nav class="navbar navbar-expand-md navbar-dark navbar-custom sticky-top" id="header">
+          <a class="navbar-brand" href="Default.aspx"><img class="img-responsive" src="Images/rentracklogo.jpg" height="40" title="Home"/></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="headeritems collapse navbar-collapse navbar-default" id="navbarNavDropdown">
+            <ul class="navbar-nav  ml-auto">
+
+              <!--Our Services-->
+              <li class="nav-item header-item" >
+                <a class="nav-link" href="OurServices.aspx" id="headerourservices">Our Services</a>
+              </li>
+
+              <!--Property List-->
+              <li class="nav-item header-item" >
+                <a class="nav-link" href="#" id="headerproperty">Properties</a>
+              </li>
+
+              <!--Add Property-->
+              <li class="nav-item header-item" >
+                <a class="nav-link" href="AddProperty.aspx" id="headeraddproperty">Add Property</a>
+              </li>
+
+              <!--Agent Search Bar-->
+              <li class="nav-item header-item" >
+                <a class="nav-link" href="#" id="headeragent">Find Agent</a>
+              </li>
+
+              <!--FAQ-->
+              <li class="nav-item header-item" >
+                <a class="nav-link" href="FAQ.aspx" id="headerfaq">FAQ</a>
+              </li>
+
+              <!--Login/Signup Dropdown-->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-user"></i>
+                </a>
+                <div class="dropdown-menu animate slideIn" aria-labelledby="navbarDropdownMenuLink">
+                  <asp:LinkButton ID="loginlink" runat="server" class="dropdown-item" OnClick="Loginlinkbutton" Text="Login"></asp:LinkButton>
+                  <asp:LinkButton ID="signuplink" runat="server" class="dropdown-item" OnClick="Signuplinkbutton" Text="Sign Up"></asp:LinkButton>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+
+        <!--Footer-->
+        <footer class="col-lg-12">
+            <div id="upperfooter" class="row">
+                    <ul id="contactus" class="offset-lg-3 col-lg-2 offset-md-2 col-md-3 offset-sm-1 col-sm-4">
+                        <li class="footerheadings">CONTACT US</li>
+                        <a href="#"><li><i class="fa fa-facebook-square"></i></li></a>
+                        <a href="#"><li><i class="fa fa-twitter-square"></i></li></a>
+                        <a href="#"><li><i class="fa fa-linkedin-square"></i></li></a>
+                    </ul>
+                    <ul id="Ul1" class="col-lg-2 col-md-3 col-sm-3">
+                        <li class="footerheadings">COMPANY</li>
+                        <a href="OurServices.aspx"><li>Our Services</li></a>
+                        <a href="FAQ.aspx"><li>FAQ</li></a>
+                        <a href="#"><li>Email Us</a>
+                    </ul>
+                    <ul id="Ul2" class="col-lg-2 col-md-3 col-sm-3">
+                        <li class="footerheadings">CONNECT</li>
+                        <a href="#"><li>Agents</li></a>
+                        <a href="AddProperty.aspx"><li>Add Property</li></a>
+                        <a href="#"><li>Properties</li></a>
+                    </ul>
+            </div>
+            <div id="lowerfooter" class="row">
+                <div id="" class="offset-lg-4 col-lg-4">
+                    <p>Copyright © 2018, Rentrack, All Rights Reserved</p>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+</body>
+</html>
