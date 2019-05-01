@@ -394,7 +394,6 @@
                         <asp:ListItem Value="Sell" Selected="True">&nbsp;Sell</asp:ListItem>
                         <asp:ListItem Value="Rent">&nbsp;Rent</asp:ListItem>
                     </asp:RadioButtonList>
-                    
                     <br />
                     <br />
 
@@ -482,7 +481,6 @@
                         <asp:Button ID="propdetnextbtn" runat="server" Text="CONTINUE" class="btn nextbutton" OnClick="propdetnextbtn_Click"/>
                     </div>
                 </div>
-
 
                 <!--Property Images Form -->
                 <div id="propimgdiv" runat="server" style="padding-bottom: 40px; padding-top: 40px" class="offset-lg-2 col-lg-8 offset-md-1 col-md-10 offset-1 col-10">
