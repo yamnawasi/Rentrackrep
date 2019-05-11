@@ -104,21 +104,6 @@ public partial class AddProperty : System.Web.UI.Page
         prog4.Attributes.Add("style", "width: 100%");
         propimgdiv.Visible = false;
         successdiv.Visible = true;
-
-        //Select Property Purpose
-        /*string proppurpose = "oh";
-        if (sellradio.Checked==true)
-        {
-            proppurpose = sellradio.Text;
-        }
-        else if (rentradio.Checked==true)
-        {
-            proppurpose = rentradio.Text;
-        }
-        else
-        {
-            proppurpose = "none";
-        }*/
         
         //Property Code
         string propcode = GenerateNumber();
