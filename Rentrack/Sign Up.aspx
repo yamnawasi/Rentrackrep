@@ -8,11 +8,9 @@
 
     <title>Sign Up</title>
     <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/Custom-Cs.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
- 
-
+   
     <style>
     	#maindiv {
     		background-image: url("Images/bg1.jpeg");
@@ -20,6 +18,7 @@
     		background-repeat: no-repeat;
     		background-attachment: fixed;
     	}
+
         #box {
 			font-family: 'Roboto', sans-serif;
             padding-top:100px;
@@ -46,17 +45,22 @@
 		    
 		
           }
+
         #loginlink p{
 			text-align:center;
 			color:white;
 			
         }
+
 		#loginlink a{text-decoration:none;}
+
         h2 {
             color:white;
             text-align:center;
             margin-bottom:50px;
+
         }
+
         .required-sign{
             color: red;
             font-size: 20px;
@@ -80,14 +84,24 @@
             -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
             -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s;  transition: all .3s;
         }
+
 		
 		 .btn:hover { opacity: 0.7; color: black; }
 		 .btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+
 		 .btnpad{
 			padding-left:30px;
 			padding-right:30px;
 		}
     </style>
+
+    <script type="text/javascript">  
+        $(function () {  
+            $('[id*=lstusertype]').multiselect({  
+                includeSelectAllOption: true  
+            });  
+        });  
+    </script> 
 
 </asp:Content>
 
@@ -114,17 +128,24 @@
             <div class="col-xs-11">
             <label>Date Of Birth<span class="required-sign"> *</span></label>
             <asp:TextBox ID="tbdob" runat="server" Class="form-control" TextMode="Date"></asp:TextBox>
+            <asp:RangeValidator ID="DateRangeValidator" runat="server" CssClass="text-danger" Type="Date" Format="DD/MM/YYYY" ControlToValidate="tbdob" ErrorMessage="You must be between 18 to 80 years old to register" Display="Dynamic" SetFocusOnError="true"></asp:RangeValidator>
+           <%-- <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"  ErrorMessage="Please enter date in correct format." ControlToValidate="tbdob" SetFocusOnError="true"  ValidationExpression="(0?[1-9]|[12]\d|30|31)[^\w\d\r\n:](0?[1-9]|1[0-2])[^\w\d\r\n:](\d{4}|\d{2})" ValidationGroup="A" ForeColor="" CssClass="Validation-Msg" Display="Dynamic"></asp:RegularExpressionValidator> --%>
             </div>
 
             <div class="col-xs-11">
             <label>Email<span class="required-sign"> *</span></label>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbemail" InitialValue="0"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="" CssClass="" ControlToValidate="tbemail" InitialValue="0" SetFocusOnError="True" Display="Dynamic" Visible="False"></asp:RequiredFieldValidator>
             <asp:TextBox ID="tbemail" runat="server" Class="form-control" TextMode="Email"></asp:TextBox>
+            <asp:RegularExpressionValidator ID="agentemailexp" runat="server"  ErrorMessage="Please enter email in correct format." ControlToValidate="tbemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ValidationGroup="A" ForeColor="" CssClass="Validation-Msg" Display="Dynamic"></asp:RegularExpressionValidator> 
             </div>
 
             <div class="col-xs-11">
             <label>Phone  No.<span class="required-sign"> *</span></label>
             <asp:TextBox ID="tbphone" runat="server" Class="form-control"></asp:TextBox>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
+			ErrorMessage="Enter valid Phone number e.g. 0346-1234567:" ControlToValidate="tbphone" 
+			ValidationExpression="^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$" >
+            </asp:RegularExpressionValidator>
             </div>
 
             <div class="col-xs-11">
@@ -142,8 +163,7 @@
             <div class="col-xs-11">
             <label>Password<span class="required-sign"> *</span></label>
             <asp:TextBox ID="tbpassword" runat="server" Class="form-control" TextMode="Password"></asp:TextBox>
-			<asp:RegularExpressionValidator ID="tbpasswordexp" runat="server" CssClass="text-danger" ErrorMessage="Password length must be between 7 to 10 characters" ControlToValidate="tbpassword"  ValidationExpression="^[a-zA-Z0-9'@&#.\s]{7,10}$" />
-  
+			<asp:RegularExpressionValidator ID="tbpasswordexp" runat="server" CssClass="text-danger" ErrorMessage="Password length must be between 8 to 20 characters" ControlToValidate="tbpassword"  ValidationExpression="^[a-zA-Z0-9'@&#.\s]{8,20}$" />  
 		    </div>
 
             <div class="col-xs-11">
@@ -157,8 +177,7 @@
 
             <div class="col-xs-11 space-vert align-content-center" id="loginlink">
             <asp:Label ID="member"  runat="server" Text="Already a Member?"></asp:Label> 
-				<a href="Login.aspx" id="lgbtn" ><p>Login</p></a>              
-            
+			<a href="Login.aspx" id="lgbtn" ><p>Login</p></a>              
             </div>
         
           
