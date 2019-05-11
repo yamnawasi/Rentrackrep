@@ -74,17 +74,22 @@
 
 		.linkto p{
 			
-			text-align:center;
-			color:#fff;
+			text-align: center;
+			color: #fff;
 			
 		}
 		.linkto :hover{
 			
-			text-align:center;
-			color:black;
+			text-align: center;
+			color: lightblue;
 			text-decoration: none;
 			
 		}
+
+        .lbl p{
+            text-align: center;
+            color: #fff
+        }
 
 		.row{
 		 padding-left:35%; 
@@ -135,18 +140,11 @@
         
         .form-bottom form button.btn {
 	        width: 100%;
-        }
-
-    
-        
-		
+        }	
 
         .form-bottom form .input-error {
 	        border-color: #de615e;
         }
-
-       
-
 
  /*Form input css*/
         #tbemail,#tbpassword, 
@@ -224,8 +222,7 @@
 		}
 		
 		#button-div{
-			text-align: center;
-		
+			text-align: center;		
 		}
 	</style>
 
@@ -264,12 +261,15 @@
                                         <asp:Label ID="lblremember" Class="remember" runat="server" Text="Remember me" for="form-check"></asp:Label>
                                     </div> 
 
-								  
+                                    <asp:Label ID="lblError" runat="server" CssClass="text-danger"></asp:Label>v>
                                   
 									<div class="form-group" id="button-div">
-                                 <asp:Button id="loginbtn" runat="server" class="btn btnpad"  OnClick="Login_btn" Text="Login" /> 
-                                    <asp:Label ID="lblError" runat="server" CssClass="text-danger"></asp:Label>
-									 <asp:LinkButton ID="signuplink" runat="server" class="btn"  href="Sign Up.aspx">Register</asp:LinkButton>
+                                        <asp:Button id="loginbtn" runat="server" class="btn btnpad"  OnClick="Login_btn" Text="Login" />                                       
+                                    </div>
+
+                                    <div class="form-group">
+                                        <asp:Label ID="Label1" runat="server" class="lbl"><p>Are you a new user?</p></asp:Label>
+                                        <asp:LinkButton ID="signuplink" runat="server"  href="Sign Up.aspx" class="linkto"><p>Register</p></asp:LinkButton>
                                     </div>
 									   
 									<div class="form-group linkto">
