@@ -48,7 +48,7 @@
                 transition-duration: 1s;
             }
 
-        @media (max-width: 768px) {          
+        @media (max-width: 992px) {          
             .header-item {              
                 margin-top: 5px;
                 padding-bottom:0px;
@@ -122,6 +122,12 @@
           border-bottom: 3px solid #eda136;
         }
 
+        #headerfirstname{
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
         /*Footer*/
         #upperfooter {
             color: white;
@@ -155,8 +161,6 @@
             text-align: center;
         }
         footer {
-           position:absolute;
-           bottom:0;
            width:100%;
         }
         </style>
@@ -169,7 +173,7 @@
 <body>
     <form id="form1" runat="server">
         <!--Header-->
-        <nav class="navbar navbar-expand-md navbar-dark navbar-custom sticky-top" id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top" id="header">
           <a class="navbar-brand" href="Default.aspx"><img class="img-responsive" src="Images/rentracklogo.jpg" height="40" title="Home"/></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -189,7 +193,7 @@
 
               <!--Add Property-->
               <li class="nav-item header-item" >
-                <a class="nav-link" href="AddProperty.aspx" id="headeraddproperty">Add Property</a>
+                  <asp:LinkButton ID="headeraddproperty" runat="server" Text="Add Property" OnClick="headeraddproperty_Click" CssClass="nav-link"></asp:LinkButton>
               </li>
 
               <!--Agent Search Bar-->
@@ -204,12 +208,15 @@
 
               <!--Login/Signup Dropdown-->
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user"></i>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: inline">
+                    <i class="fa fa-user" runat="server" id="usericon"></i>
+                    <asp:Label ID="headerfirstname" runat="server" Text="User"></asp:Label>
                 </a>
                 <div class="dropdown-menu animate slideIn" aria-labelledby="navbarDropdownMenuLink">
-                  <asp:LinkButton ID="loginlink" runat="server" class="dropdown-item" OnClick="Loginlinkbutton" Text="Login"></asp:LinkButton>
-                  <asp:LinkButton ID="signuplink" runat="server" class="dropdown-item" OnClick="Signuplinkbutton" Text="Sign Up"></asp:LinkButton>
+                    <asp:LinkButton ID="userproflink" runat="server" class="dropdown-item" OnClick="UserProflinkbutton" Text="User Profile" CausesValidation="false"></asp:LinkButton>
+                    <hr runat="server" id="headerline"/>
+                    <asp:LinkButton ID="loginlink" runat="server" class="dropdown-item" OnClick="Loginlinkbutton" Text="Login" CausesValidation="false"></asp:LinkButton>
+                    <asp:LinkButton ID="signuplink" runat="server" class="dropdown-item" OnClick="Signuplinkbutton" Text="Sign Up" CausesValidation="false"></asp:LinkButton>
                 </div>
 
               </li>

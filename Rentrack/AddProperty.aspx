@@ -6,12 +6,6 @@
             if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
             }
-            $(".finbtn").click(function () {
-                if (fileUpload.value.length > 5) {    // CHECK IF FILE(S) SELECTED.
-                    alert('You can add a maximum of five images.');
-                    return false;
-                }
-            });
         });
 
         function fnOnUpdateValidators()
@@ -20,17 +14,16 @@
            {
               var val = Page_Validators[i];
               var ctrl = document.getElementById(val.controltovalidate);
-              if (ctrl != null && ctrl.style != null)
-              {
-                  if (!val.isvalid) {
-                      ctrl.style.border = '2px solid #ff6868';
-                      ctrl.style.boxShadow = '0px 0px 1px #ff6868';
-                  }
-                  else {
-                      ctrl.style.border = '1px solid #ddd';
-                      ctrl.style.boxShadow = '0px 0px 1px #ddd';
-                  }
-              }
+              if (ctrl != null && ctrl.style != null) {
+                 if (!val.isvalid) {
+                     ctrl.style.border = '2px solid #ff6868';
+                     ctrl.style.boxShadow = '0px 0px 1px #ff6868';
+                 }
+                 else {
+                     ctrl.style.border = '1px solid #ddd';
+                     ctrl.style.boxShadow = '0px 0px 1px #ddd';
+                 }
+               }
            }
         }
 
@@ -43,6 +36,7 @@
         }
         
     </script>
+
     <style>
         #header{
             position: relative;
@@ -399,7 +393,6 @@
 
 
                     <div style="width: 100%; text-align: center">
-                        <!--<div class="btn nextbutton" id="ptnxtbtn"></div>-->
                         <asp:Button ID="proptypenextbtn" runat="server" Text="CONTINUE" class="btn nextbutton ptnxtbtn" OnClick="proptypenextbtn_Click"/>
                     </div>
                 </div>
@@ -487,7 +480,7 @@
                     
                     <label>Add a Main Image<span class="required-sign"> *</span></label>
                     <asp:FileUpload ID="fumainimg" CssClass="form-control mainimg" runat="server" style="height: 43px;"/>
-                    <asp:RegularExpressionValidator ID="revmainimg" runat="server" ErrorMessage="Please select a valid image file." CssClass="text-danger error-design" ControlToValidate="fumainimg" ValidationExpression="(.*?)\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="revmainimg" runat="server" ErrorMessage="Please upload a .jpg image" CssClass="text-danger error-design" ControlToValidate="fumainimg" ValidationExpression="(.*?)\.(jpg|JPG)$"></asp:RegularExpressionValidator>
                     <br />
                     <label>Add More Images (Optional)</label>
                     <asp:FileUpload ID="fuimgs" runat="server" AllowMultiple="true"  CssClass="form-control" style="height: 43px;"/>

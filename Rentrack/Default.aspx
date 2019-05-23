@@ -41,8 +41,13 @@
                         loop: false
                     }
                 }
-            })
+            });
+
+            
         });
+
+
+
 
         function showRentOptions() {
             $("#rentbutton").css({ "color": "#eda136", "border-bottom": "3px solid #eda136" });
@@ -165,24 +170,28 @@
                 transition-duration: 0.7s;
             }
         .propdesc, .proplocation, .proptitle{
-            margin-left: 8%;
             font-size: 16px;
             text-align: left;
+            line-height: 10px;
+        }
+        .proptitle{
+            line-height: 14px;
+            font-family: Georgia;
+            font-weight: 800;
         }
         .propprice {
             font-weight: 500;
             font-family: Calibri;
             font-size: 22px;
-            margin-top: 10%;
             background-color: #132542;
             color: white;
             text-align: center;
         }
         .gotoproppage {
-            margin-bottom: 10%;
             border: 3px solid #eda136;
             color: #eda136;
             background-color: white;
+            text-align: center;
         }
             .gotoproppage:hover {
                 background-color: #eda136;
@@ -341,72 +350,41 @@
                     </div>
             </div>
         </div>
-
+        
         <!--New/Featured Properties-->
+
+        
 
         <!--New Properties on Sale-->
         <div id="buynewprops">
             <div id="buynewpropstitle">Latest Properties on Sale</div>
             <div id="buynewpropsslider" class="owl-carousel">
-              <div id="buyprop1" class="buyprops"> 
-                  <img class="propimg img-responsive" src="Images/buy1.jpg" /> 
-                  <p class="propprice">PKR 25 Lakh</p>
-                  <p class="proptitle">Two Bed Flat for Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>2 Bed |</li>
-                          <li>2 Bath |</li>
-                          <li>1500 Sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Gulistan-e-Jauhar</p>
-                  <button class="gotoproppage btn">View Property</button>
-              </div>
 
-              <div id="buyprop2" class="buyprops"> 
-                  <img class="propimg img-responsive" src="Images/buy2.jpeg" /> 
-                  <p class="propprice">PKR 50 Lakh</p>
-                  <p class="proptitle">House for Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>3 Bed |</li>
-                          <li>2 Bath |</li>
-                          <li>1700 Sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Gulshan-e-Iqbal</p>
-                  <button class="gotoproppage btn">View Property</button>
-              </div>
-              
-              <div id="buyprop3" class="buyprops"> 
-                  <img class="propimg img-responsive" src="Images/buy3.jpg" /> 
-                  <p class="propprice">PKR 98 Lakh</p>
-                  <p class="proptitle">Villa Available For Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>4 Bed |</li>
-                          <li>3 Bath |</li>
-                          <li>2,115 sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Bahria Town Karachi</p>
-                  <button class="gotoproppage btn">View Property</button>
-              </div>
-              
-              <div id="buyprop4" class="buyprops"> 
-                  <img class="propimg img-responsive" src="Images/buy4.jpg" /> 
-                  <p class="propprice">PKR 44 Lakh</p>
-                  <p class="proptitle">Flat for Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>2 Bed |</li>
-                          <li>2 Bath |</li>
-                          <li>1450 Sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Gulshan-e-Maymar</p>
-                  <button class="gotoproppage btn">View Property</button>
-              </div>
+              <asp:Repeater ID="rptrbuy" runat="server">
+                <ItemTemplate>
+                  <div class="card">
+                      <img class="card-img-top" src="Images/PropertyImages/<%#Eval("property_id")%>/<%#Eval("image_name")%>.jpg" alt="<%#Eval("image_name") %>"/>
+                      <div class="card-body">
+                        <h5 class="card-title proptitle"><%#Eval("property_title") %></h5>
+                        <p class="propprice">PKR <%#Eval("property_price") %></p>
+                        <p class="card-text ">
+                            <div class="propdesc">
+                                  <ul>
+                                      <li><%#Eval("no_of_bedrooms")%> Bed |</li>
+                                      <li><%#Eval("no_of_bathrooms")%> Bath |</li>
+                                      <li><%#Eval("property_area") %> Sqft</li>
+                                  </ul>
+                            </div>
+                        </p>
+                        <p class="proplocation"><%#Eval("area") %></p>
+                        <div style="text-align: center">
+                            <a href="#" class="btn btn-primary gotoproppage">View Property</a>
+                        </div>
+                      </div>
+                    </div>
+                </ItemTemplate>
+              </asp:Repeater>
+
             </div>
         </div>
 
@@ -414,65 +392,32 @@
         <div id="rentfeaturedprops">
             <div id="rentfeaturedpropstitle">Featured Properties for Rent</div>
             <div id="rentfeaturedpropsslider" class="owl-carousel">
-              <div id="rentprop1" class="buyprops"> 
-                  <img class="propimg img-responsive thumb-img" src="Images/rent1.jpeg" /> 
-                  <p class="propprice">PKR 25 Lakh</p>
-                  <p class="proptitle">Two Bed Flat for Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>2 Bed |</li>
-                          <li>2 Bath |</li>
-                          <li>1500 Sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Gulistan-e-Jauhar</p>
-                  <a href="#"><button class="gotoproppage btn">View Property</button></a>
-              </div>
+              
+                <asp:Repeater ID="rptrrent" runat="server">
+                <ItemTemplate>
+                  <div class="card">
+                      <img class="card-img-top" src="Images/PropertyImages/<%#Eval("property_id")%>/<%#Eval("image_name")%>.jpg" alt="<%#Eval("image_name") %>"/>
+                      <div class="card-body">
+                        <h5 class="card-title proptitle"><%#Eval("property_title") %></h5>
+                        <p class="propprice">PKR <%#Eval("property_price") %></p>
+                        <p class="card-text ">
+                            <div class="propdesc">
+                                  <ul>
+                                      <li><%#Eval("no_of_bedrooms")%> Bed |</li>
+                                      <li><%#Eval("no_of_bathrooms")%> Bath |</li>
+                                      <li><%#Eval("property_area") %> Sqft</li>
+                                  </ul>
+                            </div>
+                        </p>
+                        <p class="proplocation"><%#Eval("area") %></p>
+                        <div style="text-align: center">
+                            <a href="#" class="btn btn-primary gotoproppage">View Property</a>
+                        </div>
+                      </div>
+                    </div>
+                </ItemTemplate>
+              </asp:Repeater>
 
-              <div id="rentprop2" class="buyprops"> 
-                  <img class="propimg img-responsive thumb-img" src="Images/rent5.jpg" /> 
-                  <p class="propprice">PKR 50 Lakh</p>
-                  <p class="proptitle">House for Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>3 Bed |</li>
-                          <li>2 Bath |</li>
-                          <li>1700 Sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Gulshan-e-Iqbal</p>
-                  <a href="#"><button class="gotoproppage btn">View Property</button></a>
-              </div>
-              
-              <div id="rentprop3" class="buyprops"> 
-                  <img class="propimg img-responsive thumb-img" src="Images/rent3.jpg" /> 
-                  <p class="propprice">PKR 98 Lakh</p>
-                  <p class="proptitle">Villa Available For Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>4 Bed |</li>
-                          <li>3 Bath |</li>
-                          <li>2,115 sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Bahria Town Karachi</p>
-                  <a href="#"><button class="gotoproppage btn">View Property</button></a>
-              </div>
-              
-              <div id="rentprop4" class="buyprops"> 
-                  <img class="propimg img-responsive thumb-img" src="Images/rent4.jpg" /> 
-                  <p class="propprice">PKR 44 Lakh</p>
-                  <p class="proptitle">Flat for Sale</p>
-                  <div class="propdesc">
-                      <ul>
-                          <li>2 Bed |</li>
-                          <li>2 Bath |</li>
-                          <li>1450 Sqft</li>
-                      </ul>
-                  </div>
-                  <p class="proplocation">Gulshan-e-Maymar</p>
-                  <a href="#"><button class="btn btn-success gotoproppage">View Property</button></a>
-              </div>
             </div>
         </div>
 
