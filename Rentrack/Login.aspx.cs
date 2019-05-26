@@ -17,7 +17,7 @@ public partial class Login : System.Web.UI.Page
             if(Request.Cookies["email"] != null && Request.Cookies["password"] != null)
             {
                 tbemail.Text = Request.Cookies["email"].Value;
-                tbpassword.Attributes["value"] = Request.Cookies["email"].Value;
+                tbpassword.Attributes["value"] = Request.Cookies["password"].Value;
                 remembercheck.Checked = true;
             }
         }
@@ -55,13 +55,26 @@ public partial class Login : System.Web.UI.Page
                         Response.Cookies["email"].Expires = DateTime.Now.AddDays(-1);   
                     }
 
+                SqlCommand cmd2 = new SqlCommand("SELECT user_type_id FROM [User] WHERE email = '" + tbemail.Text + "' and password = '" + tbpassword.Text + "'", con);
+                int usertypeid = (int)cmd2.ExecuteScalar();
+                cmd2.ExecuteNonQuery();
+
+                SqlCommand cmd3 = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE user_type_id = '" + usertypeid + "'", con);
+                cmd3.ExecuteNonQuery();
+
                 SqlCommand com = new SqlCommand("SELECT user_id FROM [User] WHERE email = '" + tbemail.Text + "' and password = '" + tbpassword.Text + "'", con);
                 int user_id = (int)com.ExecuteScalar();
                 com.ExecuteNonQuery();
-                com.Parameters.Clear();
-
                 Session["user_id"] = user_id;
-                Response.Redirect("~/Default.aspx");
+
+                if (cmd3.ExecuteScalar() == null) //Normal user
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                else if(cmd3.ExecuteScalar() != null)//Agent
+                {
+                    Response.Redirect("~/FAQ.aspx");//redirection page to be decided for agent
+                }
             }
 
             else if(dt1.Rows.Count != 0) //For admin login
@@ -83,7 +96,6 @@ public partial class Login : System.Web.UI.Page
                 SqlCommand com1 = new SqlCommand("SELECT admin_id FROM [Admin] WHERE admin_email = '" + tbemail.Text + "' and admin_password = '" + tbpassword.Text + "'", con);
                 int admin_id = (int)com1.ExecuteScalar();
                 com1.ExecuteNonQuery();
-                com1.Parameters.Clear();
 
                 Session["admin_id"] = admin_id;
                 Response.Redirect("~/AddArea.aspx");

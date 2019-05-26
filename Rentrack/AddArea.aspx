@@ -217,11 +217,9 @@
             <ul class="nav nav-tabs nav-justified" id="tabs">
               <li class="nav-item">
                   <asp:Panel ID="addheading" runat="server" CssClass="nav-link active tabheadings" data-toggle="tab" href="#addrow"><i class="fa fa-plus-circle tabicons"></i>Add Area</asp:Panel>
-                  <!--<a class="nav-link active tabheadings" data-toggle="tab" href="#addrow" runat="server">Add City</a>-->
               </li>
               <li class="nav-item">
                   <asp:Panel ID="remheading" runat="server" CssClass="nav-link tabheadings" data-toggle="tab" href="#remrow"><i class="fa fa-trash tabicons"></i>Remove Area</asp:Panel>
-                  <!--<a class="nav-link tabheadings" data-toggle="tab" href="#remrow">Remove City</a>-->
               </li>
             </ul>
 

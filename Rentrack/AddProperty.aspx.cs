@@ -32,6 +32,8 @@ public partial class AddProperty : System.Web.UI.Page
         Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), "val", "fnOnUpdateValidators();");
     }
 
+
+
     private void BindCities()
     {
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
@@ -104,21 +106,6 @@ public partial class AddProperty : System.Web.UI.Page
         prog4.Attributes.Add("style", "width: 100%");
         propimgdiv.Visible = false;
         successdiv.Visible = true;
-
-        //Select Property Purpose
-        /*string proppurpose = "oh";
-        if (sellradio.Checked==true)
-        {
-            proppurpose = sellradio.Text;
-        }
-        else if (rentradio.Checked==true)
-        {
-            proppurpose = rentradio.Text;
-        }
-        else
-        {
-            proppurpose = "none";
-        }*/
         
         //Property Code
         string propcode = GenerateNumber();
@@ -137,16 +124,19 @@ public partial class AddProperty : System.Web.UI.Page
             int roomdescid;
             roomdescid = (int)getrdid.ExecuteScalar();
 
+            //Get UserID
+            string userID = Session["user_id"].ToString();
+
             int selsubarea = Convert.ToInt32(subareaddl.SelectedItem.Value);
             if (selsubarea == 0)
             {
-                SqlCommand comm = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, room_desc_id, expires_after) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "')", con);
+                SqlCommand comm = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, room_desc_id, expires_after, user_id, property_area) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text +"')", con);
                 comm.ExecuteNonQuery();
             }
             else
             {
                 //Add values to Property Table
-                SqlCommand cmd1 = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, subarea_id, room_desc_id, expires_after) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + selsubarea + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "')", con);
+                SqlCommand cmd1 = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, subarea_id, room_desc_id, expires_after, user_id, property_area) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + selsubarea + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text + "')", con);
                 cmd1.ExecuteNonQuery();
             }
 
