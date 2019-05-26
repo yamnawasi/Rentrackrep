@@ -8,6 +8,7 @@
 
     <title>Sign Up</title>
     <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
  
 
@@ -24,8 +25,7 @@
             padding-bottom:70px;
             margin: 0px;
             width:100%;
-            height:100%;
-           
+            height:100%;         
         }
         #form {
 	        background: rgba(0, 0, 5, 0.65);
@@ -142,9 +142,6 @@
                 grid-template-rows: 1fr 1fr;
                 grid-template-columns: none;
                 grid-gap: 0px;
-            }
-            #form, #form1, #form2{
-                padding:50px;
             }
         }
 
