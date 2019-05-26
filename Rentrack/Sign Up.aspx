@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="Sign Up.aspx.cs" Inherits="Sign_Up" %>
+﻿    
+<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="Sign Up.aspx.cs" Inherits="Sign_Up" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
@@ -19,7 +20,6 @@
     		background-repeat: no-repeat;
     		background-attachment: fixed;
     	}
-
         #box {
 			font-family: 'Roboto', sans-serif;
             padding-top:70px;
@@ -40,14 +40,11 @@
 			margin-bottom:20px;
 			text-align:center;	
         }
-
         #loginlink p {
 			text-align:center;
 			color:white;		
         }
-
 		#loginlink a {text-decoration:none;}
-
         h2 {
             color:white;
             text-align:center;
@@ -55,12 +52,10 @@
             font-family: Georgia;
             font-weight: 300;
         }
-
         .required-sign {
             color: red;
             font-size: 20px;
         }
-
 		.btn {
 	        height: 50px;
             margin: 0;
@@ -79,37 +74,32 @@
             -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
             -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s;  transition: all .3s;
         }
-
 		
 		.btn:hover { opacity: 0.7; color: black; }
 		.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-
 	    .btnpad {
 			padding-left:30px;
 			padding-right:30px;
 		}
-
         .error-design {
             color: red;
             font-family: Calibri;
             font-size: 16px;
             font-weight: 600;
         }
-
         .align-content-center{
             text-align: center;
         }
-
         #lgbtn, #agbtn{
             color: #ccc;
             border-bottom: 2px solid #ccc;
             text-decoration: none;
         }
-            #lgbtn:hover, #agbtn:hover{
+        #lgbtn:hover, #agbtn:hover{
                 color: white;
                 border-bottom: 2px solid white;
                 transition-duration: 0.8s;
-            }
+        }
         .narrower{
             font-size: 14px;
         }
@@ -125,7 +115,6 @@
              grid-gap: 20px;
              grid-template-columns: 1fr 1fr;
         }
-
         @media (max-width: 768px){      
             .align-inline{
                 grid-template-rows: 1fr 1fr;
@@ -136,15 +125,11 @@
                 padding:50px;
             }
         }
-
     </style>
 
     <script> 
         $(document).ready(function () {
-
         });
-
-
         function isNumberKey(evt)
         {
              var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -152,7 +137,6 @@
                 return false;    
              return true;
         }
-
     </script> 
 
 </asp:Content>
@@ -195,7 +179,7 @@
                     <label>Email<span class="required-sign"> *</span></label>
                     <asp:TextBox ID="tbemail" runat="server" Class="form-control narrower" TextMode="Email"></asp:TextBox>
                     <asp:Label ID="lblemail" runat="server" class="text-danger error-design" Display="dynamic"></asp:Label>
-                    <asp:RegularExpressionValidator ID="agentemailexp" runat="server" ValidationGroup="signup" ErrorMessage="Incorrect format" ControlToValidate="tbemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="Validation-Msg text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator> 
+                    <asp:RegularExpressionValidator ID="emailexp" runat="server" ValidationGroup="signup" ErrorMessage="Incorrect format" ControlToValidate="tbemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="Validation-Msg text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator> 
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbemail"></asp:RequiredFieldValidator>
                 </div>
 
@@ -251,7 +235,7 @@
 
             <div class="align-content-center" id="agentlink">
                 <br />
-                <a href="Login.aspx" id="agbtn" >Sign up as Real Estate Agent</a>            
+                <a href="agentsignup.aspx" id="agbtn" >Sign up as Real Estate Agent</a>            
             </div>
         
           
