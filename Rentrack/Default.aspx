@@ -126,8 +126,8 @@
                 cursor: pointer;
             }
         #search-bar{
-            border-top-left-radius: 50px;
-            border-bottom-left-radius: 50px;
+            /*border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;*/
         }
         #search-button {
             background-color: #eda136; /*orange*/
