@@ -27,7 +27,7 @@
     <style>
 
         #maindiv {
-    		background-image: url("Images/bg1.jpeg");
+    		background-image: url("Images/bg2.jpeg");
     		background-size: cover;
     		background-repeat: no-repeat;
     		background-attachment: fixed;
