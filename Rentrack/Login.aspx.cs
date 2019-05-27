@@ -59,19 +59,21 @@ public partial class Login : System.Web.UI.Page
                 int usertypeid = (int)cmd2.ExecuteScalar();
                 cmd2.ExecuteNonQuery();
 
-                SqlCommand cmd3 = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE user_type_id = '" + usertypeid + "'", con);
-                cmd3.ExecuteNonQuery();
+                SqlCommand cmd3 = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE agent_id = '" + usertypeid + "'", con);
+                SqlDataAdapter sda2 = new SqlDataAdapter(cmd3);
+                DataTable dt2 = new DataTable();
+                sda2.Fill(dt2);
 
                 SqlCommand com = new SqlCommand("SELECT user_id FROM [User] WHERE email = '" + tbemail.Text + "' and password = '" + tbpassword.Text + "'", con);
                 int user_id = (int)com.ExecuteScalar();
                 com.ExecuteNonQuery();
                 Session["user_id"] = user_id;
 
-                if (cmd3.ExecuteScalar() == null) //Normal user
+                if (dt2.Rows.Count == 0) //Normal user
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                else if(cmd3.ExecuteScalar() != null)//Agent
+                else if(dt2.Rows.Count != 0)//Agent
                 {
                     Response.Redirect("~/FAQ.aspx");//redirection page to be decided for agent
                 }
