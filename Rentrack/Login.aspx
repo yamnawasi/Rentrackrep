@@ -7,22 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>Login</title>
 
-        <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->  
-
-        <script src="assets/js/jquery-1.11.1.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/js/jquery.backstretch.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <script src="js/bootstrap.min.js"></script>
 
     <style>
 
@@ -51,7 +38,6 @@
 			margin-bottom:20px;
 			text-align:center;	
         }
-
         h2 {
 	        color:white;
             text-align:center;
@@ -76,11 +62,11 @@
             font-weight: 600;
         }
         .remember{
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 300;
-            color: #fff;
-            line-height: 30px;
+            color: #fff;          
             margin: 5px;
+            font-family: Arial, sans-serif;
         }
 		.btn {
 	        height: 50px;
@@ -119,6 +105,7 @@
                 border-bottom: 2px solid white;
                 transition-duration: 0.8s;
         }
+
 	</style>
 
 </asp:Content>
@@ -153,11 +140,17 @@
 				</div>
 
                 <div class="form-inline">
-                    <asp:CheckBox ID="remembercheck" runat="server" Class="form-check"/>
-                    <asp:Label ID="lblremember" Class="remember" runat="server" Text="Remember me" for="form-check"></asp:Label>
+                    <div>
+                        <asp:CheckBox ID="remembercheck" runat="server" Class="form-check remember"/>
+                    </div>
+                    <div>
+                        <asp:Label ID="lblremember" Class="remember" runat="server" Text="Remember me" for="remembercheck"></asp:Label>
+                    </div>
                 </div> 
 
-                <asp:Label ID="lblError" runat="server" CssClass="text-danger error-design align-content-center"></asp:Label>
+                <div class="align-content-center">
+                    <asp:Label ID="lblError" runat="server" CssClass="text-danger error-design"></asp:Label>
+                </div>
                                   
 			    <div class="form-group align-content-center" id="loginbtnstyle">
                     <asp:Button id="loginbtn" runat="server" class="btn btnpad"  OnClick="Login_btn" Text="Login" ValidationGroup="login"/>                                       
