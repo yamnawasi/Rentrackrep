@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="agentsignup.aspx.cs" Inherits="agentsignup" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="agentsignup.aspx.cs" Inherits="agentsignup" EnableViewState="true"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
@@ -7,11 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Sign Up</title>
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
- 
 
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
+
+  
     <style>
     	#maindiv {
     		background-image: url("Images/bg1.jpeg");
@@ -79,9 +87,9 @@
             color: red;
             font-size: 20px;
         }
-		.btn {
+		.sbtn {
 	        height: 50px;
-            margin: 0;
+            margin: 5px;
             padding: 0 20px;
 			text-align: center;           
             vertical-align: middle;
@@ -97,8 +105,8 @@
             -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
             -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s;  transition: all .3s;
         }	
-		 .btn:hover { opacity: 0.7; color: black; }
-		 .btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+		 .sbtn:hover { opacity: 0.7; color: black; }
+		 .sbtn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 		 .btnpad{
 			padding-left:30px;
 			padding-right:30px;
@@ -143,11 +151,30 @@
                 grid-template-columns: none;
                 grid-gap: 0px;
             }
+        }     
+        .btn.multiselect{
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            font-size: 14px;
+            background-color: white;
+            color: black;
+            padding: 8px;
+            font-family: Arial, sans-serif;
+            padding-left: 30px;
+			padding-right: 30px;
+            width: 250px!important;
         }
-
+        .multiselect-container>li {
+            width: 250px!important;
+        }
+        .multiselect-container>li:hover{
+            background-color:lightblue;
+        }
+       
     </style>
 
-    <script> 
+    <script type="text/javascript"> 
         $(document).ready(function () {
         });
         function isNumberKey(evt)
@@ -157,6 +184,20 @@
                 return false;    
              return true;
         }
+
+        $(function () {
+            $('[id*=agentcitylist]').multiselect({
+                includeSelectAllOption: true
+
+            });
+        });
+
+        $(function () {
+            $('[id*=agencycitylist]').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+  
     </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -189,13 +230,6 @@
 			    </div>
             </div>
 
-            <div>
-                <label>Date Of Birth<span class="required-sign"> *</span></label>
-                <asp:TextBox ID="agentdob" runat="server" Class="form-control narrower" TextMode="Date"></asp:TextBox>
-                <asp:RangeValidator ID="DateRangeValidator" runat="server" CssClass="text-danger error-design" Type="Date" Format="DD/MM/YYYY" ControlToValidate="agentdob" ErrorMessage="You must be between 18 to 90 years old to register" Display="Dynamic" SetFocusOnError="true"></asp:RangeValidator>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agentdob" ValidationGroup="signup" EnableClientScript="True"></asp:RequiredFieldValidator>
-            </div>
-
             <div class="align-inline">
                 <div>
                     <label>Phone  No.<span class="required-sign"> *</span></label>
@@ -219,18 +253,17 @@
             </div>
 
             <div>
-                <label>Address<span class="required-sign"> *</span></label>
-                <asp:TextBox ID="agentaddress" runat="server" Class="form-control narrower" TextMode="MultiLine"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agentaddress"></asp:RequiredFieldValidator>
+                <div>
+                    <label>Areas you deal in<span class="required-sign"> *</span></label>
+                </div>
+                <div class="align-content-center">
+                    <div>
+                        <asp:ListBox ID="agentcitylist" runat="server" SelectionMode="Multiple" CssClass="form-control narrower"></asp:ListBox>
+                    </div>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agentcitylist"></asp:RequiredFieldValidator>
+                </div>
             </div>
-
-            <div>
-                <label>City<span class="required-sign"> *</span></label>
-                <asp:DropDownList ID="agentcity" runat="server" Class="form-control narrower" DataSourceID="Rentrackdb" DataTextField="city_name" DataValueField="city_name">
-                </asp:DropDownList>
-                <asp:SqlDataSource ID="Rentrackdb" runat="server" ConnectionString="<%$ ConnectionStrings:RentrackdbConnectionString %>" SelectCommand="SELECT [city_name] FROM [City]"></asp:SqlDataSource>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agentcity"></asp:RequiredFieldValidator>
-            </div>
+                    
          </div>
 
 	     <div id="form2">
@@ -238,14 +271,14 @@
 			<h3>Agency Information</h3>
 
 			<div>
-                <label>Agency Name<span class="required-sign"> *</span></label>
+                <label>Company Name<span class="required-sign"> *</span></label>
                 <asp:TextBox ID="agencyname" runat="server" Class="form-control narrower" ></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyname" ValidationGroup="signup" ></asp:RequiredFieldValidator>
             </div>
 
 		    <div class="align-inline">
                 <div>
-                    <label>Email<span class="required-sign"> *</span></label>
+                    <label>Company Email<span class="required-sign"> *</span></label>
                     <asp:TextBox  ID="agencyemail" runat="server" Class="form-control narrower" TextMode="Email" ></asp:TextBox>
                     <asp:Label ID="lblagencyemail" runat="server" class="text-danger error-design" Display="dynamic"></asp:Label>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ValidationGroup="signup" ErrorMessage="Incorrect format" ControlToValidate="agencyemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="Validation-Msg text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator> 
@@ -253,7 +286,7 @@
                 </div>
              
                 <div>
-                    <label>Phone  No.<span class="required-sign"> *</span></label>
+                    <label>Company Phone  No.<span class="required-sign"> *</span></label>
                     <asp:TextBox  ID="agencyphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 03001234567"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" CssClass="text-danger error-design"
 			            ErrorMessage="Enter a valid phone no."  ControlToValidate="agencyphone" Display="Dynamic" 
@@ -264,17 +297,19 @@
             </div>
 
             <div>
-                <label>Agency Branch Address<span class="required-sign"> *</span></label>
+                <label>Company Address<span class="required-sign"> *</span></label>
                 <asp:TextBox ID="agencyaddress" runat="server" ValidationGroup="address" Class="form-control narrower" TextMode="MultiLine"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyaddress"></asp:RequiredFieldValidator>
             </div>
 
             <div>
-                <label>City<span class="required-sign"> *</span></label>
-                 <asp:DropDownList ID="agencycity" runat="server" Class="form-control narrower" DataSourceID="Rentrackdb1" DataTextField="city_name" DataValueField="city_name">
-                </asp:DropDownList>
-                <asp:SqlDataSource ID="Rentrackdb1" runat="server" ConnectionString="<%$ ConnectionStrings:RentrackdbConnectionString %>" SelectCommand="SELECT [city_name] FROM [City]"></asp:SqlDataSource>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencycity"></asp:RequiredFieldValidator>
+                <label>Areas the Company deals in<span class="required-sign"> *</span></label>
+                <div class="align-content-center">
+                    <div>
+                        <asp:ListBox ID="agencycitylist" runat="server" SelectionMode="Multiple" CssClass="form-control narrower"></asp:ListBox>
+                    </div>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencycitylist"></asp:RequiredFieldValidator>
+                </div>           
             </div>
 
 			<div>
@@ -286,8 +321,8 @@
             </div>
             
            <div class="form-group align-inline signupbtnstyle">   
-                <asp:Button  ID="codebtn" runat="server" class="btn btnpad" Text="Send Code" OnClick="codebtn_Click"/>
-                <asp:Button  ID="verifybtn" runat="server" class="btn btnpad" Text="Verify Code" OnClick="verifybtn_Click"/>
+                <asp:Button  ID="codebtn" runat="server" class="sbtn btnpad" Text="Send Code" OnClick="codebtn_Click"/>
+                <asp:Button  ID="verifybtn" runat="server" class="sbtn btnpad" Text="Verify Code" OnClick="verifybtn_Click"/>
            </div>
 	    </div>
 
@@ -319,7 +354,7 @@
             </div>
                 
             <div class="space-vert form-group signupbtnstyle">   
-            <asp:Button  ID="agsignupbtn" runat="server" class="btn btnpad" Text="Sign Up" OnClick="agsignupbtn_Click" ValidationGroup="signup"/>
+            <asp:Button  ID="agsignupbtn" runat="server" class="sbtn btnpad" Text="Sign Up" OnClick="agsignupbtn_Click" ValidationGroup="signup"/>
             </div>
 
             <div class="align-content-center" id="loginlink">
