@@ -183,7 +183,7 @@
 
               <!--Our Services-->
               <li class="nav-item header-item" >
-                <a class="nav-link" href="OurServices.aspx" id="headerourservices">Our Services</a>
+                <a class="nav-link" href="Our Services.aspx" id="headerourservices">Our Services</a>
               </li>
 
               <!--Property List-->
@@ -241,7 +241,7 @@
                     </ul>
                     <ul id="Ul1" class="col-lg-2 col-md-3 col-sm-3">
                         <li class="footerheadings">COMPANY</li>
-                        <a href="OurServices.aspx"><li>Our Services</li></a>
+                        <a href="Our Services.aspx"><li>Our Services</li></a>
                         <a href="FAQ.aspx"><li>FAQ</li></a>
                         <a href="#"><li>Email Us</a>
                     </ul>

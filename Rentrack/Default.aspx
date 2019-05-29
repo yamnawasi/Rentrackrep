@@ -42,7 +42,10 @@
                     }
                 }
             });
-
+           
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
             
         });
 
@@ -229,7 +232,7 @@
         }
         .osheadings {
             color: orange;
-            margin-top: 14%;
+            margin-top: 50px;
             font-family: Georgia, 'Times New Roman';
             font-size: 22px;
         }
@@ -251,13 +254,11 @@
             #osbutton:hover {
                 transform:translateY(-2px);
                 transition-duration: 0.5s;
-                background-color: #364b96;
-            }
-            #osbutton a{
+                background-color: #364b96; 
+                text-decoration: none;
                 color: white;
             }
-            #osbutton a:hover{
-                text-decoration: none;
+            #osbutton a{
                 color: white;
             }
         #ostitle {
@@ -292,14 +293,12 @@
                 background-image: url('Images/db.jpg');
                 background-position: center;
             }
-            #dbblock {
-                
-            }
             #notifblock {     
                 background: rgba(0, 0, 0, 0.5);
             }
             .morediv {     
                 background: rgba(0, 0, 0, 0.5);
+                padding-bottom: 70px;
             }
             #osbutton {
                 display: inline;
@@ -311,17 +310,17 @@
         }
 
         /*Large Screens*/
-        @media (min-width: 992px) {
+        @media (min-width: 992px) and (max-width: 1200px) {
             #moreimg {
                 display: none;              
             }
             #osbutton {
                 display: inline;
-                margin-bottom: 5%;
                 padding: 15px;
             }
-            #morediv {
+            .morediv {
                 text-align: center;
+                padding-bottom: 70px;
             }
                 #moreheading {
                     margin-top: 5%;
@@ -492,7 +491,7 @@
                 <div class="col-xl-3 col-lg-12 col-md-6 serviceblock morediv">
                     <img src="Images/am.jpg" class="img-fluid osimg" id="moreimg"/>
                     <p class="osheadings" id="moreheading">... and more.</p>
-                    <button id="osbutton" class="btn"><a href="OurServices.aspx">Our Services</a></button>
+                    <a href="Our Services.aspx"><span id="osbutton" class="btn">Our Services</span></a>
                 </div>
             </div>
 
