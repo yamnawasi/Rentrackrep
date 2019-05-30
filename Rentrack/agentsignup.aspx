@@ -55,7 +55,6 @@
 			color:white;
 			margin-top:50px;
           }
-
         .signupbtnstyle{
 			margin-top:20px; 
 			margin-bottom:20px;
@@ -184,6 +183,13 @@
                 return false;    
              return true;
         }
+<<<<<<< HEAD
+        $(function () {
+            $('[id*=agentcitylist]').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+=======
 
         $(function () {
             $('[id*=agentcitylist]').multiselect({
@@ -192,6 +198,7 @@
             });
         });
 
+>>>>>>> upstream/master
         $(function () {
             $('[id*=agencycitylist]').multiselect({
                 includeSelectAllOption: true
