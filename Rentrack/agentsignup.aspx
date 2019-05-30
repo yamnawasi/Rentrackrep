@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-<   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
 
   
     <style>
@@ -162,10 +162,11 @@
             font-family: Arial, sans-serif;
             padding-left: 30px;
 			padding-right: 30px;
-            width: 250px!important;
+            width: 250px;
         }
         .multiselect-container>li {
             width: 250px!important;
+            color: black;
         }
         .multiselect-container>li:hover{
             background-color:lightblue;
@@ -183,13 +184,11 @@
                 return false;    
              return true;
         }
-<<<<<<< HEAD
         $(function () {
             $('[id*=agentcitylist]').multiselect({
                 includeSelectAllOption: true
             });
         });
-=======
 
         $(function () {
             $('[id*=agentcitylist]').multiselect({
@@ -197,8 +196,7 @@
 
             });
         });
-
->>>>>>> upstream/master
+        
         $(function () {
             $('[id*=agencycitylist]').multiselect({
                 includeSelectAllOption: true
@@ -217,7 +215,7 @@
                 <div id="form">
 
 			        <h2>Welcome to Rentrack</h2>
-                    <p id="createaccount">Create an Account</p>
+                    <p id="createaccount">Create an Agent Account</p>
                     <asp:Label ID="lblMsg" runat="server"></asp:Label>
                     <hr style="background-color:#999; margin: 30px 0px 30px 0px"/>
                  		 
@@ -263,7 +261,7 @@
                 <div>
                     <label>Areas you deal in<span class="required-sign"> *</span></label>
                 </div>
-                <div class="align-content-center">
+                <div class="align-content-center ">
                     <div>
                         <asp:ListBox ID="agentcitylist" runat="server" SelectionMode="Multiple" CssClass="form-control narrower"></asp:ListBox>
                     </div>

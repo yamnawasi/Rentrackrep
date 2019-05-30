@@ -21,6 +21,7 @@
             background: url("Images/ourservices.jpg");
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-size: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;          
@@ -41,12 +42,12 @@
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             animation: Slide_Up 1.4s ease; 
-            box-shadow: 0px 0px 20px #DDD;
+            box-shadow: 0px 0px 20px #CCC;
         }
         #frontdiv{
             width: 85%;
             background-color: white;
-            box-shadow: 0px 20px 20px #DDD;
+            box-shadow: 0px 0px 20px #CCC;
             animation: Slide_Up 1.4s ease;
         }
         #wdwo{
