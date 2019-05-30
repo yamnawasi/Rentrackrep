@@ -55,11 +55,7 @@ public partial class agentsignup : System.Web.UI.Page
                 }
                 con.Close();
             }
-<<<<<<< HEAD
-        }
-=======
-        }   
->>>>>>> upstream/master
+        } 
     }
 
     protected void agsignupbtn_Click(object sender, EventArgs e)
@@ -96,11 +92,11 @@ public partial class agentsignup : System.Web.UI.Page
                 DataTable dt1 = new DataTable();
                 sda1.Fill(dt1);
 
-<<<<<<< HEAD
+
                 if (dt1.Rows.Count == 0) //if agency is not registered
-=======
+
                 if(dt1.Rows.Count == 0) //if agency is not registered
->>>>>>> upstream/master
+
                 {
                     //inserting in agency table
                     SqlCommand com2 = new SqlCommand("INSERT INTO [Agency](agency_name, agency_phone, agency_email, status, activationcode) VALUES ('" + agencyname.Text + "','" + agencyphone.Text + "','" + agencyemail.Text + "','verified','" + activationcode + "')", con);
@@ -243,11 +239,11 @@ public partial class agentsignup : System.Web.UI.Page
             if (dt1.Rows.Count == 0) //if agency is not registered
             {
                 Random random = new Random();
-<<<<<<< HEAD
+
                 activationcode = random.Next(1001, 9999).ToString();
-=======
+
                 activationcode = random.Next(1001, 9999).ToString();              
->>>>>>> upstream/master
+
             }
             else if (dt1.Rows.Count != 0)
             {
@@ -262,7 +258,7 @@ public partial class agentsignup : System.Web.UI.Page
     //sending the activation code to agency's email address for verification
     private void sendcode()
     {
-<<<<<<< HEAD
+
         if (agencyemail.Text == "")
         {
             lblagencyemail.Text = "Please enter Company Email to send the activation code";
@@ -290,7 +286,7 @@ public partial class agentsignup : System.Web.UI.Page
                 throw;
             }
         }
-=======
+
         if(agencyemail.Text == "")
         {
             lblagencyemail.Text = "Please enter Company Email to send the activation code";
@@ -318,7 +314,6 @@ public partial class agentsignup : System.Web.UI.Page
                 throw;
             }
         }  
->>>>>>> upstream/master
 
     }
 
