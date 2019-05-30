@@ -183,11 +183,22 @@
                 return false;    
              return true;
         }
+<<<<<<< HEAD
         $(function () {
             $('[id*=agentcitylist]').multiselect({
                 includeSelectAllOption: true
             });
         });
+=======
+
+        $(function () {
+            $('[id*=agentcitylist]').multiselect({
+                includeSelectAllOption: true
+
+            });
+        });
+
+>>>>>>> upstream/master
         $(function () {
             $('[id*=agencycitylist]').multiselect({
                 includeSelectAllOption: true
