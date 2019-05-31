@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using System.Net;
 using System.Net.Mail;
-using System.Drawing;
-using System.IO;
+using System.Web.UI.WebControls;
 
 public partial class agentsignup : System.Web.UI.Page
 {
@@ -203,13 +196,10 @@ public partial class agentsignup : System.Web.UI.Page
                     cmd7.ExecuteNonQuery();
                 }
 
-                //alert
-
+                Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('Your account has been created successfully. Please log in to continue.');", true);
             }
             con.Close();
-
-        }
-
+        }           
     }
 
     //calling activation code when clicked
@@ -226,7 +216,7 @@ public partial class agentsignup : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(CS))
         {
             //checking if the agency already exists in db
-            SqlCommand com1 = new SqlCommand("SELECT * FROM [Agency] WHERE agency_email = '" + agencyemail.Text + "' AND agency_name = '" + agencyname.Text + "'", con);
+            SqlCommand com1 = new SqlCommand("SELECT * FROM [Agency] WHERE agency_email = '" + agencyemail.Text + "'", con);
             con.Open();
             SqlDataAdapter sda1 = new SqlDataAdapter(com1);
             DataTable dt1 = new DataTable();
@@ -242,9 +232,7 @@ public partial class agentsignup : System.Web.UI.Page
                 activationcode = Convert.ToString(dt1.Rows[0][4]);
             }
         }
-
         return activationcode;
-
     }
 
     //sending the activation code to agency's email address for verification
@@ -256,6 +244,7 @@ public partial class agentsignup : System.Web.UI.Page
         }
         else if(agencyemail.Text != "")
         {
+            lblagencyemail.Visible = false;
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
