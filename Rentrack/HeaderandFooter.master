@@ -188,7 +188,7 @@
 
               <!--Property List-->
               <li class="nav-item header-item" >
-                <a class="nav-link" href="#" id="headerproperty">Properties</a>
+                <a class="nav-link" href="propertylist.aspx" id="headerproperty">Properties</a>
               </li>
 
               <!--Add Property-->
