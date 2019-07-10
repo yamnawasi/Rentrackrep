@@ -78,8 +78,6 @@ public partial class AddArea : System.Web.UI.Page
             com.ExecuteNonQuery();
             com.Parameters.Clear();
 
-            
-
             //Check if Area is present in Area Table
             SqlCommand checkarea = new SqlCommand("SELECT count(*) from Area where area ='" + tbarea.Text + "' AND city_id = '" + tbcity + "'", con);
             checkarea.ExecuteNonQuery();

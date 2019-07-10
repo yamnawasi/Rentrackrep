@@ -4,15 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using System.Drawing;
 using System.IO;
 
-public partial class agentsignup : System.Web.UI.Page
+
+public partial class Agent_Signup : System.Web.UI.Page
 {
     static String activationcode;
     protected void Page_Load(object sender, EventArgs e)
@@ -55,7 +56,7 @@ public partial class agentsignup : System.Web.UI.Page
                 }
                 con.Close();
             }
-        } 
+        }
     }
 
     protected void agsignupbtn_Click(object sender, EventArgs e)
@@ -92,11 +93,7 @@ public partial class agentsignup : System.Web.UI.Page
                 DataTable dt1 = new DataTable();
                 sda1.Fill(dt1);
 
-
                 if (dt1.Rows.Count == 0) //if agency is not registered
-
-                if(dt1.Rows.Count == 0) //if agency is not registered
-
                 {
                     //inserting in agency table
                     SqlCommand com2 = new SqlCommand("INSERT INTO [Agency](agency_name, agency_phone, agency_email, status, activationcode) VALUES ('" + agencyname.Text + "','" + agencyphone.Text + "','" + agencyemail.Text + "','verified','" + activationcode + "')", con);
@@ -207,13 +204,10 @@ public partial class agentsignup : System.Web.UI.Page
                     cmd7.ExecuteNonQuery();
                 }
 
-                //alert
-
+                Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('Your account has been created successfully. Please log in to continue.');", true);
             }
             con.Close();
-
         }
-
     }
 
     //calling activation code when clicked
@@ -230,7 +224,7 @@ public partial class agentsignup : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(CS))
         {
             //checking if the agency already exists in db
-            SqlCommand com1 = new SqlCommand("SELECT * FROM [Agency] WHERE agency_email = '" + agencyemail.Text + "' AND agency_name = '" + agencyname.Text + "'", con);
+            SqlCommand com1 = new SqlCommand("SELECT * FROM [Agency] WHERE agency_email = '" + agencyemail.Text + "'", con);
             con.Open();
             SqlDataAdapter sda1 = new SqlDataAdapter(com1);
             DataTable dt1 = new DataTable();
@@ -239,32 +233,26 @@ public partial class agentsignup : System.Web.UI.Page
             if (dt1.Rows.Count == 0) //if agency is not registered
             {
                 Random random = new Random();
-
                 activationcode = random.Next(1001, 9999).ToString();
-
-                activationcode = random.Next(1001, 9999).ToString();              
-
             }
             else if (dt1.Rows.Count != 0)
             {
                 activationcode = Convert.ToString(dt1.Rows[0][4]);
             }
         }
-
         return activationcode;
-
     }
 
     //sending the activation code to agency's email address for verification
     private void sendcode()
     {
-
         if (agencyemail.Text == "")
         {
             lblagencyemail.Text = "Please enter Company Email to send the activation code";
         }
         else if (agencyemail.Text != "")
         {
+            lblagencyemail.Visible = false;
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
@@ -286,34 +274,6 @@ public partial class agentsignup : System.Web.UI.Page
                 throw;
             }
         }
-
-        if(agencyemail.Text == "")
-        {
-            lblagencyemail.Text = "Please enter Company Email to send the activation code";
-        }
-        else if(agencyemail.Text != "")
-        {
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential("Rentrackfyp@gmail.com", "contract123");
-            smtp.EnableSsl = true;
-            MailMessage msg = new MailMessage();
-            msg.Subject = "Activation code to verify email address";
-            msg.Body = "An agent from your agency wants to register with our website. The agent must enter the activation code below to successfuly register. \n\n The activation code is " + activationcode + "\n\n\nTeam Rentrack";
-            string toAddress = agencyemail.Text;
-            msg.To.Add(toAddress);
-            string fromaddress = "<Rentrackfyp@gmail.com>";
-            msg.From = new MailAddress(fromaddress);
-            try
-            {
-                smtp.Send(msg);
-            }
-            catch
-            {
-                throw;
-            }
-        }  
 
     }
 

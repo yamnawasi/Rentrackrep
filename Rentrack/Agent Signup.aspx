@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="agentsignup.aspx.cs" Inherits="agentsignup" EnableViewState="true"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="Agent Signup.aspx.cs" Inherits="Agent_Signup" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
-	 <meta charset="utf-8" />
+	<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
 
   
     <style>
@@ -55,6 +55,7 @@
 			color:white;
 			margin-top:50px;
           }
+
         .signupbtnstyle{
 			margin-top:20px; 
 			margin-bottom:20px;
@@ -162,11 +163,10 @@
             font-family: Arial, sans-serif;
             padding-left: 30px;
 			padding-right: 30px;
-            width: 250px;
+            width: 250px!important;
         }
         .multiselect-container>li {
             width: 250px!important;
-            color: black;
         }
         .multiselect-container>li:hover{
             background-color:lightblue;
@@ -175,6 +175,7 @@
     </style>
 
     <script type="text/javascript"> 
+
         $(document).ready(function () {
         });
         function isNumberKey(evt)
@@ -184,9 +185,16 @@
                 return false;    
              return true;
         }
-        $(function () {
-            $('[id*=agentcitylist]').multiselect({
-                includeSelectAllOption: true
+
+         $(function () {
+            $('[id*=cnicnum]').on('keypress', function () {
+                var number = $(this).val();
+                if (number.length == 5) {
+                    $(this).val($(this).val() + '-');
+                }
+                else if (number.length == 13) {
+                    $(this).val($(this).val() + '-');
+                }
             });
         });
 
@@ -196,7 +204,7 @@
 
             });
         });
-        
+
         $(function () {
             $('[id*=agencycitylist]').multiselect({
                 includeSelectAllOption: true
@@ -215,7 +223,7 @@
                 <div id="form">
 
 			        <h2>Welcome to Rentrack</h2>
-                    <p id="createaccount">Create an Agent Account</p>
+                    <p id="createaccount">Create an Account</p>
                     <asp:Label ID="lblMsg" runat="server"></asp:Label>
                     <hr style="background-color:#999; margin: 30px 0px 30px 0px"/>
                  		 
@@ -229,9 +237,9 @@
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="fname" ValidationGroup="signup" ></asp:RequiredFieldValidator>
                 </div>
 			    <div>
-                 <label>Last Name<span class="required-sign"> *</span></label>
-                 <asp:TextBox ID="lname" runat="server" Class="form-control narrower" ></asp:TextBox>
-                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lname"></asp:RequiredFieldValidator>
+                     <label>Last Name<span class="required-sign"> *</span></label>
+                     <asp:TextBox ID="lname" runat="server" Class="form-control narrower" ></asp:TextBox>
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lname"></asp:RequiredFieldValidator>
 			    </div>
             </div>
 
@@ -248,7 +256,7 @@
 
                 <div>
                     <label>CNIC No.<span class="required-sign"> *</span></label>
-                    <asp:TextBox  ID="cnicnum" runat="server" Class="form-control narrower" placeholder="E.g. 35101-1234567-8"></asp:TextBox>
+                    <asp:TextBox  ID="cnicnum" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 35101-1234567-8" MaxLength="15"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" CssClass="text-danger error-design"
 			            ErrorMessage="Enter CNIC in correct format"  ControlToValidate="cnicnum" Display="Dynamic" 
 			            ValidationExpression="^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$" ValidationGroup="signup"> 
@@ -261,7 +269,7 @@
                 <div>
                     <label>Areas you deal in<span class="required-sign"> *</span></label>
                 </div>
-                <div class="align-content-center ">
+                <div class="align-content-center">
                     <div>
                         <asp:ListBox ID="agentcitylist" runat="server" SelectionMode="Multiple" CssClass="form-control narrower"></asp:ListBox>
                     </div>
@@ -292,10 +300,10 @@
              
                 <div>
                     <label>Company Phone  No.<span class="required-sign"> *</span></label>
-                    <asp:TextBox  ID="agencyphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 03001234567"></asp:TextBox>
+                    <asp:TextBox  ID="agencyphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 0217654321"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" CssClass="text-danger error-design"
 			            ErrorMessage="Enter a valid phone no."  ControlToValidate="agencyphone" Display="Dynamic" 
-			            ValidationExpression="^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$" ValidationGroup="signup"> 
+			            ValidationExpression="(\d{3})\d{7}" ValidationGroup="signup"> 
                     </asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyphone"></asp:RequiredFieldValidator>
                 </div>
@@ -372,3 +380,4 @@
     </div>
 </div>
 </asp:Content>
+

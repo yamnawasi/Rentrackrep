@@ -52,7 +52,7 @@ public partial class Login : System.Web.UI.Page
                 else
                     {
                         Response.Cookies["email"].Expires = DateTime.Now.AddDays(-1);
-                        Response.Cookies["email"].Expires = DateTime.Now.AddDays(-1);   
+                        Response.Cookies["password"].Expires = DateTime.Now.AddDays(-1);   
                     }
 
                 SqlCommand cmd2 = new SqlCommand("SELECT user_type_id FROM [User] WHERE email = '" + tbemail.Text + "' and password = '" + tbpassword.Text + "'", con);
