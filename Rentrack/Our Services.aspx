@@ -146,6 +146,16 @@
         }
 
         /*Responsiveness*/
+        /*Large Screen*/
+        @media (max-width: 1200px) {
+            #whitediv{
+                margin-top: 220px;
+            }
+            #os-heading {
+                padding-top: 20px;
+            }
+        }
+
 
         /*Medium Screen and Smaller*/
         @media (max-width: 992px) {
@@ -157,6 +167,17 @@
             }
             #frontdiv{
                 width: 100%;
+            }
+            #os-heading {
+                color: white;
+                padding-top: 70px;
+            }
+            #headdiv{
+                background-size: 100%;
+                background: url("Images/ourservices-2.jpg");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+    
             }
         }
         /*Small Screen and Extra Small Screen*/
@@ -185,14 +206,36 @@
                 color: white;
                 background: url("Images/db3.png");
                 background-repeat: no-repeat;
-                background-size: cover;
+                background-size: unset;
             }
             #whitediv{
                 display: none;
             }
-            #headdiv{
-                height: 150px;
+            #os-heading {
+                padding-top: 20px;
+                color: white;
             }
+            #frontdiv{
+                box-shadow: none;
+            }
+        }
+        #signup-div{
+            background-color: #db3718;
+            color: white;
+            font-weight: 500;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px 30px;
+        }
+            #signup-div:hover{
+                background-color: red;
+                transform: scale(1.05);
+                transition-duration: 1s;
+                box-shadow: 0px 0px 10px #555;
+                border-radius: 10px;
+            }
+        a:hover{
+            text-decoration: none;
         }
     </style>
 </asp:Content>
@@ -278,6 +321,11 @@
                 </div> 
             </div>
 
+            <a href="Sign Up.aspx">
+                <div id="signup-div">
+                    <span>Create an account with us now to experience it all.</span>
+                </div>
+            </a>
         </div>
 
     </div>
