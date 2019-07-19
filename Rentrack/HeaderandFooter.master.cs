@@ -19,6 +19,7 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
             headerfirstname.Visible = false;
             userproflink.Visible = false;
             headerline.Visible = false;
+            notifdropdown.Visible = false;
         }
         else if (Session["user_id"] != null)
         {
@@ -46,6 +47,8 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
             usericon.Visible = false;
             userproflink.Visible = true;
             headerline.Visible = true;
+            headerfaq.Visible = false;
+            notifdropdown.Visible = true;
         }
 
     }
