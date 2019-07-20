@@ -6,6 +6,7 @@
     <link href="css/bootstrap-grid.min.css" rel="stylesheet" />
     <style>
         #maindiv{
+            background-color: #fff;
             padding-top:50px;
             padding-left:35px;
             
@@ -15,7 +16,13 @@
             max-width:450px;
             align-content:center;
             padding:0px 40px 40px 60px;
+           
         }
+
+        #imgp{
+            width:30%;
+        }
+       
         .pronameview{
             font-size:20px;
             line-height:17px;
@@ -56,27 +63,29 @@
 
     }
      #divDet5{
-          padding-left:40px;
-          padding-top:0px;
+   
           width:250px;
           align-content:center;
+          float:right;
          
      }
-     #div6{
-
-         align-items:baseline;
-     }
+    
   
      .btn{
              height: 50px;
-             width:80px;
-            padding: 0 20px;
-			text-align: center;
+             width:85px;
+            
+            padding:0 20px ;
+            margin-top:10px;
+            margin-left:35%;
+            margin-bottom:20px;
+			align-content:center;
             background: #eda136;
             font-size: 16px;
             font-weight: 300;
             line-height: 50px;
             color: #fff;
+            
             -webkit-border-radius: 4px; border-radius: 4px;
             text-shadow: none;
            -webkit-box-shadow: none; box-shadow: none;
@@ -86,21 +95,31 @@
 		 .btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 		 
      </style>
+      <script> 
+        $(document).ready(function () {
+        });
+        function isNumberKey(evt)
+        {
+             var charCode = (evt.which) ? evt.which : evt.keyCode;
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;    
+             return true;
+        }
+    </script> 
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
 <div class="row" id="maindiv">
-    <div class="col-md-5">
-       <div  class="img-thumbnail" >
+    <div class="row">
+       <div id="imgp" class="col-lg-4 col-md-3 col-sm-3 col-4 ">
         <!-- Image carousel -->
 
-        
-                     <img src="Images/PropertyImages/25/House-25.jpg"/ class="img-thumbnail" >
+                <img src="Images/PropertyImages/1/House%20for%20Sale-1.jpg" class="img-thumbnail" />
         </div>
 
 
-    <div id="desc" class="col-md-7">
+        <div id="desc" class=" col-lg-4 col-md-3 col-sm-3 col-4">
         <div class="divDet1">
            <h1 class="pronameview"> 400 sq yd house</h1>
            <span class="proPrice">RS 12,000</span>
@@ -119,27 +138,46 @@
            <p>a small house</p>
 
          </div>
-         
-        <div class="divDet4">
-
-            <h5>add to fav</h5>
-        </div>
+        
      </div>
+        <div id="divDet5" class=" col-lg-4 col-md-3 col-sm-3 col-4" >
+           
+             <h1>contact owner/agent</h1>
 
+                <div>
+                    <label>Name</label>
+                    <asp:TextBox ID="tbfname" runat="server" Class="form-control narrower" InitialValue="0"></asp:TextBox>
+                    </div>
+                <div>
+                    <label>Email</label>
+                    <asp:TextBox ID="buyemail" runat="server" Class="form-control narrower" TextMode="Email"></asp:TextBox>
+                </div>
+                <div>
+                    <label>Phone  No.</label>
+                    <asp:TextBox ID="tbphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 03001234567"></asp:TextBox>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" CssClass="text-danger error-design"
+			            ErrorMessage="Enter a valid phone no."  ControlToValidate="tbphone" Display="Dynamic" 
+			            ValidationExpression="^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$" ValidationGroup="signup"> 
+                    </asp:RegularExpressionValidator>
+               </div>
 
+                 <div id="message"  runat="server">
+                   
+                    <label>Message</label>
+                    <asp:TextBox ID="msg" runat="server" class="form-control narrower areafield"></asp:TextBox> 
+                    
+                 </div>
 
-    <div id="divDet5" >
-
-        <h1>contact owner/agent</h1>
-
-        <asp:Button  class="btn" ID="Button1" runat="server" Text="Call" />
-        <asp:Button   class="btn" ID="Button2" runat="server" Text="Email" />
+               <div >
+                   <asp:Button   class="btn " ID="email" runat="server" Text="email"  OnClick="email_Click" />
+                   </div>
     </div>
-  
-    <div id="div6">
-        <h1>similar properties</h1>
-    </div>
- </div>
+
+    
+    
+  </div>
+</div>
+
  
 
 
