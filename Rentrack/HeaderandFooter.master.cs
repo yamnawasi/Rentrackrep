@@ -18,6 +18,7 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
             headeraddproperty.Visible = false;
             headerfirstname.Visible = false;
             userproflink.Visible = false;
+            dblink.Visible = false;
             headerline.Visible = false;
             notifdropdown.Visible = false;
         }
@@ -49,6 +50,7 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
             headerline.Visible = true;
             headerfaq.Visible = false;
             notifdropdown.Visible = true;
+            dblink.Visible = true;
         }
 
     }
@@ -80,5 +82,9 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
     protected void UserProflinkbutton(object sender, EventArgs e)
     {
         Response.Redirect("~/User Profile.aspx");
+    }
+    protected void Dashboardlinkbutton(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Dashboard.aspx");
     }
 }

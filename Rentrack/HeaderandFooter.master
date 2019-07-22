@@ -7,9 +7,9 @@
     <title></title>
 
     <!--Bootstrap and jQuery-->
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <script type="text/javascript" src="Scripts/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>    
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
 
     <!--Font Awesome-->
     <link rel="stylesheet" href="Content/font-awesome.min.css"/>
@@ -220,7 +220,7 @@
             font-size: 14px;
         }
             .notif-btns:hover{
-                background-color: #e58457; /*Blue*/
+                background-color: #e58457; /*Orange*/
                 color: white;
                 transition-duration: 0.7s;
             }
@@ -294,7 +294,7 @@
 
               <!--Agent Search Bar-->
               <li class="nav-item header-item" >
-                <a class="nav-link" href="#" id="headeragent">Find Agent</a>
+                <a class="nav-link" href="Find Agent.aspx" id="headeragent">Find Agent</a>
               </li>
 
               <!--FAQ-->
@@ -312,6 +312,7 @@
                 </a>
                 <div class="dropdown-menu animate slideIn dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                     <asp:LinkButton ID="userproflink" runat="server" class="dropdown-item" OnClick="UserProflinkbutton" Text="User Profile" CausesValidation="false"></asp:LinkButton>
+                    <asp:LinkButton ID="dblink" runat="server" class="dropdown-item" OnClick="Dashboardlinkbutton" Text="Dashboard" CausesValidation="false"></asp:LinkButton>
                     <hr runat="server" id="headerline"/>
                     <asp:LinkButton ID="loginlink" runat="server" class="dropdown-item" OnClick="Loginlinkbutton" Text="Login" CausesValidation="false"></asp:LinkButton>
                     <asp:LinkButton ID="signuplink" runat="server" class="dropdown-item" OnClick="Signuplinkbutton" Text="Sign Up" CausesValidation="false"></asp:LinkButton>
@@ -348,9 +349,12 @@
                     </div>
 
                     <div class="notifs" id="notif3">
-                        <p class="notif-text">Generate a tenancy agreement for property "Apartment for Rent"</p>
+                        <p class="notif-text">Ahmed Ali is interested in your property "Apartment for Rent" for rent. Information about the user has been emailed to you.</p>
                         <div class="align-sides">
-                            <button class="btn notif-btns">Create Contract</button>
+                            <div>
+                                <button class="btn notif-btns">View User Profile</button>
+                                <button class="btn notif-btns">View Rental Resume</button>
+                            </div>
                             <i class="fa fa-times hidebtn" runat="server" id="N3" title="Hide notification"></i>
                         </div>
                     </div>

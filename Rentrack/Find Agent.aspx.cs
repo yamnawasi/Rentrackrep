@@ -48,13 +48,9 @@ public partial class Find_Agent : System.Web.UI.Page
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
         using (SqlConnection con = new SqlConnection(CS))
         {
-            //Get City ID
             //con.Open();
-            //SqlCommand getCityID = new SqlCommand("SELECT * FROM City WHERE city_name='" + city + "'", con);
-            //getCityID.ExecuteNonQuery();
-            //int city_id = (int)getCityID.ExecuteScalar();
 
-            using (SqlCommand cmd = new SqlCommand("SELECT A.*, B.*,C.agency_name FROM User A JOIN Agent B on A.user_type_id = B.agent_id INNER JOIN Agency C ON C.agency_id = B.agency_id WHERE Agent_City.city_id ='" + city + "'", con))
+            /*using (SqlCommand cmd = new SqlCommand("SELECT A.*, B.*,C.agency_name FROM User A JOIN Agent B on A.user_type_id = B.agent_id INNER JOIN Agency C ON C.agency_id = B.agency_id WHERE Agent_City.city_id ='" + city + "'", con))
             {
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
@@ -63,7 +59,7 @@ public partial class Find_Agent : System.Web.UI.Page
                     rptragent.DataSource = dtBuyPropsUnder;
                     rptragent.DataBind();
                 }
-            }
+            }*/
         }
     }
 
