@@ -2,11 +2,19 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <script>
-        if ( window.history.replaceState ) {
+        $(document).ready(function () {
+            if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
-        }
+            }
+            
+        });
     </script>
     <style>
+        #bigdiv{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         #search-div{
             width: 100%;
             height: 500px;
@@ -31,18 +39,51 @@
             font-family: Georgia;
             font-size: 25px
         }
-        #Searchbtn{
-            padding: 30px;
-        }
         .search-btn{
             padding: 15px 30px;
             font-size: 20px;
             font-weight: 300;
         }
+            .search-btn:hover{
+                transition-duration: 0.6s;
+            }
         .card{
             box-shadow: 0px 0px 10px #AAA;
             width: 300px;
         }
+            .card:hover{
+                transform: scale(1.05);
+                transition-duration: 0.6s;
+            }
+        #agent-list{
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 50px;
+            width: 80%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .city{
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 10px;
+        }
+        .agent-name{           
+            color: #677893; /*Steel Blue*/
+            font-weight: 400;
+            text-align: center;
+        }
+        .gotoproppage{
+            background-color: #f2934f; /*Orange-ish*/
+            color: white;
+        }
+            .gotoproppage:hover{
+                background-color: #fEBA7F; /*Orange-ish*/
+                color: white;
+                transition-duration: 0.6s;
+            }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -63,33 +104,70 @@
 
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title agent-name">Hamn Kamran</h5>
+                        <h5 class="card-title agent-name">Hamna Kamran</h5>
                         <p class="card-text ">
-                            <p class="agency-name">ABC Agency</p>
+                            <p class="agency-name">Homes Agency</p>
+                            <p class="city">Karachi</p>
                         </p>
                         <div style="text-align: center">
-                            <a href="#" class="btn btn-primary gotoproppage">View Profile</a>
+                            <a href="#" class="btn gotoproppage">View Profile</a>
                         </div>
                       </div>
                     </div>
-
-            <asp:Repeater ID="rptragent" runat="server">
-                <ItemTemplate>
 
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title agent-name"><%#Eval("agent_name") %></h5>
+                        <h5 class="card-title agent-name">Shahid Khan</h5>
                         <p class="card-text ">
-                            <p class="agency-name"><%#Eval("agency_name") %></p>
+                            <p class="agency-name">Blessed Agency</p>
+                            <p class="city">Karachi</p>
                         </p>
                         <div style="text-align: center">
-                            <a href="#" class="btn btn-primary gotoproppage">View Profile</a>
+                            <a href="#" class="btn gotoproppage">View Profile</a>
                         </div>
                       </div>
                     </div>
 
-                </ItemTemplate>
-              </asp:Repeater>
+            <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title agent-name">Ayesha Syed</h5>
+                        <p class="card-text ">
+                            <p class="agency-name">Celeste Agency</p>
+                            <p class="city">Karachi</p>
+                        </p>
+                        <div style="text-align: center">
+                            <a href="#" class="btn gotoproppage">View Profile</a>
+                        </div>
+                      </div>
+                    </div>
+
+            <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title agent-name">Ajmal Jameel</h5>
+                        <p class="card-text ">
+                            <p class="agency-name">AFK Agency</p>
+                            <p class="city">Karachi</p>
+                        </p>
+                        <div style="text-align: center">
+                            <a href="#" class="btn gotoproppage">View Profile</a>
+                        </div>
+                      </div>
+                    </div>
+
+            <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title agent-name">Muneer Khan</h5>
+                        <p class="card-text ">
+                            <p class="agency-name">AFK Agency</p>
+                            <p class="city">Karachi</p>
+                        </p>
+                        <div style="text-align: center">
+                            <a href="#" class="btn gotoproppage">View Profile</a>
+                        </div>
+                      </div>
+                    </div>
+
+            
         </div>
     </div>
 </asp:Content>
