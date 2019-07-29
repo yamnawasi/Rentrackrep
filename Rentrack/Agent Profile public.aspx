@@ -61,6 +61,11 @@
         .revbox{
             margin: 10px;
         }
+        #git-div{
+            box-shadow: 0px 0px 15px #aaa;
+            margin-top: 50px;
+            padding: 50px;
+        }
     </style>
 
 </asp:Content>
@@ -76,17 +81,17 @@
                 
                 
                                 <div class="align-content-center">
-                                    <h5 class="align-content-center">Ahmed Ali</h5>
+                                    <h5 class="align-content-center">Hamna Kamran</h5>
                                 <br />
                                     <div>
                                     <div class="align-inline">
                                     <label>Agency</label>
-                                    <p class="useradd">HK Agency</p>
+                                    <p class="useradd">Homes Agency</p>
                                     </div>
                                     
                                     <div class="align-inline">
                                     <label>Cities</label>
-                                    <p class="usrdob">Karachi, Lahore</p>
+                                    <p class="usrdob">Karachi</p>
                                     </div>
 
                                 <div class="align-inline">
@@ -96,7 +101,7 @@
 
                                 <div class="align-inline">
                                     <label>Email</label>
-                                    <p class="usremail">Ahmed@hk.com</p>
+                                    <p class="usremail">hamna.kamran@homes.com</p>
                                     </div>
                             </div>
                 <br />   
@@ -119,7 +124,21 @@
                     <div>
                        <asp:Button ID="submitrev" runat="server" Text="Submit" Class="submitbtn btn"/>
                     </div>
-                   </div>         
+                   </div>        
+                   
+                <div id="git-div">
+                    <h3>Get in Touch</h3>
+                    <label>Full Name:</label>
+                    <input type="text" class="form-control"/>
+                    <label>Email:</label>
+                    <input type="text" class="form-control"/>
+                    <label>Phone Number:</label>
+                    <input type="text" class="form-control"/>
+                    <label>Message:</label>
+                    <textarea class="form-control"></textarea>
+                    <br />
+                    <asp:Button ID="gitbtn" runat="server" Text="Send" Class="submitbtn btn"/>
+                </div>
                             
                             </div>              
                         

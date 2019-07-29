@@ -110,7 +110,7 @@
                             <p class="city">Karachi</p>
                         </p>
                         <div style="text-align: center">
-                            <a href="#" class="btn gotoproppage">View Profile</a>
+                            <a href="Agent Profile public.aspx" class="btn gotoproppage">View Profile</a>
                         </div>
                       </div>
                     </div>

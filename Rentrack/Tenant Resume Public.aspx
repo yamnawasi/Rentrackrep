@@ -1,7 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="User Profile public.aspx.cs" Inherits="User_Profile_public" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HeaderandFooter.master" AutoEventWireup="true" CodeFile="Tenant Resume Public.aspx.cs" Inherits="Tenant_Resume_Public" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-
     <style>
 
         #maindiv {
@@ -61,16 +60,27 @@
         .revbox{
             margin: 10px;
         }
+        #accbtn{
+            background-color: #2ca344; /*Green*/
+            color: white;
+            padding: 10px 20px;
+        }
+        #rejbtn{
+            background-color: #d61c1c; /*Red*/
+            color: white;
+            padding: 10px 20px;
+        }
+        .trbtn{
+            margin: 20px;
+        }
     </style>
-
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<div id="maindiv">
+    <div id="maindiv">
     <div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-12">
         <div id="box" class="col-lg-12 col-md-12 col-sm-12 col-12">
 
-            <h3 class="heading align-content-center">User Profile</h3>
+            <h3 class="heading align-content-center">Rental Resume</h3>
 
             <div id="usrdiv" class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10 col-sm-12 col-12">
                 
@@ -81,51 +91,46 @@
                                     <div>
 
                                     <div class="align-inline">
-                                    <label>Address</label>
-                                    <p class="useradd">Univeristy Road</p>
+                                    <label>Move-in Date</label>
+                                    <p class="useradd">Within next month</p>
                                     </div>
 
                                     <div class="align-inline">
-                                    <label>City</label>
-                                    <p class="useradd">Karachi</p>
+                                    <label>No. of Tenants</label>
+                                    <p class="useradd">2 Adults</p>
                                     </div>
                                     
                                     <div class="align-inline">
-                                    <label>Date Of Birth</label>
-                                    <p class="usrdob">02-06-1992</p>
+                                    <label>Moving From</label>
+                                    <p class="usrdob">University Road</p>
                                     </div>
 
                                 <div class="align-inline">
-                                    <label>Phone No.</label>
-                                    <p class="usrphone">0300 1234567</p>
+                                    <label>Do you have any pets?</label>
+                                    <p class="usrphone">No</p>
                                     </div>
 
                                 <div class="align-inline">
-                                    <label>Email</label>
-                                    <p class="usremail">ahmedali@gmail.com</p>
-                                    </div>
+                                    <label>Do you smoke?</label>
+                                    <p class="usremail">No</p>
+                                </div>
+
+                                <div class="align-inline">
+                                    <label>Employer</label>
+                                    <p class="usremail">Dawn Newspapers</p>
+                                </div>
+
+                                <div class="align-inline">
+                                    <label>Job Title</label>
+                                    <p class="usremail">Sports Journalist</p>
+                                </div>
                             </div>
                 <br />   
-                <div class="divrev align-content-center">
-                <h3 class="revtitle">Reviews</h3>
-                    <div class="align-inline revusr">
-                        <label>Jamal:</label>
-                        <asp:Label ID="Label1" runat="server" Text="Good Tenant."></asp:Label>
-                    </div>
-                    <div class="align-inline revusr">
-                        <label>Sara:</label>
-                        <asp:Label ID="Label2" runat="server" Text="Kept the house in a good condition"></asp:Label>
-                    </div>
-                    <br />
-                    <br />
-                   <div class="revbox">
-                    <label>Your Review:</label>
-                <asp:TextBox ID="tbrev" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
-                </div>
-                    <div>
-                       <asp:Button ID="submitrev" runat="server" Text="Submit" Class="submitbtn btn"/>
-                    </div>
-                   </div>         
+                
+                      <div>
+                          <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
+                          <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
+                      </div>
                             
                             </div>              
                         
