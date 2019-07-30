@@ -47,12 +47,45 @@
             font-weight: 300;
             padding-top: 50px;
         }
-        .db-table{
-            margin-top: 20px;
-            width: 70%;
-        }
+        
         .sub-headings{
             font-family: Georgia;
+            color: #e58457; /*Orange*/
+        }
+        .empty-message{
+            color: gray;
+            text-align: center;
+        }
+        th{
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .tablink{
+            color: #888;
+            font-family: Georgia;
+            font-weight: 500;
+        }
+            .tablink:hover{
+                color: black;
+                transition-duration: 0.8s;
+            }
+        .tabdesign{
+            background-color: #efefef;
+        }
+            .tabdesign:hover{
+                background-color: #f8f8f8;
+                transition-duration: 0.8s;
+            }
+        .rowdesign {
+            font-size: 14px;
+        }
+        .db-table{
+            width: 75%;
+            padding: 50px;
+            box-shadow: 0px 0px 10px #aaa;
+            border-radius: 5px;
+            margin-top: 40px;
         }
     </style>
 </asp:Content>
@@ -68,146 +101,289 @@
             <a href="AddProperty.aspx"><div class="btn db-btn" id="apbtn"><i class="fa fa-plus-circle" id="apicon"></i> Add Property</div></a>
             <a href="#"><div class="btn db-btn" id="rrbtn"><i class="fa fa-paper-plane" id="rricon"></i> Request Resource</div></a>
         </div>
-
-        <div id="sold-prop" class="db-table">
+        
+        <div id="selling-history" class="db-table">
+            <h3 class="sub-headings">Buying and Selling History</h3>
             <hr />
-            <br />
-            <h3 class="sub-headings">Sold Properties</h3>
-              <p>This table has a log of all the properties you have sold through Rentrack.</p>            
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>S. No.</th>
-                    <th>Property Title</th>
-                    <th>Property Code</th>                     
-                    <th>Sold To</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>400 sq House for Sale</td>
-                    <td>1982711178</td>
-                    <td>Mustafa Abbas</td>
-                    <td>January 16, 2019</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>House for Sale</td>
-                    <td>2562764179</td>
-                    <td>Hassan Arshad</td>
-                    <td>July 10, 2019</td>
-                  </tr>
-                </tbody>
-              </table>
+            <p>This table has a record of all the properties you have sold or bought through Rentrack.</p>
+
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+              <li class="nav-item tabdesign">
+                <a class="nav-link active tablink" id="soldprop-tab" data-toggle="tab" href="#soldprop" role="tab" aria-controls="soldprop" aria-selected="true">Sold Properties</a>
+              </li>
+              <li class="nav-item tabdesign">
+                <a class="nav-link tablink" id="boughtprop-tab" data-toggle="tab" href="#boughtprop" role="tab" aria-controls="boughtprop" aria-selected="false">Bought Properties</a>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="soldprop" role="tabpanel" aria-labelledby="soldprop-tab">
+                  <!--Table-->
+                    <asp:Repeater ID="rptrsoldprop" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Sold To</th>
+                                      <th scope="col">Sold On</th>
+                                      <th scope="col">Cost</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %></td>
+                              <td><%# Eval ("date_sold") %></td>
+                              <td><%# Eval ("cost") %></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                <div style="text-align: center">
+                    <asp:label runat="server" text="" ID="soldpropmsg" class="empty-message"></asp:label>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade" id="boughtprop" role="tabpanel" aria-labelledby="boughtprop-tab">
+                  <!--Table-->
+                    <asp:Repeater ID="rptrboughtprop" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Bought From</th>
+                                      <th scope="col">Sold On</th>
+                                      <th scope="col">Cost</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %></td>
+                              <td><%# Eval ("date_sold") %></td>
+                              <td><%# Eval ("cost") %></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="boughtproptext" class="empty-message"></asp:label>
+                    </div>
+                  </div>
+            </div>
         </div>
 
-        <div id="bought-prop" class="db-table">
-            <h3 class="sub-headings">Bought Properties</h3>
-              <p>This table has a log of all the properties you have bought through Rentrack.</p>            
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>S. No.</th>
-                    <th>Property Title</th>
-                    <th>Property Code</th>                     
-                    <th>Bought From</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Studio Apartment</td>
-                    <td>3456811901</td>
-                    <td>Maryam Shah</td>
-                    <td>April 12, 2017</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Gulshan House for Sale</td>
-                    <td>1453831945</td>
-                    <td>Arsal Khan</td>
-                    <td>July 22, 2018</td>
-                  </tr>
-                </tbody>
-              </table>
-        </div>
 
-        <div id="rented-prop" class="db-table">
+        <!--Rented History-->
+        
+        <div id="renting-history" class="db-table">
+
+            <h3 class="sub-headings">Renting History</h3>
+                <p>This table has a history of all the properties you have rented or are currently renting through Rentrack.</p>
             <hr />
-            <br />
-            <h3 class="sub-headings">Rented Properties (Landlord)</h3>
-              <p>This table has a log of all the properties you have rented to other users through Rentrack.</p>            
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>S. No.</th>
-                    <th>Property Title</th>
-                    <th>Property Code</th>                     
-                    <th>Rented to</th>
-                    <th>Start Date</th>
-                    <th>Contract Expiry</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Lower Portion for Rent</td>
-                    <td>245671901</td>
-                    <td>Yawar Mahmood</td>
-                    <td>September 30, 2018</td>
-                    <td>August 30, 2019</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>2 Room Apartment for Rent</td>
-                    <td>744731972</td>
-                    <td>Ahmed Ali</td>
-                    <td>July 06, 2019</td>
-                    <td>June 06, 2020</td>
-                  </tr>
-                </tbody>
-              </table>
+            <nav>
+              <ul class="nav nav-tabs nav-justified" id="rhnav-tab" role="tablist">
+                <li class="nav-item tabdesign">
+                    <a class="nav-link active tablink" id="landlord-tab" data-toggle="tab" href="#landlordprop" role="tab" aria-controls="landlordprop" aria-selected="true">Landlord</a>
+                </li>
+                <li class="nav-item tabdesign">
+                    <a class="nav-link tablink" id="tenantprop-tab" data-toggle="tab" href="#tenantprop" role="tab" aria-controls="tenantprop" aria-selected="false">Tenant</a>
+                </li>
+              </ul>
+            </nav>
+            <div class="tab-content" id="rhnav-tabContent">
+              <div class="tab-pane fade show active" id="landlordprop" role="tabpanel" aria-labelledby="landlord-tab">
+                  <asp:Repeater ID="rptrlandlord" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Tenant</th>
+                                      <th scope="col">Rent</th>
+                                      <th scope="col">Contract Start</th>
+                                      <th scope="col">Contract End</th>
+                                      <th scope="col">Active</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %></td>
+                              <td><%# Eval ("rent") %></td>
+                              <td><%# Eval ("start_date") %></td>
+                              <td><%# Eval ("end_date") %></td>                      
+                              <td><%# Eval ("active") %></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="llpropmsg" class="empty-message"></asp:label>
+                    </div>
+              </div>
+
+              <div class="tab-pane fade" id="tenantprop" role="tabpanel" aria-labelledby="tenantprop-tab">
+                  <asp:Repeater ID="rptrtenant" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Landlord</th>
+                                      <th scope="col">Rent</th>
+                                      <th scope="col">Contract Start</th>
+                                      <th scope="col">Contract End</th>
+                                      <th scope="col">Active</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %></td>
+                              <td><%# Eval ("rent") %></td>
+                              <td><%# Eval ("start_date") %></td>
+                              <td><%# Eval ("end_date") %></td>                      
+                              <td><%# Eval ("active") %></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="tenpropmsg" class="empty-message"></asp:label>
+                    </div>
+              </div>
+            </div>
         </div>
 
-        <div id="rented-from-prop" class="db-table">
+
+        <!--Currently Listed-->        
+        <div id="currently-listed" class="db-table">
+
+            <h3 class="sub-headings">Current Listings</h3>
+                <p>All your properties that are currently listed on Rentrack.</p>
             <hr />
-            <br />
-            <h3 class="sub-headings">Rented Properties (Tenant)</h3>
-              <p>This table has a log of all the properties you have rented from other users through Rentrack.</p>            
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>S. No.</th>
-                    <th>Property Title</th>
-                    <th>Property Code</th>                     
-                    <th>Rented from</th>
-                    <th>Start Date</th>
-                    <th>Contract Expiry</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>House in Gulistan-e-Jauhar</td>
-                    <td>4345367771</td>
-                    <td>Shahid Khan</td>
-                    <td>Februray 12, 2019</td>
-                    <td>January 12, 2020</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>3 Room House for Rent</td>
-                    <td>7834984439</td>
-                    <td>Batool Qamar</td>
-                    <td>July 17, 2019</td>
-                    <td>June 17, 2020</td>
-                  </tr>
-                </tbody>
-              </table>
+            <nav>
+              <ul class="nav nav-tabs nav-justified" id="clnav-tab" role="tablist">
+                <li class="nav-item tabdesign">
+                    <a class="nav-link active tablink" id="forsale-tab" data-toggle="tab" href="#forsale" role="tab" aria-controls="forsale" aria-selected="true">For Sale</a>
+                </li>
+                <li class="nav-item tabdesign">
+                    <a class="nav-link tablink" id="forrent-tab" data-toggle="tab" href="#forrent" role="tab" aria-controls="forrent" aria-selected="false">For Rent</a>
+                </li>
+              </ul>
+            </nav>
+            <div class="tab-content" id="clnav-tabContent">
+              <div class="tab-pane fade show active" id="forsale" role="tabpanel" aria-labelledby="forsale-tab">
+                  <asp:Repeater ID="rptrforsale" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Property Page</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("property_price") %> </td>
+                              <td><a href="#">View Property Page</a></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="forsalemsg" class="empty-message"></asp:label>
+                    </div>
+              </div>
+
+              <div class="tab-pane fade" id="forrent" role="tabpanel" aria-labelledby="forrent-tab">
+                  <asp:Repeater ID="rptrforrent" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Property Page</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("property_price") %> </td>
+                              <td><a href="#">View Property Page</a></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="forrentmsg" class="empty-message"></asp:label>
+                    </div>
+              </div>
+            </div>
         </div>
+        
+
     </div>
 </asp:Content>
 
