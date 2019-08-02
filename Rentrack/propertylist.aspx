@@ -44,7 +44,7 @@
       <asp:Repeater ID="rptrProperty" runat="server">
       <ItemTemplate>
                 <div class="col-sm-3 col-md-3">
-                 
+                 <a style="text-decoration:none;" href="propertyviewpage.aspx?property_id=<%#Eval("property_id") %>">
                     <div >
                         <img src="Images/PropertyImages/<%#Eval("property_id") %>/<%#Eval("image_name") %>.jpg " class="img-thumbnail" alt="<%#Eval("image_name") %>">
                         <div class="caption">
@@ -56,14 +56,14 @@
 
                         </div>
 
-                        <div>
+                    <!--   <div>
                         <asp:Button runat="server" Text="Call"></asp:Button>
                         <asp:Button runat="server" Text="Email"></asp:Button>
                             <button><a href="propertyviewpage.aspx">view</a></button>
-                        </div>
+                        </div>-->
                            
                     </div>
-                     
+                     </a>
                 </div>
        </ItemTemplate>
       </asp:Repeater>

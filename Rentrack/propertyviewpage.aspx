@@ -71,7 +71,7 @@
      }
     
   
-     .btn{
+     .btne{
              height: 50px;
              width:85px;
             
@@ -93,6 +93,16 @@
         
         } .btn:hover { opacity: 0.7; color: black; }
 		 .btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+
+          #myCarousel img {
+
+width: auto;
+
+height: 225px;
+
+max-height: 225px;
+
+}
 		 
      </style>
       <script> 
@@ -112,11 +122,48 @@
 
 <div class="row" id="maindiv">
     <div class="row">
-       <div id="imgp" class="col-lg-4 col-md-3 col-sm-3 col-4 ">
-        <!-- Image carousel -->
+   
 
-                <img src="Images/PropertyImages/1/House%20for%20Sale-1.jpg" class="img-thumbnail" />
-        </div>
+           <div id="demo" class="carousel slide col-lg-4 col-md-3 col-sm-3 col-4" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+
+  <!-- The slideshow -->
+     <div class="carousel-inner" role="listbox">
+
+      <asp:Repeater ID="imagerepeater" Runat="Server">
+          <ItemTemplate>
+              <div class="carousel-item active">
+                <img class="card-img-top" src="Images/PropertyImages/<%#Eval("property_id")%>/<%#Eval("image_name")%>.jpg" alt="<%#Eval("image_name") %>"/>
+              </div>
+   <!-- <div class="carousel-item">
+     
+        <img src="Images/PropertyImages/3/2%20Room%20Apartment-3-1.jpg" />
+    </div>
+    <div class="carousel-item">
+    <img src="Images/PropertyImages/1/House%20for%20Sale-1.jpg" />
+    </div>  -->
+          </ItemTemplate>
+      </asp:Repeater>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+
+
+         
 
 
         <div id="desc" class=" col-lg-4 col-md-3 col-sm-3 col-4">
@@ -169,7 +216,7 @@
                  </div>
 
                <div >
-                   <asp:Button   class="btn " ID="email" runat="server" Text="email"  OnClick="email_Click" />
+                   <asp:Button   class="btn   btne " ID="email" runat="server" Text="email"  />
                    </div>
     </div>
 

@@ -257,6 +257,12 @@
             flex-direction: row;
             justify-content: space-between;
         }
+        .badge {
+          padding: 5px 10px;
+          border-radius: 50%;
+          background: red;
+          color: white;
+        }
         </style>
     <asp:ContentPlaceHolder id="head" runat="server">
         
@@ -324,12 +330,18 @@
               <li class="nav-item dropdown" runat="server" id="notifdropdown">
                 <a class="nav-link" href="#" id="notifDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: inline" title="Notifications">
                     <i class="fa fa-bell" runat="server" id="notificon"></i>
+                    <span class="badge">3</span>
                 </a>
                 <div class="dropdown-menu animate slideIn dropdown-menu-right overflow-auto" aria-labelledby="navbarDropdownMenuLink" id="notifbody">
                     <div id="notifheading">
                         <p id="notif-heading-text">Notifications</p>
                     </div>
                     <div class="dropdown-divider"></div>
+
+                    <div>
+
+                    </div>
+
                     <div class="notifs" id="notif1">
                         <p class="notif-text">Hasan Arshad is interested in your property "House for Sale". Information about the user has been emailed to you.</p>
                         <div class="align-sides">

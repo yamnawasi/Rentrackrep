@@ -19,34 +19,36 @@ public partial class propertyviewpage : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-           
+            BindProductImages();
         }
     }
-    protected void email_Click(object sender, EventArgs e)
+
+    private void BindProductImages()
     {
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential("Rentrackfyp@gmail.com", "contract123");
-            smtp.EnableSsl = true;
-            MailMessage msg = new MailMessage();
-            msg.Subject = "You have a potential buyer";
-            msg.Body = "Buyer Details\n\n\nTeam Rentrack";
-            string toAddress = buyemail.Text;
-            msg.To.Add(toAddress);
-            string fromaddress = "<Rentrackfyp@gmail.com>";
-            msg.From = new MailAddress(fromaddress);
-            try
+        Int64 propertyid = Convert.ToInt64(Request.QueryString["property_id"]);
+
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Property_Image WHERE property_id='"+ propertyid +"'", con))
             {
-                smtp.Send(msg);
+                cmd.CommandType = CommandType.Text;
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dtpropimage = new DataTable();
+                    sda.Fill(dtpropimage);
+                    imagerepeater.DataSource = dtpropimage;
+                    imagerepeater.DataBind();
+
+                }
             }
-            catch
-            {
-                throw;
-            }
 
-         
-
-
+        }
     }
+
 }
+
+
+    
