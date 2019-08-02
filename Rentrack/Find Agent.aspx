@@ -59,10 +59,7 @@
             display: grid;
             grid-template-rows: 1fr 1fr;
             grid-template-columns: 1fr 1fr 1fr;
-            grid-gap: 50px;
             width: 80%;
-            padding-top: 50px;
-            padding-bottom: 50px;
         }
         .city{
             text-transform: uppercase;
@@ -84,6 +81,9 @@
                 color: white;
                 transition-duration: 0.6s;
             }
+        .agent-card{
+            margin: 30px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -99,73 +99,26 @@
             <br />
             <asp:Button ID="Searchbtn" runat="server" Text="Search" class="btn btn-dark search-btn" OnClick="Searchbtn_Click"/>
         </div>
-
+         
         <div id="agent-list">
-
-                    <div class="card">
+                    
+            <asp:Repeater ID="rptragent" Runat="Server">
+                <ItemTemplate>
+                    <div class="card agent-card">
                       <div class="card-body">
-                        <h5 class="card-title agent-name">Hamna Kamran</h5>
+                        <h5 class="card-title agent-name"><%# Eval ("f_name") %> <%# Eval ("l_name") %></h5>
+                          <hr />
                         <p class="card-text ">
-                            <p class="agency-name">Homes Agency</p>
-                            <p class="city">Karachi</p>
+                            <p class="agency-name"><%# Eval ("agency_name") %></p>
+                            <p class="city"><%# Eval ("city_name") %></p>
                         </p>
                         <div style="text-align: center">
-                            <a href="Agent Profile public.aspx" class="btn gotoproppage">View Profile</a>
+                            <a href="AgentProfile.aspx?id=<%# Eval ("agent_id") %>" class="btn gotoproppage">View Profile</a>
                         </div>
                       </div>
                     </div>
-
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title agent-name">Shahid Khan</h5>
-                        <p class="card-text ">
-                            <p class="agency-name">Blessed Agency</p>
-                            <p class="city">Karachi</p>
-                        </p>
-                        <div style="text-align: center">
-                            <a href="#" class="btn gotoproppage">View Profile</a>
-                        </div>
-                      </div>
-                    </div>
-
-            <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title agent-name">Ayesha Syed</h5>
-                        <p class="card-text ">
-                            <p class="agency-name">Celeste Agency</p>
-                            <p class="city">Karachi</p>
-                        </p>
-                        <div style="text-align: center">
-                            <a href="#" class="btn gotoproppage">View Profile</a>
-                        </div>
-                      </div>
-                    </div>
-
-            <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title agent-name">Ajmal Jameel</h5>
-                        <p class="card-text ">
-                            <p class="agency-name">AFK Agency</p>
-                            <p class="city">Karachi</p>
-                        </p>
-                        <div style="text-align: center">
-                            <a href="#" class="btn gotoproppage">View Profile</a>
-                        </div>
-                      </div>
-                    </div>
-
-            <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title agent-name">Muneer Khan</h5>
-                        <p class="card-text ">
-                            <p class="agency-name">AFK Agency</p>
-                            <p class="city">Karachi</p>
-                        </p>
-                        <div style="text-align: center">
-                            <a href="#" class="btn gotoproppage">View Profile</a>
-                        </div>
-                      </div>
-                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
 
             
         </div>

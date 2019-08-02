@@ -298,7 +298,11 @@
                 margin-bottom: 40px;
             }
         }
-
+        #remwarning{
+            font-size: 14px;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </asp:Content>
 
@@ -360,6 +364,7 @@
                             <label>Subarea</label><br />
                             <asp:DropDownList ID="subareaddl" runat="server" class="dropdowndesign narrower inlinefields"></asp:DropDownList>                        
                         </div>
+
                     </div>
                     
                     
@@ -388,17 +393,19 @@
                         <asp:ListItem Value="Sell" Selected="True">&nbsp;Sell</asp:ListItem>
                         <asp:ListItem Value="Rent">&nbsp;Rent</asp:ListItem>
                     </asp:RadioButtonList>
-                    <br />
-                    <br />
-
+                    
+                    
 
                     <div style="width: 100%; text-align: center">
                         <asp:Button ID="proptypenextbtn" runat="server" Text="CONTINUE" class="btn nextbutton ptnxtbtn" OnClick="proptypenextbtn_Click"/>
                     </div>
                 </div>
 
+                    
+
                 <!--Property Details Form -->
                 <div id="propdetaildiv" style="padding-bottom: 40px; padding-top: 40px" class="offset-lg-2 col-lg-8 offset-md-1 col-md-10 offset-1 col-10" runat="server">
+                    
                     <!--Property Details-->
                     <p class="heading">Property Description</p>
                     <label>Property Title<span class="required-sign"> *</span></label>
@@ -467,12 +474,27 @@
                             <asp:TextBox ID="tbfloor" runat="server" class="form-control narrower areafield" onkeypress="return isNumberKey(event)" TextMode="Number"></asp:TextBox>
                             <asp:RangeValidator ID="rvtbloor" ControlToValidate="tbfloor" runat="server" ErrorMessage="Must be between 0 and 10" MaximumValue="10" MinimumValue="0" CssClass="text-danger error-design" Type="Integer"></asp:RangeValidator>                        
                         </div>
-                    </div>        
+                    </div>     
+                    
+                    <!--Property Owner-->
+                    <div id="ownerdiv" runat="server">
+                        <hr />
+                        <p class="heading">Property Owner</p>
+                        <p class="alert-info" id="remwarning"> The owner of this property must have an account on Rentrack.</p>
+                        <label>Owner's Email Address:</label><br />
+                        <asp:TextBox ID="tboemail" runat="server" class="form-control narrower areafield"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorOEmail" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tboemail" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="revOEmail" runat="server" ErrorMessage="Please enter a valid email address" ControlToValidate="tboemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="Validation-Msg text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator>      
+                        <asp:Label ID="oemailmsg" runat="server" Text="" CssClass="text-danger error-design"></asp:Label>
+                    </div>
 
                     <div style="width: 100%; text-align: center; margin-top: 40px">
                         <asp:Button ID="propdetprevbtn" runat="server" Text="BACK" class="btn btn-light prevbutton" OnClick="propdetprevbtn_Click" CausesValidation="false"/>
                         <asp:Button ID="propdetnextbtn" runat="server" Text="CONTINUE" class="btn nextbutton" OnClick="propdetnextbtn_Click"/>
                     </div>
+
+                    
+                    
                 </div>
 
                 <!--Property Images Form -->

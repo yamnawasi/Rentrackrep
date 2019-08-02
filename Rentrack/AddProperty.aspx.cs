@@ -15,21 +15,30 @@ public partial class AddProperty : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack) {
-            BindCities();
-            areaddl.Items.Insert(0, new ListItem("- UNAVAILABLE -", "0"));
-            areaddl.Attributes.Add("disabled", "disabled");
-            subareaddl.Items.Insert(0, new ListItem("- UNAVAILABLE -", "0"));
-            subareaddl.Attributes.Add("disabled", "disabled");
+        if (Session["user_id"] == null)
+        {
+            Response.Redirect("Login.aspx");
         }
+        else if (Session["user_id"] != null)
+        {
+            if (!IsPostBack)
+            {
+                BindCities();
+                areaddl.Items.Insert(0, new ListItem("- UNAVAILABLE -", "0"));
+                areaddl.Attributes.Add("disabled", "disabled");
+                subareaddl.Items.Insert(0, new ListItem("- UNAVAILABLE -", "0"));
+                subareaddl.Attributes.Add("disabled", "disabled");
+                ownerdiv.Visible = false;
+            }
 
-        dot1.Attributes.Add("class", "activedot");
-        prog1.Attributes.Add("style", "width: 100%");
-        propdetaildiv.Visible = false;
-        propimgdiv.Visible = false;
-        successdiv.Visible = false;
+            dot1.Attributes.Add("class", "activedot");
+            prog1.Attributes.Add("style", "width: 100%");
+            propdetaildiv.Visible = false;
+            propimgdiv.Visible = false;
+            successdiv.Visible = false;
 
-        Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), "val", "fnOnUpdateValidators();");
+            Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), "val", "fnOnUpdateValidators();");
+        }
     }
 
 
@@ -64,6 +73,43 @@ public partial class AddProperty : System.Web.UI.Page
         dot1.Attributes.Add("class", "completedot");
         dot2.Attributes.Add("class", "activedot");
         prog2.Attributes.Add("style", "width: 100%");
+
+        int userid = Convert.ToInt32(Session["user_id"].ToString());
+        int ownerid;
+        string usertypeid = "";
+        string agentid = "";
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+            //Get User Type ID
+            SqlCommand getusertypeid = new SqlCommand("SELECT user_type_id FROM [USER] WHERE user_id = '" + userid + "'", con);
+            SqlDataReader reader = getusertypeid.ExecuteReader();
+            while (reader.Read())
+            {
+                usertypeid = reader[0].ToString();
+            }
+            reader.Close();
+
+            //Get Agent ID
+            SqlCommand getagentid = new SqlCommand("SELECT agent_id FROM [USER_TYPE] WHERE user_type_id = '" + usertypeid + "'", con);
+            SqlDataReader aireader = getagentid.ExecuteReader();
+            while (aireader.Read())
+            {
+                agentid = aireader[0].ToString();
+            }
+            aireader.Close();
+            
+            if(agentid == null || agentid == "")
+            {
+                ownerid = Convert.ToInt32(Session["user_id"].ToString());
+            }
+            else
+            {
+                ownerdiv.Visible = true;
+            }
+        }
     }
 
 
@@ -77,12 +123,36 @@ public partial class AddProperty : System.Web.UI.Page
 
     protected void propdetnextbtn_Click(object sender, EventArgs e)
     {
-        propdetaildiv.Visible = false;
-        propimgdiv.Visible = true;
-        dot1.Attributes.Add("class", "completedot");
-        dot2.Attributes.Add("class", "completedot");
-        dot3.Attributes.Add("class", "activedot");
-        prog3.Attributes.Add("style", "width: 100%");
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+            string owneremail = tboemail.Text;
+            if (owneremail != null || owneremail != "")
+            {
+                //Check if email exists
+                SqlCommand checkomail = new SqlCommand("SELECT COUNT(*) FROM [USER] WHERE email = '" + owneremail + "'", con);
+                int tempy = Convert.ToInt32(checkomail.ExecuteScalar().ToString());
+                if (tempy <= 0) //Email doesn't exist
+                {
+                    oemailmsg.Text = "This email address is not registered with Rentrack.";
+                    propdetaildiv.Visible = true;
+                    //Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('"+ tempy +"');", true);
+
+                }
+                else if(tempy > 0)
+                {
+                    propdetaildiv.Visible = false;
+                    propimgdiv.Visible = true;
+                    dot1.Attributes.Add("class", "completedot");
+                    dot2.Attributes.Add("class", "completedot");
+                    dot3.Attributes.Add("class", "activedot");
+                    prog3.Attributes.Add("style", "width: 100%");
+                }
+            }
+        }
+
+
     }
 
     //Generate Property Code
@@ -110,10 +180,61 @@ public partial class AddProperty : System.Web.UI.Page
         //Property Code
         string propcode = GenerateNumber();
         string cityselected = cityddl.SelectedItem.Value;
+        int userid = Convert.ToInt32(Session["user_id"].ToString());
+        int ownerid = 0;
+        int agencyid = 0;
+        string usertypeid = "";
+        string agentid = "";
+
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
         using (SqlConnection con = new SqlConnection(CS))
         {
+            //Get User Type ID
             con.Open();
+            SqlCommand getusertypeid = new SqlCommand("SELECT user_type_id FROM [USER] WHERE user_id = '" + userid + "'", con);
+            SqlDataReader reader = getusertypeid.ExecuteReader();
+            while (reader.Read())
+            {
+                usertypeid = reader[0].ToString();
+            }
+            reader.Close();
+
+            //Get Agent ID
+            SqlCommand getagentid = new SqlCommand("SELECT agent_id FROM [USER_TYPE] WHERE user_type_id = '" + usertypeid + "'", con);
+            SqlDataReader aireader = getagentid.ExecuteReader();
+            while (aireader.Read())
+            {
+                agentid = aireader[0].ToString();
+            }
+            aireader.Close();
+
+            if (agentid == null || agentid == "")
+            {
+                ownerid = Convert.ToInt32(Session["user_id"].ToString());
+                //Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('" + ownerid + "');", true);
+            }
+            else
+            {
+                //Get ID from Email
+                SqlCommand ugh = new SqlCommand("SELECT user_id FROM [USER] WHERE email = '" + tboemail.Text + "'", con);
+                SqlDataReader uireader = ugh.ExecuteReader();
+                while (uireader.Read())
+                {
+                    ownerid = Convert.ToInt32(uireader[0].ToString());
+                }
+                uireader.Close();
+
+                //Get Agency ID
+                SqlCommand ugh2 = new SqlCommand("SELECT agency_id FROM [AGENT] where agent_id ='" + agentid + "'", con);
+                SqlDataReader eader = ugh2.ExecuteReader();
+                while (eader.Read())
+                {
+                    agencyid = Convert.ToInt32(eader[0].ToString());
+                }
+                eader.Close();
+            }
+
+
             //Add to Room Desc table
             SqlCommand addroomdesc = new SqlCommand("INSERT INTO [Room_Description](no_of_bedrooms, no_of_bathrooms, no_of_kitchen, no_of_hall, no_of_floors) VALUES ('" + tbbed.Text + "','" + tbbath.Text + "','" + tbkitchen.Text + "','" + tbhall.Text + "','" + tbfloor.Text + "')", con);
             addroomdesc.ExecuteNonQuery();
@@ -128,17 +249,35 @@ public partial class AddProperty : System.Web.UI.Page
             string userID = Session["user_id"].ToString();
 
             int selsubarea = Convert.ToInt32(subareaddl.SelectedItem.Value);
-            if (selsubarea == 0)
+            if(agencyid == 0)
             {
-                SqlCommand comm = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, room_desc_id, expires_after, user_id, property_area) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text +"')", con);
-                comm.ExecuteNonQuery();
+                if (selsubarea == 0)
+                {
+                    SqlCommand comm = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, room_desc_id, expires_after, user_id, property_area, owner_id) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text + "','" + ownerid + "')", con);
+                    comm.ExecuteNonQuery();
+                }
+                else
+                {
+                    //Add values to Property Table
+                    SqlCommand cmd1 = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, subarea_id, room_desc_id, expires_after, user_id, property_area, owner_id) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + selsubarea + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text + "','" + ownerid + "')", con);
+                    cmd1.ExecuteNonQuery();
+                }
             }
             else
             {
-                //Add values to Property Table
-                SqlCommand cmd1 = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, subarea_id, room_desc_id, expires_after, user_id, property_area) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + selsubarea + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text + "')", con);
-                cmd1.ExecuteNonQuery();
+                if (selsubarea == 0)
+                {
+                    SqlCommand comm = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, room_desc_id, expires_after, user_id, property_area, agency_id, owner_id) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text + "','" + agencyid + "','" + ownerid + "')", con);
+                    comm.ExecuteNonQuery();
+                }
+                else
+                {
+                    //Add values to Property Table
+                    SqlCommand cmd1 = new SqlCommand("INSERT INTO [Property](property_title, property_type, property_purpose, property_desc, property_price, property_code, is_sold, is_rented, area_id, subarea_id, room_desc_id, expires_after, user_id, property_area, agency_id, owner_id) VALUES ('" + tbproptitle.Text + "','" + propertytypedropdown.SelectedItem.Value + "','" + rentsellrb.SelectedItem.Value + "','" + tbpropdesc.Text + "','" + tbprice.Text + "','" + propcode + "','" + 0 + "','" + 0 + "','" + areaddl.SelectedItem.Value + "','" + selsubarea + "','" + roomdescid + "','" + expafterdropdown.SelectedItem.Value + "','" + userID + "','" + tblandarea.Text + "','" + agencyid + "','" + ownerid + "')", con);
+                    cmd1.ExecuteNonQuery();
+                }
             }
+            
 
             //Get Property ID
             SqlCommand getpropid = new SqlCommand("SELECT * FROM [Property] WHERE property_code='" + propcode + "'", con);
