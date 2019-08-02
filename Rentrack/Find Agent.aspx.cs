@@ -45,27 +45,36 @@ public partial class Find_Agent : System.Web.UI.Page
     private void BindAgentList()
     {
         string city = cityddl.SelectedValue;
+        //Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('"+ city +"');", true);
+
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
         using (SqlConnection con = new SqlConnection(CS))
         {
-            //con.Open();
-
-            /*using (SqlCommand cmd = new SqlCommand("SELECT A.*, B.*,C.agency_name FROM User A JOIN Agent B on A.user_type_id = B.agent_id INNER JOIN Agency C ON C.agency_id = B.agency_id WHERE Agent_City.city_id ='" + city + "'", con))
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand("SELECT A.agency_name, B.*, C.*, D.f_name, D.l_name, E.city_name FROM dbo.[Agency] A JOIN dbo.[Agent] B ON (A.agency_id = B.agency_id) JOIN dbo.[Agent_city] C ON (C.agent_id = B.agent_id) JOIN dbo.[User] D ON (D.user_type_id = B.agent_id) JOIN dbo.[City] E ON (C.city_id = E.city_id) WHERE C.city_id ='" + city + "'", con))
             {
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
-                    DataTable dtBuyPropsUnder = new DataTable();
-                    sda.Fill(dtBuyPropsUnder);
-                    rptragent.DataSource = dtBuyPropsUnder;
+                    DataTable dtagentlist = new DataTable();
+                    sda.Fill(dtagentlist);
+                    rptragent.DataSource = dtagentlist;
                     rptragent.DataBind();
                 }
-            }*/
+            }
         }
     }
 
 
     protected void Searchbtn_Click(object sender, EventArgs e)
     {
-        BindAgentList();
+        if (Session["user_id"] == null)
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('Kindly log in to search for agents');", true);
+        }
+        else if (Session["user_id"] != null)
+        {
+            BindAgentList();
+        }
     }
+    
 }
