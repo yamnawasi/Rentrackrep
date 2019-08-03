@@ -73,71 +73,85 @@
         .trbtn{
             margin: 20px;
         }
+        .lblnores{
+            font-family: Georgia;
+            font-size: 30px;
+            margin-bottom: 2%;
+            margin-top: 100px;
+            text-align: center;
+            color: darkgray;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id="maindiv">
-    <div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-12">
-        <div id="box" class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-12">
+            <div id="box" class="col-lg-12 col-md-12 col-sm-12 col-12">
 
-            <h3 class="heading align-content-center">Rental Resume</h3>
+                <h3 class="heading align-content-center">Rental Resume</h3>
 
-            <div id="usrdiv" class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10 col-sm-12 col-12">
+                <div class="align-content-center">
+                    <asp:Label ID="lblfavid" runat="server" CssClass="lblnores align-content-center"></asp:Label>
+                </div>
+
+                <div id="usrdiv" class="align-content-center">
+                    <asp:Repeater ID="rptrusr" runat="server">
+                        <ItemTemplate>    
                 
-                
-                                <div class="align-content-center">
-                                    <h5 class="align-content-center">Ahmed Ali</h5>
-                                <br />
-                                    <div>
+                            <div class="align-content-center">
+                                <h5 class="align-content-center"><%#Eval("f_name")%> <%#Eval("l_name")%></h5>
+                            </div>
 
-                                    <div class="align-inline">
-                                    <label>Move-in Date</label>
-                                    <p class="useradd">Within next month</p>
-                                    </div>
+                            <br />
 
-                                    <div class="align-inline">
-                                    <label>No. of Tenants</label>
-                                    <p class="useradd">2 Adults</p>
-                                    </div>
+                            <div>
+                                <div class="align-inline">
+                                <label>Move-in Date</label>
+                                <p class="useradd"><%#Eval("move_in_date")%></p>
+                                </div>
+
+                                <div class="align-inline">
+                                <label>No. of Tenants</label>
+                                <p class="useradd"><%#Eval("number_of_tenants")%></p>
+                                </div>
                                     
-                                    <div class="align-inline">
-                                    <label>Moving From</label>
-                                    <p class="usrdob">University Road</p>
-                                    </div>
-
                                 <div class="align-inline">
-                                    <label>Do you have any pets?</label>
-                                    <p class="usrphone">No</p>
-                                    </div>
-
-                                <div class="align-inline">
-                                    <label>Do you smoke?</label>
-                                    <p class="usremail">No</p>
+                                <label>Moving From</label>
+                                <p class="usrdob"><%#Eval("move_in_from")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                    <label>Employer</label>
-                                    <p class="usremail">Dawn Newspapers</p>
+                                <label>Do you have any pets?</label>
+                                <p class="usrphone"><%#Eval("pets")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                    <label>Job Title</label>
-                                    <p class="usremail">Sports Journalist</p>
+                                <label>Do you smoke?</label>
+                                <p class="usremail"><%#Eval("smoking")%></p>
+                                </div>
+
+                                <div class="align-inline">
+                                <label>Employer</label>
+                                <p class="usremail"><%#Eval("employer")%></p>
+                                </div>
+
+                                <div class="align-inline">
+                                <label>Job Title</label>
+                                <p class="usremail"><%#Eval("job_title")%></p>
                                 </div>
                             </div>
-                <br />   
-                
-                      <div>
-                          <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
-                          <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
-                      </div>
-                            
-                            </div>              
-                        
 
-            </div>    
+                                <div>
+                                  <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
+                                  <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                            <br />   
+                                       
+                </div>    
+            </div>
         </div>
     </div>
-   </div>
 </asp:Content>
 

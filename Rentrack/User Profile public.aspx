@@ -62,77 +62,81 @@
             margin: 10px;
         }
     </style>
-
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<div id="maindiv">
-    <div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-12">
-        <div id="box" class="col-lg-12 col-md-12 col-sm-12 col-12">
+    <div id="maindiv">
+        <div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-12">
+            <div id="box" class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <h3 class="heading align-content-center">User Profile</h3>
 
-            <h3 class="heading align-content-center">User Profile</h3>
-
-            <div id="usrdiv" class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10 col-sm-12 col-12">
+                <div id="usrdiv" class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 offset-md-1 col-md-10 col-sm-12 col-12">
                 
+                    <asp:Repeater ID="rptrusr" runat="server">
+                        <ItemTemplate> 
                 
-                                <div class="align-content-center">
-                                    <h5 class="align-content-center">Ahmed Ali</h5>
-                                <br />
-                                    <div>
+                            <div>
+                                <h5 class="align-content-center"><%#Eval("f_name")%> <%#Eval("l_name") %></h5>
+                            </div>
 
-                                    <div class="align-inline">
+                            <br />
+
+                            <div>
+
+                                <div class="align-inline">
                                     <label>Address</label>
-                                    <p class="useradd">Univeristy Road</p>
-                                    </div>
+                                    <p class="usradd"><%#Eval("address") %></p>
+                                </div>
 
-                                    <div class="align-inline">
+                                <div class="align-inline">
                                     <label>City</label>
-                                    <p class="useradd">Karachi</p>
-                                    </div>
+                                    <p class="usrcity"><%#Eval("city_name") %></p>
+                                </div>
                                     
-                                    <div class="align-inline">
+                                <div class="align-inline">
                                     <label>Date Of Birth</label>
-                                    <p class="usrdob">02-06-1992</p>
-                                    </div>
+                                    <p class="usrdob"><%#Eval("dob", "{0:dd/MM/yyyy}") %></p>
+                                </div>
 
                                 <div class="align-inline">
                                     <label>Phone No.</label>
-                                    <p class="usrphone">0300 1234567</p>
-                                    </div>
+                                    <p class="usrphone"><%#Eval("phone_no") %></p>
+                                </div>
 
                                 <div class="align-inline">
                                     <label>Email</label>
-                                    <p class="usremail">ahmedali@gmail.com</p>
-                                    </div>
+                                    <p class="usremail"><%#Eval("email") %></p>
+                                </div>
                             </div>
-                <br />   
-                <div class="divrev align-content-center">
-                <h3 class="revtitle">Reviews</h3>
-                    <div class="align-inline revusr">
-                        <label>Jamal:</label>
-                        <asp:Label ID="Label1" runat="server" Text="Good Tenant."></asp:Label>
-                    </div>
-                    <div class="align-inline revusr">
-                        <label>Sara:</label>
-                        <asp:Label ID="Label2" runat="server" Text="Kept the house in a good condition"></asp:Label>
-                    </div>
-                    <br />
-                    <br />
-                   <div class="revbox">
-                    <label>Your Review:</label>
-                <asp:TextBox ID="tbrev" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
-                </div>
-                    <div>
-                       <asp:Button ID="submitrev" runat="server" Text="Submit" Class="submitbtn btn"/>
-                    </div>
-                   </div>         
-                            
-                            </div>              
-                        
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    <br />   
+                    <div class="divrev align-content-center">
+                        <h3 class="revtitle">Reviews</h3>
+                        <div class="align-inline revusr">
+                            <label>Jamal:</label>
+                            <asp:Label ID="Label1" runat="server" Text="Good Tenant."></asp:Label>
+                        </div>
+                        <div class="align-inline revusr">
+                            <label>Sara:</label>
+                            <asp:Label ID="Label2" runat="server" Text="Kept the house in a good condition"></asp:Label>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="revbox">
+                            <label>Your Review:</label>
+                            <asp:TextBox ID="tbrev" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
+                        </div>
 
-            </div>    
+                        <div>
+                           <asp:Button ID="submitrev" runat="server" Text="Submit" Class="submitbtn btn"/>
+                        </div>
+                    </div>         
+                                
+
+                </div>    
+            </div>
         </div>
     </div>
-   </div>
 </asp:Content>
 
