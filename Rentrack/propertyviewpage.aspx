@@ -204,8 +204,10 @@
     
 
     </div>
-        <!--Contact Owner Form-->
-    <div id="formdiv" class="" >
+
+    <!--Contact Owner Form-->
+    <div runat="server" id="showform">
+    <div id="formdiv" class="">
            
              <h1 id="main-heading">Contact Owner/Agent</h1>
 
@@ -234,7 +236,7 @@
                </div>
         </div>
 
-
+       </div>
      
 
         </div>
