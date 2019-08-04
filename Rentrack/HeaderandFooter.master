@@ -338,9 +338,17 @@
                     </div>
                     <div class="dropdown-divider"></div>
 
-                    <div>
-
-                    </div>
+                    <asp:Repeater ID="rptrnotif" runat="server">
+                        <ItemTemplate>
+                            <div class="notifs">
+                                <p class="notif-text"><%# Eval ("notification_text") %></p>
+                                <div class="align-sides">
+                                    <a href="<%# Eval ("btn_link") %>"><div class="btn notif-btns"><%# Eval ("btn_text") %></div></a>
+                                    <i class="fa fa-times hidebtn" runat="server" id="I1" title="Hide notification"></i>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
 
                     <div class="notifs" id="notif1">
                         <p class="notif-text">Hasan Arshad is interested in your property "House for Sale". Information about the user has been emailed to you.</p>

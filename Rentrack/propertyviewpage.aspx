@@ -4,109 +4,13 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" />
    <link href="css/bootstrap-grid.css" rel="stylesheet" />
     <link href="css/bootstrap-grid.min.css" rel="stylesheet" />
-    <style>
-        #maindiv{
-            background-color: #fff;
-            padding-top:50px;
-            padding-left:35px;
-            
-        }
-       
-        #desc{
-            max-width:450px;
-            align-content:center;
-            padding:0px 40px 40px 60px;
-           
-        }
 
-        #imgp{
-            width:30%;
-        }
-       
-        .pronameview{
-            font-size:20px;
-            line-height:17px;
-            font-family:sans-serif;
-            font-weight:600;
-            color:#696e80;
-        }
-        h1{
-            font-size:20px;
-            line-height:17px;
-            font-family:sans-serif;
-        }
-         .proPrice {
-       font-size: 14px;
-       line-height: 17px;
-       font-family: sans-serif;
-       font-weight: 600;
-       }
     
-  .divDet1,  .divDet2 ,.divDet3, .divDdet4{
-        
-        border-bottom:1px dashed #D5d6D8;
-        margin-bottom:20px;
-    }
-    
-    .h1size{
-        font-weight:600;
-        font-size:30px;
-
-    }
- 
-     .norooms ,.nobathrooms ,.sqyard{
-           font-size:15px;
-            line-height:17px;
-            font-family:sans-serif;
-            font-weight:600;
-            color:#696e80;
-
-    }
-     #divDet5{
-   
-          width:250px;
-          align-content:center;
-          float:right;
-         
-     }
-    
-  
-     .btne{
-             height: 50px;
-             width:85px;
-            
-            padding:0 20px ;
-            margin-top:10px;
-            margin-left:35%;
-            margin-bottom:20px;
-			align-content:center;
-            background: #eda136;
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 50px;
-            color: #fff;
-            
-            -webkit-border-radius: 4px; border-radius: 4px;
-            text-shadow: none;
-           -webkit-box-shadow: none; box-shadow: none;
-            -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s;  transition: all .3s;
-        
-        } .btn:hover { opacity: 0.7; color: black; }
-		 .btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-
-          #myCarousel img {
-
-width: auto;
-
-height: 225px;
-
-max-height: 225px;
-
-}
-		 
-     </style>
       <script> 
         $(document).ready(function () {
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }    
         });
         function isNumberKey(evt)
         {
@@ -117,108 +21,223 @@ max-height: 225px;
         }
     </script> 
 
+    <style>
+        #maindiv{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f8f8;
+        }
+        .error-design{
+            color: red;
+            font-family: Calibri;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .required-sign{
+            color: red;
+            font-size: 20px;
+        }
+        
+        .narrower{
+            font-size: 14px;
+        }
+
+        #carousel-div{
+            max-width: 600px;
+            margin: 50px 50px 20px 50px;
+
+        }
+        .align-two-vert{
+            display: flex;
+            flex-direction: column;
+        }
+        .align-two-hori{
+            display: flex;
+            flex-direction: row;
+        }
+        #formdiv{
+            box-shadow: 0px 0px 15px #aaa;
+            margin-top: 50px;
+            margin-bottom: 10px;
+            padding: 50px;
+            background-color: white;
+            border-radius: 5px;
+            min-width: 450px;
+            max-height: 600px;
+        }
+        #main-heading{
+            font-family: Georgia;
+            font-size: 25px;
+        }
+        .submitbtn{
+            color: white;
+            background-color: #f2934f; /*Orange-ish*/
+            padding: 10px 35px 10px 35px;
+        }
+            .submitbtn:hover{
+                background-color: #555;
+                color: white;
+                transition-duration: 0.7s;
+                box-shadow: 0px 2px 10px #aaa;
+            }
+        #desc{
+            margin: 10px 50px 50px 50px;
+            box-shadow: 0px 0px 10px #aaa;
+            padding: 50px;
+            background-color: white;
+            border-radius: 5px;
+        }
+		.proptitle{
+            font-size: 30px;
+            font-family: Georgia;
+		}
+        .proPrice{
+            font-size: 25px;
+            padding: 2px 20px;
+            color: white;
+            background-color: #132542; /*Dark Blue*/
+            border-radius: 50px;
+        }
+        .propdet{
+            font-size: 16px;           
+        }
+        .protype{
+            margin-top: 10px;
+        }
+        .propdesctext{
+            box-shadow: 0px 0px 5px #aaa;
+            padding: 10px 10px 40px 10px;
+            border-radius: 5px;
+            margin-bottom: 40px;
+        }
+        .roomdesc{
+            font-size: 16px;
+            font-weight: 400;
+        }
+        .sub-heading{
+            font-size: 25px;
+            font-weight: 300;
+            color: #f2934f; /*Orange-ish*/
+            margin-top: 20px;
+        }
+        .nokitchen{
+            margin-bottom: 40px;
+        }
+     </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-<div class="row" id="maindiv">
-    <div class="row">
-   
+<div id="maindiv">
+    <div >
+      <div class="align-two-hori">
+       <div class="align-two-vert">
+       <div class="carousel slide" data-ride="carousel" id="carousel-div">
+            <!-- Indicators -->
+           <ul class="carousel-indicators">
+           <li data-target="#demo" data-slide-to="0" class="active"></li>
+           <li data-target="#demo" data-slide-to="1"></li>
+           <li data-target="#demo" data-slide-to="2"></li>
+           </ul>
 
-           <div id="demo" class="carousel slide col-lg-4 col-md-3 col-sm-3 col-4" data-ride="carousel">
+            <!-- The slideshow -->
+          <div class="carousel-inner" role="listbox">
 
-  <!-- Indicators -->
-  <ul class="carousel-indicators">
-    <li data-target="#demo" data-slide-to="0" class="active"></li>
-    <li data-target="#demo" data-slide-to="1"></li>
-    <li data-target="#demo" data-slide-to="2"></li>
-  </ul>
-
-  <!-- The slideshow -->
-     <div class="carousel-inner" role="listbox">
-
-      <asp:Repeater ID="imagerepeater" Runat="Server">
-          <ItemTemplate>
-              <div class="carousel-item active">
-                <img class="card-img-top" src="Images/PropertyImages/<%#Eval("property_id")%>/<%#Eval("image_name")%>.jpg" alt="<%#Eval("image_name") %>"/>
-              </div>
-   <!-- <div class="carousel-item">
-     
-        <img src="Images/PropertyImages/3/2%20Room%20Apartment-3-1.jpg" />
-    </div>
-    <div class="carousel-item">
-    <img src="Images/PropertyImages/1/House%20for%20Sale-1.jpg" />
-    </div>  -->
-          </ItemTemplate>
-      </asp:Repeater>
-  </div>
-
-  <!-- Left and right controls -->
-  <a class="carousel-control-prev" href="#demo" data-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </a>
-  <a class="carousel-control-next" href="#demo" data-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </a>
-
-</div>
-
-
-         
-
-
-        <div id="desc" class=" col-lg-4 col-md-3 col-sm-3 col-4">
-        <div class="divDet1">
-           <h1 class="pronameview"> 400 sq yd house</h1>
-           <span class="proPrice">RS 12,000</span>
-         </div>
-         <div class="divDet2">
-             <h1 class="h1size">size</h1>
-             <div>
-               <h1 class="norooms"> No of rooms:</h1>
-                <h1 class="nobathrooms"> No of bathrooms:</h1>
-                 <h1 class="sqyard"> sq yards:</h1>
-             </div>
+            <asp:Repeater ID="imagerepeater" Runat="Server">
+              <ItemTemplate>
+                  <div class="carousel-item <%#GetActiveClass(Container.ItemIndex) %>">
+                    <img class="card-img-top img-fluid img-thumbnail" src="Images/PropertyImages/<%#Eval("property_id")%>/<%#Eval("image_name")%>.jpg" alt="<%#Eval("image_name") %>" />
+                  </div>
+              </ItemTemplate>
+            </asp:Repeater>
          </div>
 
-         <div class="divDet3">
-           <h5>Description</h5>
-           <p>a small house</p>
+          <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+           <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+           </a>
 
-         </div>
-        
      </div>
-        <div id="divDet5" class=" col-lg-4 col-md-3 col-sm-3 col-4" >
-           
-             <h1>contact owner/agent</h1>
+    
+     <!--Property Description-->
+     <div id="desc" class="">
+         <asp:Repeater ID="rptr" Runat="Server">
+          <ItemTemplate>
+              <div class="divDet1">
+                  <h1 class="proptitle"> <%#Eval("property_title")%></h1>
+                   <span class="proPrice">PKR <%#Eval("property_price")%></span>
+                  <h1 class="sub-heading">Property Description</h1>
+                   <h1 class="protype propdet">Property Type: <%#Eval("property_type")%></h1>
+                   <h1 class="propurpose propdet">Purpose: <%#Eval("property_purpose")%></h1>
+                   <h1 class="proparea propdet">Land Area: <%#Eval("property_area")%> Sq. Ft</h1>
+                   <h1 class="desctitle propdet">Description:</h1>
+                   <p class="propdesctext"><%#Eval("property_desc")%></p>
+              </div>
+              <hr />
+              <div class="divDet2">
+                   <h1 class="h1size sub-heading">Room Description</h1>
+                   <div>                
+                     <h1 class="nooffloors roomdesc"><i class="fa fa-building"></i> No of Floors: <%#Eval("no_of_floors")%></h1>
+                     <h1 class="norooms roomdesc"><i class="fa fa-bed"></i> No of Bedrooms: <%#Eval("no_of_bedrooms")%></h1>
+                     <h1 class="nobathrooms roomdesc"><i class="fa fa-bath"></i> No of Bathrooms: <%#Eval("no_of_bathrooms")%></h1>
+                     <h1 class="noofhalls roomdesc"><i class="fa fa-home"></i> No of Halls: <%#Eval("no_of_hall")%></h1>
+                     <h1 class="nokitchen roomdesc"><i class="fa fa-coffee"></i> No of Kitchens: <%#Eval("no_of_kitchen")%></h1>
+                  </div>
+             </div>
+              <hr />
+             <div class="propLocation">
+                     <h5 class="sub-heading">Location</h5>
+                      <h1 class="locarea propdet"><%#Eval("subarea")%></h1>
+                      <h1 class="locarea propdet"><%#Eval("area")%></h1>
+                      <h1 class="propcity propdet"><%#Eval("city_name")%></h1>
+                      <h1 class="procountry propdet"><%#Eval("country")%></h1>
+                      <h1 class="proprov propdet"><%#Eval("province_state")%></h1>
 
-                <div>
-                    <label>Name</label>
-                    <asp:TextBox ID="tbfname" runat="server" Class="form-control narrower" InitialValue="0"></asp:TextBox>
-                    </div>
-                <div>
-                    <label>Email</label>
-                    <asp:TextBox ID="buyemail" runat="server" Class="form-control narrower" TextMode="Email"></asp:TextBox>
-                </div>
-                <div>
-                    <label>Phone  No.</label>
-                    <asp:TextBox ID="tbphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 03001234567"></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" CssClass="text-danger error-design"
-			            ErrorMessage="Enter a valid phone no."  ControlToValidate="tbphone" Display="Dynamic" 
-			            ValidationExpression="^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$" ValidationGroup="signup"> 
-                    </asp:RegularExpressionValidator>
-               </div>
+             </div>
+          </ItemTemplate>
+        </asp:Repeater>
+     </div>
+    
 
-                 <div id="message"  runat="server">
-                   
-                    <label>Message</label>
-                    <asp:TextBox ID="msg" runat="server" class="form-control narrower areafield"></asp:TextBox> 
-                    
-                 </div>
-
-               <div >
-                   <asp:Button   class="btn   btne " ID="email" runat="server" Text="email"  />
-                   </div>
     </div>
+        <!--Contact Owner Form-->
+    <div id="formdiv" class="" >
+           
+             <h1 id="main-heading">Contact Owner/Agent</h1>
+
+                    <label class="narrower">Full Name<span class="required-sign"> *</span></label>
+                    <asp:TextBox ID="tbname" runat="server" class="form-control narrower areafield"></asp:TextBox> 
+                    <asp:RequiredFieldValidator ID="rfvname" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbname" ValidationGroup="contact-group"></asp:RequiredFieldValidator>
+                    <br />
+
+                    <label class="narrower">Email<span class="required-sign"> *</span></label>
+                    <asp:TextBox ID="tbemail" runat="server" class="form-control narrower areafield" disabled="disabled"></asp:TextBox> 
+                    <asp:RequiredFieldValidator ID="rfvemail" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbemail" ValidationGroup="contact-group" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ErrorMessage="Please enter a valid email address" ControlToValidate="tbemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator>                          
+                    <br />
+
+                    <label class="narrower">Phone Number<span class="required-sign"> *</span></label>
+                    <asp:TextBox ID="tbphone" runat="server" class="form-control narrower areafield" onkeypress="return isNumberKey(event)" ></asp:TextBox> 
+                    <asp:RequiredFieldValidator ID="rfvphone" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbphone" ValidationGroup="contact-group"></asp:RequiredFieldValidator>
+                    <br />
+
+                    <label class="narrower">Message<span class="required-sign"> *</span></label>
+                    <asp:TextBox ID="tbmsg" TextMode="MultiLine" runat="server" class="form-control narrower areafield" placeholder="Your message here..."></asp:TextBox>                   
+                    <asp:RequiredFieldValidator ID="rfvmessage" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbmsg"  ValidationGroup="contact-group"></asp:RequiredFieldValidator>
+
+               <div style="text-align: center">
+                   <asp:Button  class="btn submitbtn" ID="email" runat="server" Text="Email"  OnClick="Sendbtn_Click" ValidationGroup="contact-group"/>
+               </div>
+        </div>
+
+
+     
+
+        </div>
 
     
     
