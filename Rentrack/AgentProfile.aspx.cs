@@ -17,18 +17,59 @@ public partial class AgentProfile : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user_id"] == null)
+        if (Request.QueryString["id"] != null)
         {
-            Response.Redirect("Login.aspx");
-        }
-        else if (Session["user_id"] != null)
-        {
-            if (!IsPostBack)
+            if (Session["user_id"] == null)
             {
-                BindAgentInfo();
-                BindGitForm();
+                Response.Redirect("Login.aspx");
+            }
+            else if (Session["user_id"] != null)
+            {
+                int userid = Convert.ToInt32(Session["user_id"].ToString());
+                string usertypeid = "";
+                string agentid = "";
+
+                String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    con.Open();
+                    //Get User Type ID
+                    SqlCommand getusertypeid = new SqlCommand("SELECT user_type_id FROM [USER] WHERE user_id = '" + userid + "'", con);
+                    SqlDataReader reader = getusertypeid.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        usertypeid = reader[0].ToString();
+                    }
+                    reader.Close();
+
+                    //Get Agent ID
+                    SqlCommand getagentid = new SqlCommand("SELECT agent_id FROM [USER_TYPE] WHERE user_type_id = '" + usertypeid + "'", con);
+                    SqlDataReader aireader = getagentid.ExecuteReader();
+                    while (aireader.Read())
+                    {
+                        agentid = aireader[0].ToString();
+                    }
+                    aireader.Close();
+
+                    if (agentid == null || agentid == "")
+                    {
+                        BindAgentInfo();
+                        BindGitForm();
+                        showgit.Visible = true;
+                    }
+                    else
+                    {
+                        BindAgentInfo();
+                        showgit.Visible = false;
+                    }
+                }
             }
         }
+        else
+        {
+            Response.Redirect("~/Find Agent.aspx");
+        }
+        
         
     }
 

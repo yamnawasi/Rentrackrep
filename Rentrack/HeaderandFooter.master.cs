@@ -24,6 +24,8 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
         }
         else if (Session["user_id"] != null)
         {
+            BindNotifications();
+
             //Get First Name
             string huserid = Session["user_id"].ToString();
             string firstName = "";
@@ -51,9 +53,31 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
             headerfaq.Visible = false;
             notifdropdown.Visible = true;
             dblink.Visible = true;
+
         }
 
     }
+
+    private void BindNotifications()
+    {
+        string userid = Session["user_id"].ToString();
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.[Notification] WHERE receiver_id ='" + userid + "'", con))
+            {
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dtnotif = new DataTable();
+                    sda.Fill(dtnotif);
+                    rptrnotif.DataSource = dtnotif;
+                    rptrnotif.DataBind();
+                }
+            }
+        }
+    }
+
     protected void Loginlinkbutton(object sender, EventArgs e)
     {
         if (Session["user_id"] == null)
