@@ -61,15 +61,21 @@
              grid-gap: 20px;
              grid-template-columns: 1fr 1fr;
         }
-        #accbtn{
+        .accbtn{
             background-color: #2ca344; /*Green*/
             color: white;
             padding: 10px 20px;
         }
-        #rejbtn{
+        .rejbtn{
             background-color: #d61c1c; /*Red*/
             color: white;
             padding: 10px 20px;
+        }
+        .accbtn:hover, .rejbtn:hover{
+            background-color: #668; /*Red*/
+            box-shadow: 0px 0px 10px #888;
+            transition-duration: 0.6s;
+            color: white;
         }
         .trbtn{
             margin: 20px;
@@ -155,8 +161,9 @@
                         </asp:Repeater>
                             <br />   
                         <div class="align-content-center">
-                                  <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
-                                  <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
+                            <asp:LinkButton ID="accbtn" Class="btn trbtn accbtn" runat="server" OnClick="Accept_click"><i class="fa fa-check"></i> Accept</asp:LinkButton>
+                            <asp:LinkButton ID="rejbtn" Class="btn trbtn rejbtn" runat="server" OnClick="Reject_click"><i class="fa fa-times"></i> Reject</asp:LinkButton>
+                                
                         </div>               
                 </div>    
         </div>

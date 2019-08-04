@@ -17,34 +17,7 @@
     <script>
 
         $(document).ready(function () {
-            $("#N1").click(function(){
-                $("#notif1").hide();
-            });
-            $("#N2").click(function(){
-                $("#notif2").hide();
-            });
-            $("#N3").click(function(){
-                $("#notif3").hide();
-            });
-            $("#N4").click(function(){
-                $("#notif4").hide();
-            });
-            $("#N5").click(function(){
-                $("#notif5").hide();
-            });
-            $("#N6").click(function(){
-                $("#notif6").hide();
-            });
-            $("#N7").click(function(){
-                $("#notif7").hide();
-            });
-            $("#N8").click(function(){
-                $("#notif8").hide();
-            });
-
-            $("#headerourservices").active(function () {
-                $(this).addClass('selected');
-            });
+           
         });
         
     </script>
@@ -338,25 +311,18 @@
                     </div>
                     <div class="dropdown-divider"></div>
 
-                    <asp:Repeater ID="rptrnotif" runat="server">
+                    <asp:Repeater ID="rptrnotif" runat="server" onitemcommand="Rptr_ItemCommand">
                         <ItemTemplate>
                             <div class="notifs">
                                 <p class="notif-text"><%# Eval ("notification_text") %></p>
                                 <div class="align-sides">
                                     <a href="<%# Eval ("btn_link") %>"><div class="btn notif-btns"><%# Eval ("btn_text") %></div></a>
-                                    <i class="fa fa-times hidebtn" runat="server" id="I1" title="Hide notification"></i>
+                                    <asp:LinkButton ID="hidenotif" runat="server" CommandArgument='<%#Eval("notif_id") %>'><i class="fa fa-times hidebtn" id="I1" title="Hide notification"></i></asp:LinkButton>
                                 </div>
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
 
-                    <div class="notifs" id="notif1">
-                        <p class="notif-text">Hasan Arshad is interested in your property "House for Sale". Information about the user has been emailed to you.</p>
-                        <div class="align-sides">
-                            <button class="btn notif-btns">View User Profile</button>
-                            <i class="fa fa-times hidebtn" runat="server" id="N1" title="Hide notification"></i>
-                        </div>
-                    </div>
                     <div class="notifs" id="notif2">
                         <p class="notif-text">Has property "House for Sale" been sold to Hasan Arshad?</p>
                         <div class="align-sides">
@@ -365,17 +331,6 @@
                                 <button class="btn notif-btn-gray">No</button>
                             </div>
                             <i class="fa fa-times hidebtn" runat="server" id="N2" title="Hide notification"></i>
-                        </div>
-                    </div>
-
-                    <div class="notifs" id="notif3">
-                        <p class="notif-text">Ahmed Ali is interested in your property "Apartment for Rent" for rent. Information about the user has been emailed to you.</p>
-                        <div class="align-sides">
-                            <div>
-                                <a href="User Profile public.aspx"><div class="btn notif-btns">View User Profile</div></a>
-                                <a href="Tenant Resume Public.aspx"><div class="btn notif-btns">View Rental Resume</div></a>
-                            </div>
-                            <i class="fa fa-times hidebtn" runat="server" id="N3" title="Hide notification"></i>
                         </div>
                     </div>
 

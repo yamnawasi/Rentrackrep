@@ -91,6 +91,7 @@
 		.proptitle{
             font-size: 30px;
             font-family: Georgia;
+            margin-top: 20px;
 		}
         .proPrice{
             font-size: 25px;
@@ -123,6 +124,18 @@
         }
         .nokitchen{
             margin-bottom: 40px;
+        }
+        .warningdesign{
+           padding: 5px 10px;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+        .ownername{
+            font-size: 18px;
+            font-family: Georgia;
+            margin-top: 20px;
+            color: #6c7696; /*Orange-ish*/
         }
      </style>
 
@@ -165,11 +178,18 @@
     
      <!--Property Description-->
      <div id="desc" class="">
+         <a href="Login.aspx">
+             <span class="alert-warning warningdesign" runat="server" id="formmsg"><i class="fa fa-info-circle"></i> <asp:Label ID="formtext" runat="server" Text=""></asp:Label></span>
+         </a>
+
          <asp:Repeater ID="rptr" Runat="Server">
           <ItemTemplate>
               <div class="divDet1">
                   <h1 class="proptitle"> <%#Eval("property_title")%></h1>
                    <span class="proPrice">PKR <%#Eval("property_price")%></span>
+
+                  <h1 class="ownername"> Posted by: <%#Eval("f_name")%> <%#Eval("l_name")%></h1>
+                  <hr />
                   <h1 class="sub-heading">Property Description</h1>
                    <h1 class="protype propdet">Property Type: <%#Eval("property_type")%></h1>
                    <h1 class="propurpose propdet">Purpose: <%#Eval("property_purpose")%></h1>
@@ -206,9 +226,11 @@
     </div>
 
     <!--Contact Owner Form-->
+    
+
     <div runat="server" id="showform">
     <div id="formdiv" class="">
-           
+        
              <h1 id="main-heading">Contact Owner/Agent</h1>
 
                     <label class="narrower">Full Name<span class="required-sign"> *</span></label>

@@ -17,33 +17,42 @@ public partial class propertyviewpage : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user_id"] != null)
-        {
-            int userid = Convert.ToInt32(Session["user_id"].ToString());
-            Int64 propertyid = Convert.ToInt64(Request.QueryString["property_id"]);
-            String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(CS))
-            {
-                con.Open();
-                SqlCommand checkuser = new SqlCommand("SELECT COUNT(*) FROM [PROPERTY] WHERE user_id = '" + userid + "' and property_id = '" + propertyid + "'", con);
-                int tempy = Convert.ToInt32(checkuser.ExecuteScalar().ToString());
-                if (tempy <= 0) //No Record Found
-                {
-                    BindContactForm();
-                }
-                else
-                {
-                    showform.Visible = false;
-                }
-            }
-            
-        }
+        
         if (Request.QueryString["property_id"] !=null)
         {
             if (!IsPostBack)
             {
-                BindProductImages();
                 BindPropDetails();
+                BindProductImages();
+                formmsg.Visible = false;
+
+                if (Session["user_id"] != null)
+                {
+                    int userid = Convert.ToInt32(Session["user_id"].ToString());
+                    Int64 propertyid = Convert.ToInt64(Request.QueryString["property_id"]);
+                    String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(CS))
+                    {
+                        con.Open();
+                        SqlCommand checkuser = new SqlCommand("SELECT COUNT(*) FROM [PROPERTY] WHERE user_id = '" + userid + "' and property_id = '" + propertyid + "'", con);
+                        int tempy = Convert.ToInt32(checkuser.ExecuteScalar().ToString());
+                        if (tempy <= 0) //No Record Found
+                        {
+                            BindContactForm();
+                        }
+                        else
+                        {
+                            showform.Visible = false;
+                        }
+                    }
+
+                }
+                else if (Session["user_id"] == null)
+                {
+                    formmsg.Visible = true;
+                    showform.Visible = false;
+                    formtext.Text = "Kindly log in to inquire about this property.";
+                }
             }
         }
         else
@@ -84,7 +93,7 @@ public partial class propertyviewpage : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(CS))
         {
             con.Open();
-            using (SqlCommand cmd = new SqlCommand("SELECT A.*, B.*, C.area, D.subarea, E.* FROM dbo.[Property] A JOIN dbo.[Room_Description] B ON (A.room_desc_id = B.room_desc_id) JOIN dbo.[Area] C ON (A.area_id = C.area_id) JOIN dbo.[Subarea] D ON (A.subarea_id = D.subarea_id) JOIN dbo.[City] E ON (E.city_id = C.city_id) WHERE A.property_id='" + propertyid + "'", con))
+            using (SqlCommand cmd = new SqlCommand("SELECT A.*, B.*, C.area, D.subarea, E.*, F.f_name, F.l_name FROM dbo.[Property] A JOIN dbo.[Room_Description] B ON (A.room_desc_id = B.room_desc_id) JOIN dbo.[Area] C ON (A.area_id = C.area_id) JOIN dbo.[Subarea] D ON (A.subarea_id = D.subarea_id) JOIN dbo.[City] E ON (E.city_id = C.city_id) JOIN dbo.[User] F ON (A.user_id = F.user_id) WHERE A.property_id='" + propertyid + "'", con))
             {             
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
@@ -209,8 +218,21 @@ public partial class propertyviewpage : System.Web.UI.Page
 
             //Store in Notification Table
             DateTime today = DateTime.Today;
-            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text, btn_link) VALUES ('" + "Interested Buyer" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View User Profile" + "','" + "User Profile public.aspx?userid=" + userid + "')", con);
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text) VALUES ('" + "Interested Buyer" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View User Profile" + "')", con);
             createnotif.ExecuteNonQuery();
+
+            //Get Notif ID
+            SqlCommand getrdid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Notification] ORDER BY notif_id DESC", con);
+            getrdid.ExecuteNonQuery();
+            int notifid;
+            notifid = (int)getrdid.ExecuteScalar();
+
+            //Create link
+            string btnlink = "User Profile public.aspx?userid=" + userid + "&notifid=" + notifid;
+
+            //Add Button Link
+            SqlCommand updatenotif = new SqlCommand("UPDATE dbo.[Notification] SET btn_link = '" + btnlink + "' WHERE notif_id = '" + notifid + "'", con);
+            updatenotif.ExecuteNonQuery();
         }
 
         //Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('" + posterid + "');", true);
@@ -252,10 +274,22 @@ public partial class propertyviewpage : System.Web.UI.Page
 
             //Store in Notification Table
             DateTime today = DateTime.Today;
-            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text, btn_link) VALUES ('" + "Interested Tenant" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View Rental Resume" + "','" + "Tenant Resume Public.aspx?userid=" + userid + "')", con);
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text) VALUES ('" + "Interested Tenant" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View Rental Resume" + "')", con);
             createnotif.ExecuteNonQuery();
-        }
 
+            //Get Notif ID
+            SqlCommand getrdid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Notification] ORDER BY notif_id DESC", con);
+            getrdid.ExecuteNonQuery();
+            int notifid;
+            notifid = (int)getrdid.ExecuteScalar();
+
+            //Create link
+            string btnlink = "Tenant Resume Public.aspx?userid=" + userid + "&notifid=" + notifid;
+
+            //Add Button Link
+            SqlCommand updatenotif = new SqlCommand("UPDATE dbo.[Notification] SET btn_link = '" + btnlink + "' WHERE notif_id = '" + notifid + "'", con);
+            updatenotif.ExecuteNonQuery();
+        }
 
 
         //Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('" + posterid + "');", true);
@@ -303,6 +337,8 @@ public partial class propertyviewpage : System.Web.UI.Page
         {
             throw;
         }
+
+        Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('Your request has been forwarded to the owner.');", true);
     }
 
 
