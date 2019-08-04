@@ -9,9 +9,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Net;
 using System.Net.Mail;
+using System.Windows.Forms;
 
 public partial class AgentProfile : System.Web.UI.Page
 {
