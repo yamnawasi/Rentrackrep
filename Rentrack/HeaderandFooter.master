@@ -323,59 +323,7 @@
                         </ItemTemplate>
                     </asp:Repeater>
 
-                    <div class="notifs" id="notif2">
-                        <p class="notif-text">Has property "House for Sale" been sold to Hasan Arshad?</p>
-                        <div class="align-sides">
-                            <div>
-                                <button class="btn notif-btns">Yes</button>
-                                <button class="btn notif-btn-gray">No</button>
-                            </div>
-                            <i class="fa fa-times hidebtn" runat="server" id="N2" title="Hide notification"></i>
-                        </div>
-                    </div>
-
-                    <div class="notifs" id="notif4">
-                        <p class="notif-text">Ahmed Ali has agreed to the terms of the contract for property "Apartment for Sale"</p>
-                        <div class="align-sides">
-                            <button class="btn notif-btns">View Contract</button>
-                            <i class="fa fa-times hidebtn" runat="server" id="N4" title="Hide notification"></i>
-                        </div>
-                    </div>
-
-                    <div class="notifs" id="notif5">
-                        <p class="notif-text">Rate and review your experience with your tenant, Ahmed Ali, for property "Apartment for Sale".</p>
-                        <div class="align-sides">
-                            <button class="btn notif-btns">Go to User Profile</button>
-                            <i class="fa fa-times hidebtn" runat="server" id="N5" title="Hide notification"></i>
-                        </div>
-                    </div>
-
-                    <div class="notifs" id="notif6">
-                        <p class="notif-text">You have been reviewed by your landlord, Amir Khan.</p>
-                        <div class="align-sides">
-                            <button class="btn notif-btns">View your Profile</button>
-                            <i class="fa fa-times hidebtn" runat="server" id="N6" title="Hide notification"></i>
-                        </div>
-                    </div>
-
-                    <div class="notifs" id="notif7">
-                        <p class="notif-text">Amir Khan has sent a Tenancy Agreement.</p>
-                        <div class="align-sides">
-                            <button class="btn notif-btns">View Contract</button>
-                            <i class="fa fa-times hidebtn" runat="server" id="N7" title="Hide notification"></i>
-                        </div>
-                    </div>
-
-                    <div class="notifs" id="notif8">
-                        <p class="notif-text">Has property "Apartment for Rent" been rented to Ahmed Ali?</p>
-                        <div class="align-sides">
-                            <div>
-                                <button class="btn notif-btns">Yes</button>
-                                <button class="btn notif-btn-gray">No</button>
-                            </div>
-                            <i class="fa fa-times hidebtn" runat="server" id="N8" title="Hide notification"></i>
-                        </div>
-                    </div>
+                    
                     <br /><br />
                     <div class="dropdown-divider"></div>
                 </div>

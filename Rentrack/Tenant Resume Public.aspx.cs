@@ -139,7 +139,7 @@ public partial class Tenant_Resume_Public : System.Web.UI.Page
         {
             con.Open();
 
-            //Get Owner/Agent's ID and Property Title
+            //Get Property ID and Property Title
             SqlCommand cmdd = new SqlCommand("SELECT A.property_id, A.property_title FROM dbo.[Property] A JOIN dbo.[Notification] B ON (A.property_id = B.property_id) WHERE B.notif_id ='" + Convert.ToInt32(notifid) + "'", con);
             SqlDataReader reader = cmdd.ExecuteReader();
             while (reader.Read())
