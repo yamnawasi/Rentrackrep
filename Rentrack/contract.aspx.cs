@@ -50,21 +50,6 @@ public partial class contract : System.Web.UI.Page
                         tntparent.Attributes.Add("readonly", "readonly");
                         tntcnicnum.Attributes.Add("readonly", "readonly");
                         tntaddress.Attributes.Add("readonly", "readonly");
-                        tblndfname.Attributes.Add("readonly", "readonly");
-                        tblndlname.Attributes.Add("readonly", "readonly");
-                        lndlrdparent.Attributes.Add("readonly", "readonly");
-                        lndlrdcnicnum.Attributes.Add("readonly", "readonly");
-                        tblndaddress.Attributes.Add("readonly", "readonly");
-                        tbrntaddress.Attributes.Add("readonly", "readonly");
-                        tbrent.Attributes.Add("readonly", "readonly");
-                        tbfxd.Attributes.Add("readonly", "readonly");
-                        Cntrctlife.Attributes.Add("disabled", "disabled");
-                        //dates
-                        rntpay.Attributes.Add("readonly", "readonly");
-                        tbstart.Attributes.Add("readonly", "readonly");
-                        tbend.Attributes.Add("readonly", "readonly");
-                        txttbstart.Attributes.Add("readonly", "readonly");
-                        tbendtxt.Attributes.Add("readonly", "readonly");
 
                         //getting tenant's details tenant
                         SqlCommand contcmd = new SqlCommand("SELECT * FROM [Contract_Form] WHERE landlord_id = '" + landlordid + "' AND tenant_id = '" + tenantid + "'", con);
@@ -99,6 +84,22 @@ public partial class contract : System.Web.UI.Page
                                 txttbstart.Visible = true;
                                 tbendtxt.Visible = true;
                                 sndtnt.Visible = false;
+
+                                tblndfname.Attributes.Add("readonly", "readonly");
+                                tblndlname.Attributes.Add("readonly", "readonly");
+                                lndlrdparent.Attributes.Add("readonly", "readonly");
+                                lndlrdcnicnum.Attributes.Add("readonly", "readonly");
+                                tblndaddress.Attributes.Add("readonly", "readonly");
+                                tbrntaddress.Attributes.Add("readonly", "readonly");
+                                tbrent.Attributes.Add("readonly", "readonly");
+                                tbfxd.Attributes.Add("readonly", "readonly");
+                                Cntrctlife.Attributes.Add("disabled", "disabled");
+                                //dates
+                                rntpay.Attributes.Add("readonly", "readonly");
+                                tbstart.Attributes.Add("readonly", "readonly");
+                                tbend.Attributes.Add("readonly", "readonly");
+                                txttbstart.Attributes.Add("readonly", "readonly");
+                                tbendtxt.Attributes.Add("readonly", "readonly");
 
                             }
                             
