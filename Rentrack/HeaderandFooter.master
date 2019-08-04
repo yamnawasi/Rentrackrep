@@ -231,10 +231,16 @@
             justify-content: space-between;
         }
         .badge {
-          padding: 5px 10px;
+          padding: 5px 7px;
           border-radius: 50%;
           background: red;
           color: white;
+          position: absolute;
+          top: -10px;
+        }
+        .notifemptydesign{
+            margin-left: 20px;
+            color: #777;
         }
         </style>
     <asp:ContentPlaceHolder id="head" runat="server">
@@ -303,7 +309,7 @@
               <li class="nav-item dropdown" runat="server" id="notifdropdown">
                 <a class="nav-link" href="#" id="notifDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: inline" title="Notifications">
                     <i class="fa fa-bell" runat="server" id="notificon"></i>
-                    <span class="badge">3</span>
+                    <asp:Label ID="notifnumber" runat="server" Text="" CssClass="badge"></asp:Label>
                 </a>
                 <div class="dropdown-menu animate slideIn dropdown-menu-right overflow-auto" aria-labelledby="navbarDropdownMenuLink" id="notifbody">
                     <div id="notifheading">
@@ -322,6 +328,8 @@
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
+
+                    <asp:Label ID="notifemptymsg" runat="server" Text="" CssClass="notifemptydesign"></asp:Label>
 
                     
                     <br /><br />
