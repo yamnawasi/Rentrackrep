@@ -19,7 +19,24 @@ public partial class propertyviewpage : System.Web.UI.Page
     {
         if (Session["user_id"] != null)
         {
-            BindContactForm();
+            int userid = Convert.ToInt32(Session["user_id"].ToString());
+            Int64 propertyid = Convert.ToInt64(Request.QueryString["property_id"]);
+            String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                con.Open();
+                SqlCommand checkuser = new SqlCommand("SELECT COUNT(*) FROM [PROPERTY] WHERE user_id = '" + userid + "' and property_id = '" + propertyid + "'", con);
+                int tempy = Convert.ToInt32(checkuser.ExecuteScalar().ToString());
+                if (tempy <= 0) //No Record Found
+                {
+                    BindContactForm();
+                }
+                else
+                {
+                    showform.Visible = false;
+                }
+            }
+            
         }
         if (Request.QueryString["property_id"] !=null)
         {
@@ -192,7 +209,7 @@ public partial class propertyviewpage : System.Web.UI.Page
 
             //Store in Notification Table
             DateTime today = DateTime.Today;
-            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text, btn_link) VALUES ('" + "Interested Buyer" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View User Profile" + "','" + "User Profile Public.aspx?user_id=" + userid + "')", con);
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text, btn_link) VALUES ('" + "Interested Buyer" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View User Profile" + "','" + "User Profile public.aspx?userid=" + userid + "')", con);
             createnotif.ExecuteNonQuery();
         }
 
@@ -235,7 +252,7 @@ public partial class propertyviewpage : System.Web.UI.Page
 
             //Store in Notification Table
             DateTime today = DateTime.Today;
-            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text, btn_link) VALUES ('" + "Interested Tenant" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View Rental Resume" + "','" + "Tenant Resume Public.aspx?user_id=" + userid + "')", con);
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text, btn_link) VALUES ('" + "Interested Tenant" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "View Rental Resume" + "','" + "Tenant Resume Public.aspx?userid=" + userid + "')", con);
             createnotif.ExecuteNonQuery();
         }
 
