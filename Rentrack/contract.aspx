@@ -246,6 +246,8 @@
 
                 <hr />
 
+                 <asp:Button ID="Button1" runat="server" Text="Generate"  OnClick="Generate_btn" class="btn submitbtn finbtn" ValidationGroup="generate" />
+
                 <!--Tenant details -->
                 <p class="subheading"><span><i class="fa fa-user-o" style="font-size: 25px"></i></span>  Tenant</p>
                 <div class="align-three-inline">              
@@ -366,7 +368,7 @@
 
                 <div style="width: 100%; text-align: center; margin-top: 30px">
                         <asp:Button ID="cancelbtn" runat="server" Text="Cancel" class="btn btn-light cancelbtn" CausesValidation="false"/>
-                        <asp:Button ID="submitbtn" runat="server" Text="Generate" class="btn submitbtn finbtn" ValidationGroup="generate" />
+                        <asp:Button ID="submitbtn" runat="server" Text="Generate"   class="btn submitbtn finbtn" ValidationGroup="generate" />
                 </div>
 
             </div>
