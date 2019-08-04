@@ -37,7 +37,7 @@ public partial class Tenant_Resume_Public : System.Web.UI.Page
 
                 if (fdt.Rows.Count == 0) //user has no tenant resume
                 {
-                    lblfavid.Text = "This user does not have a Tenant Resume";
+                    lbltntid.Text = "This user does not have a Tenant Resume";
                 }
                 else if (fdt.Rows.Count != 0)//user has tenant resume
                 {
