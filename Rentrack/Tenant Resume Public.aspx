@@ -150,14 +150,14 @@
                                 </div>
                             </div>
 
-                                <div class="align-content-center">
-                                  <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
-                                  <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
-                                </div>
+                                
                             </ItemTemplate>
                         </asp:Repeater>
                             <br />   
-                                       
+                        <div class="align-content-center">
+                                  <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
+                                  <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
+                        </div>               
                 </div>    
         </div>
     </div>
