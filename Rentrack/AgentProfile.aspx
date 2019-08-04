@@ -7,7 +7,7 @@
                 window.history.replaceState( null, null, window.location.href );
             }    
         });
-
+ 
         function isNumberKey(evt)
         {
              var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -24,8 +24,9 @@
             align-items: center;
             justify-content: center;
             background-color: #f5f5f5;
+            padding-bottom: 50px;
         }
-        #git-div{
+        #gitdiv{
             box-shadow: 0px 0px 15px #aaa;
             margin-top: 50px;
             margin-bottom: 50px;
@@ -123,7 +124,7 @@
                     <hr />
                     <div style="display: flex; flex-direction: column; align-items: center;">
                     <div>
-                        <p><i class="fa fa-building agicons"></i> <span class="agheading">Agency: </span><a href="#" id="agency-link" title="View Agency Page"><span id="agency-name" class="aginfo"><%# Eval ("agency_name") %></span></a></p>           
+                        <p><i class="fa fa-building agicons"></i> <span class="agheading">Agency: </span><a href="Agency Profile.aspx?agency_id=<%# Eval ("agency_id") %>" id="agency-link" title="View Agency Page"><span id="agency-name" class="aginfo"><%# Eval ("agency_name") %></span></a></p>           
                         <p><i class="fa fa-phone agicons"></i> <span class="agheading">Phone: </span><span id="phone-no" class="aginfo"><%# Eval ("phone_no") %></span></p>
                         <p><i class="fa fa-envelope agicons"></i> <span class="agheading">Email: </span><span id="email" class="aginfo"><%# Eval ("email") %></span></p>
                         <p><i class="fa fa-map-marker agicons"></i> <span class="agheading">Locations: </span><span id="areas" class="aginfo"><%# Eval ("city_name") %></span></p>
@@ -132,7 +133,8 @@
                 </div>
             </ItemTemplate>
         </asp:Repeater>
-                <div id="git-div" class="col-lg-6 col-md-8 col-sm-10 col-12">
+            <div id="showgit" runat="server"  class="col-lg-6 col-md-8 col-sm-10 col-12" >
+                <div id="gitdiv">
                     <h3 class="ap-heading" id="git-heading">Get in Touch</h3>
                     
                     <label>Full Name<span class="required-sign"> *</span></label>
@@ -141,7 +143,7 @@
                     <br />
 
                     <label>Email<span class="required-sign"> *</span></label>
-                    <asp:TextBox ID="tbemail" runat="server" class="form-control narrower areafield"></asp:TextBox> 
+                    <asp:TextBox ID="tbemail" runat="server" class="form-control narrower areafield" disabled="disabled"></asp:TextBox> 
                     <asp:RequiredFieldValidator ID="rfvemail" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbemail" ValidationGroup="git-group" Display="Dynamic"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="revEmail" runat="server" ErrorMessage="Please enter a valid email address" ControlToValidate="tbemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator>                          
                     <br />
@@ -159,7 +161,8 @@
                     <div style="text-align: center">
                         <asp:Button ID="gitbtn" runat="server" Text="Send" Class="submitbtn btn"  ValidationGroup="git-group" OnClick="Sendbtn_Click"/>
                     </div>
-                </div>     
+                </div>  
+           </div>
     </div>
 </asp:Content>
 

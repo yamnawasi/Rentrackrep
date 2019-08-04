@@ -389,7 +389,7 @@
                         </p>
                         <p class="proplocation"><%#Eval("area") %></p>
                         <div style="text-align: center">
-                            <a href="#" class="btn btn-primary gotoproppage">View Property</a>
+                            <a href="propertyviewpage.aspx?property_id=<%#Eval("property_id") %>" class="btn btn-primary gotoproppage">View Property</a>
                         </div>
                       </div>
                     </div>

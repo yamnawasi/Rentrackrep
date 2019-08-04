@@ -44,6 +44,18 @@
                 includeSelectAllOption: true
             });
         });
+
+         $(function () {
+            $('[id*=cnicnum]').on('keypress', function () {
+                var number = $(this).val();
+                if (number.length == 5) {
+                    $(this).val($(this).val() + '-');
+                }
+                else if (number.length == 13) {
+                    $(this).val($(this).val() + '-');
+                }
+            });
+        });
     </script>
 
     <style>
@@ -112,6 +124,12 @@
         }
         .inactivebtn{
             color: gray;
+        }
+        .error-design {
+            color: red;
+            font-family: Calibri;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         /*Rental Resume*/
@@ -341,12 +359,48 @@
         .multiselect-container>li:hover{
             background-color:lightblue;
         }
-
         h3 {
             text-align: left;
             font-weight: 500;
             font-family: Arial, sans-serif;
             margin-bottom: 20px;
+        }
+        .lblbold{
+            font-weight: 600;
+        }
+        .usrsubmitbtn{
+            color: white;
+            background-color: #eda136; /*orange*/
+            padding: 10px 35px 10px 35px;
+            margin-top: 20px;
+        }
+        .usrsubmitbtn:hover{
+            background-color: #555;
+            color: white;
+            transition-duration: 0.7s;
+            box-shadow: 0px 2px 10px #aaa;
+        }
+        .usrcancelbtn{
+            padding: 10px 35px 10px 35px;
+            color: black;
+            background-color: #bbb;
+            margin-top: 20px;
+        }
+        .usrcancelbtn:hover{
+            transition-duration: 0.7s;
+            box-shadow: 0px 2px 10px #aaa;
+        }
+        listbx{
+            border: 0px;
+            overflow-y: scroll;
+            -ms-overflow-style: none;  /* IE 10+ */
+            box-sizing: content-box;
+            margin: 5px 0px 20px 0px;
+            padding: 10px;
+        }
+        .listbx::-webkit-scrollbar { /* WebKit */
+            width: 0;
+            height: 0;
         }
 
     </style>
@@ -382,7 +436,7 @@
                     <h3>Personal Information</h3>
 
                 <div>
-                    <asp:Label ID="emaillabel" runat="server" text="Email:"></asp:Label>
+                    <asp:Label ID="emaillabel" Class="lblbold" runat="server" text="Email:"></asp:Label>
                     <asp:Label ID="lblusremail" runat="server"></asp:Label>
                     <asp:linkbutton id="emaileditbtn" runat="server" OnClick="EmailEdit_Click">Edit</asp:linkbutton>
 
@@ -397,27 +451,20 @@
                         <div>
                             <asp:Label runat="server" text="Current Password"></asp:Label>                       
                             <asp:TextBox ID="currentpass" runat="server" Class="form-control  narrower" TextMode="Password"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator16" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="currentpass"></asp:RequiredFieldValidator>
                             <asp:Label ID="lblError" runat="server" CssClass="text-danger error-design" Text="Password is incorrect!" Visible="false"></asp:Label>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator16" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="currentpass"></asp:RequiredFieldValidator>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <asp:Label ID="passwordlabel" runat="server" text="Password:"></asp:Label>
+                    <asp:Label ID="passwordlabel" Class="lblbold" runat="server" text="Password:"></asp:Label>
                     <asp:Label ID="lblusrpassword" runat="server" ></asp:Label>
                     <asp:linkbutton ID="passeditbtn" runat="server" OnClick="PassEdit_Click">Edit</asp:linkbutton>
 
                     <div id="changePass" runat="server" Visible="false">
-                        <div>                          
-                            <asp:Label runat="server" text="Current Password"></asp:Label>                       
-                            <asp:TextBox ID="oldpass" runat="server" Class="form-control  narrower" TextMode="Password"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator18" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="oldpass"></asp:RequiredFieldValidator>
-                            <asp:Label ID="oldpasserror" runat="server" CssClass="text-danger error-design" Text="Password is incorrect!" Visible="false"></asp:Label>                  
-                        </div>
-
                         <div>
-                            <asp:Label ID="lblPassword" runat="server" Text="New Password"></asp:Label>
+                            <asp:Label ID="lblPassword" Class="lblbold" runat="server" Text="New Password"></asp:Label>
                             <asp:TextBox ID="tbNewPass" runat="server" Class="form-control  narrower" TextMode="Password" placeholder="Atleast 8 Characters"></asp:TextBox>
                             <asp:RegularExpressionValidator ID="tbpasswordexp" runat="server" ValidationGroup="update" CssClass="text-danger error-design" ErrorMessage="Password length must be between 8 to 20 characters" ControlToValidate="tbNewPass"  ValidationExpression="^[a-zA-Z0-9'@&#.\s]{8,20}$" Display="Dynamic" ></asp:RegularExpressionValidator>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbNewPass"></asp:RequiredFieldValidator>		        
@@ -428,7 +475,14 @@
                             <asp:TextBox ID="tbConfirmPass" runat="server" Class="form-control narrower" TextMode="Password"></asp:TextBox>
                             <asp:CompareValidator ID="tbrepasswordcompare" runat="server" CssClass="text-danger error-design" ControlToValidate="tbConfirmPass" ControlToComapre="tbNewPass"  ValidationGroup="update" ErrorMessage="Passwords do not match" Display="Dynamic" SetFocusOnError="true" ControlToCompare="tbNewPass"></asp:CompareValidator>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator17" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbConfirmPass"></asp:RequiredFieldValidator>
-                        </div>		        
+                        </div>
+                        
+                        <div>                          
+                            <asp:Label runat="server" text="Current Password"></asp:Label>                       
+                            <asp:TextBox ID="oldpass" runat="server" Class="form-control  narrower" TextMode="Password"></asp:TextBox>
+                            <asp:Label ID="oldpasserror" runat="server" CssClass="text-danger error-design" Text="Password is incorrect!" Visible="false"></asp:Label>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator18" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="oldpass"></asp:RequiredFieldValidator>
+                        </div>
                     </div>
                 </div>
                 <br/><br/>
@@ -436,46 +490,60 @@
                         <div>
                             <label>First Name</label>
                             <asp:TextBox ID="tbfname" runat="server" Class="form-control narrower" InitialValue="0"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbfname" ValidationGroup="signup" ></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbfname" ValidationGroup="update" ></asp:RequiredFieldValidator>
                         </div>
 
                         <div>
                             <label>Last Name</label>
                             <asp:TextBox ID="tblname" runat="server" Class="form-control narrower"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblname"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblname"></asp:RequiredFieldValidator>
                         </div>
                     </div>
 
-                <div id="dobdiv" runat="server">
-                    <label>Date Of Birth<span class="required-sign"> *</span></label>
+                <div id="lbldobdiv" runat="server">
+                    <asp:Label ID="usrdoblbl" runat="server" Text="Date of Birth:"></asp:Label>
+                    <asp:Label ID="lbldob" runat="server" Text=""></asp:Label>
+                    <asp:linkbutton ID="usrdob" runat="server" OnClick="DobEdit_Click">Edit</asp:linkbutton>
+                    <br />
+                    <br />
+                </div>
+
+                <div id="dobdiv" runat="server" visible="false">
+                    <label>Date Of Birth</label>
                     <asp:TextBox ID="tbdob" runat="server" Class="form-control narrower" TextMode="Date"></asp:TextBox>
-                    <asp:RangeValidator ID="DateRangeValidator" runat="server" CssClass="text-danger error-design" Type="Date" Format="DD/MM/YYYY" ControlToValidate="tbdob" ErrorMessage="You must be between 18 to 90 years old to register" Display="Dynamic" SetFocusOnError="true"></asp:RangeValidator>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbdob" ValidationGroup="signup" EnableClientScript="True"></asp:RequiredFieldValidator>
+                    <asp:RangeValidator ID="DateRangeValidator" ValidationGroup="update" runat="server" CssClass="text-danger error-design" Type="Date" Format="DD/MM/YYYY" ControlToValidate="tbdob" ErrorMessage="You must be between 18 to 90 years old to register" Display="Dynamic" SetFocusOnError="true"></asp:RangeValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbdob" ValidationGroup="update" EnableClientScript="True"></asp:RequiredFieldValidator>
                     <%-- <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"  ErrorMessage="Please enter date in correct format." ControlToValidate="tbdob" SetFocusOnError="true"  ValidationExpression="(0?[1-9]|[12]\d|30|31)[^\w\d\r\n:](0?[1-9]|1[0-2])[^\w\d\r\n:](\d{4}|\d{2})" ValidationGroup="A" ForeColor="" CssClass="Validation-Msg" Display="Dynamic"></asp:RegularExpressionValidator> --%>
                 </div>
 
                 <div id="phonediv" runat="server">
-                    <label>Phone  No.<span class="required-sign"> *</span></label>
+                    <label>Phone  No.</label>
                     <asp:TextBox ID="tbphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 03001234567"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" CssClass="text-danger error-design"
 			            ErrorMessage="Enter a valid phone no."  ControlToValidate="tbphone" Display="Dynamic" 
-			            ValidationExpression="^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$" ValidationGroup="signup"> 
+			            ValidationExpression="^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$" ValidationGroup="update"> 
                     </asp:RegularExpressionValidator>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbphone"></asp:RequiredFieldValidator>                
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbphone"></asp:RequiredFieldValidator>                
                 </div>
 
                 <div id="addressdiv" runat="server">
                     <label>Address</label>
                     <asp:TextBox ID="tbaddress" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbaddress"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbaddress"></asp:RequiredFieldValidator>
+                </div>
+    
+                <div id="usrcitylbl" runat="server">
+                    <asp:Label ID="citylbl" runat="server" Text="City:"></asp:Label>
+                    <asp:Label ID="usrcity" runat="server" Text=""></asp:Label>
+                    <asp:linkbutton ID="usrcityedit" runat="server" OnClick="UsrcityEdit_Click">Edit</asp:linkbutton>
                 </div>
 
-                <div id="citydiv" runat="server">
+                <div id="citydiv" runat="server" visible="false">
                     <label>City</label>
                     <asp:DropDownList ID="tbdcity" runat="server" Class="form-control narrower" DataSourceID="Rentrackdb" DataTextField="city_name" DataValueField="city_name">
                     </asp:DropDownList>
                     <asp:SqlDataSource ID="Rentrackdb" runat="server" ConnectionString="<%$ ConnectionStrings:RentrackdbConnectionString %>" SelectCommand="SELECT [city_name] FROM [City]"></asp:SqlDataSource>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbdcity"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbdcity"></asp:RequiredFieldValidator>
                 </div>
                 
                 <div id="cnicdiv" runat="server" Visible="false">
@@ -486,6 +554,14 @@
 			            ValidationExpression="^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$" ValidationGroup="update"> 
                     </asp:RegularExpressionValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="cnicnum"></asp:RequiredFieldValidator>
+                </div>
+
+                <div id="agntareadiv" class="listbox" runat="server" visible="false">
+                    <label>Areas you deal in</label>
+                    <div>
+                        <asp:ListBox ID="lbagntarea" runat="server" CssClass="listbx"  ValidationGroup="update" BackColor="#EEEEEE"></asp:ListBox>
+                        <asp:linkbutton ID="agntedit" runat="server" OnClick="AgntEdit_Click">Edit</asp:linkbutton>
+                    </div>  
                 </div>
 
                 <div id="areadealdiv" runat="server" Visible="false">
@@ -501,12 +577,14 @@
                 </div>
 
                 <div id="agencyinfo" runat="server" Visible="false">
+                    <br />
+                    <br />
                     <h3>Agency Information</h3>
 
 			        <div>
                         <label>Company Name</label>
                         <asp:TextBox ID="agencyname" runat="server" Class="form-control narrower" ></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyname" ValidationGroup="signup" ></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyname" ValidationGroup="update" ></asp:RequiredFieldValidator>
                     </div>
 
 		            <div class="align-inline">
@@ -514,8 +592,8 @@
                             <label>Company Email</label>
                             <asp:TextBox  ID="agencyemail" runat="server" Class="form-control narrower" TextMode="Email" ></asp:TextBox>
                             <asp:Label ID="lblagencyemail" runat="server" class="text-danger error-design" Display="dynamic"></asp:Label>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ValidationGroup="signup" ErrorMessage="Incorrect format" ControlToValidate="agencyemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="Validation-Msg text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator> 
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyemail"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ValidationGroup="update" ErrorMessage="Incorrect format" ControlToValidate="agencyemail" SetFocusOnError="true"  ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="Validation-Msg text-danger error-design" Display="Dynamic"></asp:RegularExpressionValidator> 
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator12" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyemail"></asp:RequiredFieldValidator>
                         </div>
              
                         <div>
@@ -523,36 +601,44 @@
                             <asp:TextBox  ID="agencyphone" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)" placeholder="E.g. 0217654321"></asp:TextBox>
                             <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" CssClass="text-danger error-design"
 			                    ErrorMessage="Enter a valid phone no."  ControlToValidate="agencyphone" Display="Dynamic" 
-			                    ValidationExpression="(\d{3})\d{7}" ValidationGroup="signup"> 
+			                    ValidationExpression="(\d{3})\d{7}" ValidationGroup="update"> 
                             </asp:RegularExpressionValidator>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyphone"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyphone"></asp:RequiredFieldValidator>
                         </div>
                     </div>
 
                     <div>
                         <label>Company Address</label>
                         <asp:TextBox ID="agencyaddress" runat="server" ValidationGroup="address" Class="form-control narrower" TextMode="MultiLine"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyaddress"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencyaddress"></asp:RequiredFieldValidator>
                     </div>
 
-                    <div>
+                    <div id="agcyareadiv" class="listbox" runat="server">
+                        <label>Areas the Company deals in</label>
+                        <div>
+                            <asp:ListBox ID="lbagcy" runat="server" CssClass="listbx"  ValidationGroup="update" BackColor="#EEEEEE"></asp:ListBox>
+                            <asp:linkbutton ID="agcyedit" runat="server" OnClick="AgcyEdit_Click">Edit</asp:linkbutton>
+                        </div>     
+                    </div>
+
+                    <div id="agcyareadealdiv" runat="server" Visible="false">
                         <label>Areas the Company deals in</label>
                         <div class="align-content-center">
                             <div>
                                 <asp:ListBox ID="agencycitylist" runat="server" SelectionMode="Multiple" CssClass="form-control narrower"></asp:ListBox>
                             </div>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" ValidationGroup="signup" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencycitylist"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" ValidationGroup="update" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="agencycitylist"></asp:RequiredFieldValidator>
                         </div>           
                     </div>
                 </div>
 
                     <div class="align-inline">
                         <div style="text-align: center">
-                            <asp:Button ID="usrcancel" runat="server" Text="Cancel" class="btn save-button" OnClick="Cancel" ValidationGroup="cancel"/>
+                            <asp:Button ID="usrcancel" runat="server" Text="Cancel" class="btn usrcancelbtn" OnClick="Cancel" ValidationGroup="cancel" CausesValidation="false"/>
                         </div>
 
                         <div style="text-align: center">
-                            <asp:Button ID="usrsave" runat="server" Text="Save" class="btn save-button" OnClick="SaveUserInfo" ValidationGroup="update"/>
+                            <asp:Button ID="usrsave" runat="server" Text="Save" class="btn usrsubmitbtn" OnClick="SaveUserInfo" ValidationGroup="update"/>
                         </div>
                     </div>
                 <!--User profile code end-->
@@ -564,7 +650,6 @@
                 <p class="heading">Favourite Properties</p>
                 <hr />
                 <!--Fav prop code start-->
-                
                 <asp:Repeater ID="rptrfav" runat="server" onitemcommand="Repeater1_ItemCommand">
                     <ItemTemplate>                        
                         <div class="card">
@@ -603,7 +688,8 @@
 
                 </ItemTemplate>
               </asp:Repeater>
-                 <asp:Label ID="lblfavid" runat="server" CssClass="lblfav align-content-center"></asp:Label>
+                    <asp:Label ID="lblfavid" runat="server" CssClass="lblfav falign-content-center"></asp:Label>
+
                 <!--Fav prop code end-->
             </div>
 

@@ -14,13 +14,14 @@ using System.IO;
 
 public partial class User_Profile : System.Web.UI.Page
 {
+    public int HorizontalExtent { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
         msg.Visible = false;
-        userprofdiv.Visible = false;
+        userprofdiv.Visible = true;
         favpropdiv.Visible = false;
-        rentresdiv.Visible = true;
-        rentresbtn.Attributes.Add("class", "sidebarbtns activebtn");
+        rentresdiv.Visible = false;
+        userprofbtn.Attributes.Add("class", "sidebarbtns activebtn");
 
         if (!IsPostBack)
         {
@@ -141,9 +142,7 @@ public partial class User_Profile : System.Web.UI.Page
                     }
 
 
-                    //Write your page load .cs code here
-                    //The CS connection string has been setup just start by making your SQLConnection
-                    //Start
+                    //User Profile
                     //checking if the user id agent or normal user
                     SqlCommand acmd = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE agent_id = '" + usertypeid + "'", con);
                     SqlDataAdapter asda = new SqlDataAdapter(acmd);
@@ -160,10 +159,12 @@ public partial class User_Profile : System.Web.UI.Page
                         citydiv.Visible = false;
                         agencyinfo.Visible = true;
                         cnicdiv.Visible = true;
-                        areadealdiv.Visible = true;
+                        usrcitylbl.Visible = false;
+                        lbldobdiv.Visible = false;
+                        agntareadiv.Visible = true;
                     }
 
-                    //User Profile
+                    //dob range 
                     DateRangeValidator.MinimumValue = DateTime.Today.AddYears(-90).ToShortDateString();
                     DateRangeValidator.MaximumValue = DateTime.Today.AddYears(-18).ToShortDateString();
 
@@ -196,7 +197,7 @@ public partial class User_Profile : System.Web.UI.Page
                         agencycitylist.DataBind();
                     }
                     con.Close();
-
+            
                     //Favourites
                     //checking if fav props exists for the user
                     SqlCommand fcmd = new SqlCommand("SELECT * FROM [Favourite_Property] WHERE user_id = '" + userid + "'", con);
@@ -315,25 +316,27 @@ public partial class User_Profile : System.Web.UI.Page
         {
             string userid = Session["user_id"].ToString();
 
+            //getting user data
             SqlCommand userdata = new SqlCommand("SELECT * FROM [User] WHERE user_id = '" + userid + "'", con);
             SqlDataAdapter usersda = new SqlDataAdapter(userdata);
             DataTable userdt = new DataTable();
             usersda.Fill(userdt);
 
-            
+            //password in *
             lblusrpassword.Text = "";
             foreach (char c in userdt.Rows[0][8].ToString())
             {
                 lblusrpassword.Text += "*";
             }
-            
+
+            //assigning(filling) user data to the textboxes
             lblusremail.Text = userdt.Rows[0][9].ToString();
             tbfname.Text = userdt.Rows[0][2].ToString();
             tblname.Text = userdt.Rows[0][3].ToString();         
             tbphone.Text = userdt.Rows[0][7].ToString();
            
 
-            SqlCommand cmd2 = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE agent_id = '" + userdt.Rows[0][1].ToString() + "'", con);
+            SqlCommand cmd2 = new SqlCommand("SELECT * FROM [User_Type] WHERE agent_id = '" + userdt.Rows[0][1].ToString() + "'", con);
             SqlDataAdapter sda2 = new SqlDataAdapter(cmd2);
             DataTable dt2 = new DataTable();
             sda2.Fill(dt2);
@@ -344,10 +347,11 @@ public partial class User_Profile : System.Web.UI.Page
                 con.Open();
                 string cityname = (string)com.ExecuteScalar();
                 com.ExecuteNonQuery();
-
-                tbdob.Text = userdt.Rows[0][6].ToString();
+                DateTime usrdobdt = ((DateTime)userdt.Rows[0][6]);
+                string usrdob = usrdobdt.ToShortDateString();
+                lbldob.Text = usrdob;
                 tbaddress.Text = userdt.Rows[0][4].ToString();
-                tbdcity.SelectedValue = cityname;
+                usrcity.Text = cityname;
             }
             else if (dt2.Rows.Count != 0)//Agent
             {
@@ -367,72 +371,98 @@ public partial class User_Profile : System.Web.UI.Page
                 agencybrsda.Fill(agencybrdt);
 
                 cnicnum.Text = agentdt.Rows[0][2].ToString();
-                //agentcitylist.Text = agentdt.Rows[0][2].ToString();
                 agencyname.Text = agencydt.Rows[0][1].ToString();
                 agencyemail.Text = agencydt.Rows[0][3].ToString();
                 agencyphone.Text = agencydt.Rows[0][2].ToString();
                 agencyaddress.Text = agencybrdt.Rows[0][3].ToString();
-                //agencycitylist.Text = agencydt.Rows[0][3].ToString();
+                con.Close();
 
-                SqlCommand agentcitydata = new SqlCommand("SELECT * FROM [Agent_city] WHERE agent_id = '" + userdt.Rows[0][1].ToString() + "'", con);
-                SqlDataAdapter agentcitydatasda = new SqlDataAdapter(agentcitydata);
-                DataTable agentcitydatadt = new DataTable();
-                agentcitydatasda.Fill(agentcitydatadt);
+                //clearing the list of prev values
+                lbagntarea.Items.Clear();
+                lbagcy.Items.Clear();
 
-                SqlCommand agencycitydata = new SqlCommand("SELECT * FROM [Agency_city] WHERE agency_id = '" + agentdt.Rows[0][1].ToString() + "'", con);
-                SqlDataAdapter agencycitydatasda = new SqlDataAdapter(agencycitydata);
-                DataTable agencycitydatadt = new DataTable();
-                agencycitydatasda.Fill(agencycitydatadt);
+                //agentcitylist
+                SqlCommand agntcity = new SqlCommand("SELECT city_id FROM [Agent_city] WHERE agent_id = '" + agentdt.Rows[0][0] + "'", con);
+                con.Open();
+                SqlDataAdapter agentcitysda = new SqlDataAdapter(agntcity);
+                DataTable agentcitydt = new DataTable();
+                agentcitysda.Fill(agentcitydt);
+                DataRow tempRow = null;
+                int agtcount = 0;
 
-                for (int i = 0; i <= agentcitydatadt.Rows.Count; i++)
+                foreach (DataRow tempRow_Variable in agentcitydt.Rows)
                 {
-                    foreach (ListItem item in agentcitylist.Items)
-                    {
-                        if (item.Text == agentcitydatadt.Rows[0][i].ToString())
-                        {
-                            item.Selected = true;
-                        }
-                    }
+                    tempRow = tempRow_Variable;
+                    SqlCommand agntcitynm = new SqlCommand("SELECT city_name FROM [City] WHERE city_id = '" + tempRow["city_id"] + "'", con);
+                    string agtcity = agntcitynm.ExecuteScalar().ToString();
+                    agntcitynm.ExecuteNonQuery();
+                    lbagntarea.Items.Add(agtcity);
+                    agtcount++;
                 }
+                lbagntarea.Rows = agtcount;
 
-                for (int i = 0; i <= agencycitydatadt.Rows.Count; i++)
+                //agencycitylist
+                SqlCommand agncycity = new SqlCommand("SELECT city_id FROM [Agency_city] WHERE agency_id = '" + agentdt.Rows[0][1] + "'", con);
+                SqlDataAdapter agencycitysda = new SqlDataAdapter(agncycity);
+                DataTable agencycitydt = new DataTable();
+                agencycitysda.Fill(agencycitydt);
+                DataRow tempRow1 = null;
+                int agcycount = 0;
+
+                foreach (DataRow tempRow_Variable1 in agencycitydt.Rows)
                 {
-                    foreach (ListItem item in agencycitylist.Items)
-                    {
-                        if (item.Text == agencycitydatadt.Rows[0][i].ToString())
-                        {
-                            item.Selected = true;
-                        }
-                    }
+                    tempRow1 = tempRow_Variable1;
+                    SqlCommand agntcitynm = new SqlCommand("SELECT city_name FROM [City] WHERE city_id = '" + tempRow1["city_id"] + "'", con);
+                    string agcycity = agntcitynm.ExecuteScalar().ToString();
+                    agntcitynm.ExecuteNonQuery();
+                    lbagcy.Items.Add(agcycity);
+                    agcycount++;
                 }
+                lbagcy.Rows = agcycount;
             }
 
-           
+
         }
     }
 
     protected void EmailEdit_Click(object sender, EventArgs e)
     {
-        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
-        using (SqlConnection con = new SqlConnection(CS))
-        {
-            changeEmail.Visible = true;
-            lblusremail.Visible = false;
-            emaileditbtn.Visible = false;
-            emaillabel.Text = "New Email";
-        }
+        changeEmail.Visible = true;
+        lblusremail.Visible = false;
+        emaileditbtn.Visible = false;
+        emaillabel.Text = "New Email";   
     }
 
     protected void PassEdit_Click(object sender, EventArgs e)
     {
-        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
-        using (SqlConnection con = new SqlConnection(CS))
-        {
-            changePass.Visible = true;
-            passwordlabel.Visible = false;
-            lblusrpassword.Visible = false;
-            passeditbtn.Visible = false;      
-        }
+        changePass.Visible = true;
+        passwordlabel.Visible = false;
+        lblusrpassword.Visible = false;
+        passeditbtn.Visible = false;      
+    }
+
+    protected void UsrcityEdit_Click(object sender, EventArgs e)
+    {
+        citydiv.Visible = true;
+        usrcitylbl.Visible = false;
+    }
+
+    protected void DobEdit_Click(object sender, EventArgs e)
+    {
+        dobdiv.Visible = true;
+        lbldobdiv.Visible = false;
+    }
+
+    protected void AgntEdit_Click(object sender, EventArgs e)
+    {
+        areadealdiv.Visible = true;
+        agntareadiv.Visible = false;
+    }
+
+    protected void AgcyEdit_Click(object sender, EventArgs e)
+    {
+        agcyareadealdiv.Visible = true;
+        agcyareadiv.Visible = false;
     }
 
     protected void SaveUserInfo(object sender, EventArgs e)
@@ -447,7 +477,7 @@ public partial class User_Profile : System.Web.UI.Page
             string password = (string)com.ExecuteScalar();
             com.ExecuteNonQuery();
             com.Parameters.Clear();
-
+            
             if (currentpass.Text != password)
             {
                 lblError.Visible = true;
@@ -458,57 +488,115 @@ public partial class User_Profile : System.Web.UI.Page
                 oldpasserror.Visible = true;
             }
 
-            SqlCommand cmd1 = new SqlCommand("SELECT user_type_id FROM [User] WHERE user_id = '" + userid + "'", con);
-            int usertypeid = (int)cmd1.ExecuteScalar();
-            cmd1.ExecuteNonQuery();
+            //getting user data
+            SqlCommand userdata = new SqlCommand("SELECT * FROM [User] WHERE user_id = '" + userid + "'", con);
+            SqlDataAdapter usersda = new SqlDataAdapter(userdata);
+            DataTable userdt = new DataTable();
+            usersda.Fill(userdt);
 
-            SqlCommand cmd2 = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE agent_id = '" + usertypeid + "'", con);
-            SqlDataAdapter sda2 = new SqlDataAdapter(cmd2);
+            SqlCommand agentdata = new SqlCommand("SELECT * FROM [Agent] WHERE agent_id = '" + userdt.Rows[0][1] + "'", con);
+            SqlDataAdapter agentsda = new SqlDataAdapter(agentdata);
+            DataTable agentdt = new DataTable();
+            agentsda.Fill(agentdt);
+
+            string usertypeid = userdt.Rows[0][1].ToString();
+
+            SqlCommand cmd1 = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE agent_id = '" + usertypeid + "'", con);
+            SqlDataAdapter sda2 = new SqlDataAdapter(cmd1);
             DataTable dt2 = new DataTable();
             sda2.Fill(dt2);
 
-            if(tbemail.Text != "" && currentpass.Text != "")
+            if(tbemail.Text != "" && currentpass.Text != "" && currentpass.Text == password)
             {
-                SqlCommand com2 = new SqlCommand("UPDATE [User] SET email='" + tbemail.Text + "' WHERE user_id = '" + userid + "'", con);
+                SqlCommand upemail = new SqlCommand("UPDATE [User] SET email='" + tbemail.Text + "' WHERE user_id = '" + userid + "'", con);
+                upemail.ExecuteNonQuery();
             }
 
-            if (oldpass.Text != "" && tbConfirmPass.Text != "")
+            if (oldpass.Text != "" && tbConfirmPass.Text != "" && tbNewPass.Text == tbConfirmPass.Text && oldpass.Text == password)
             {
-                SqlCommand com2 = new SqlCommand("UPDATE [User] SET password='" + tbConfirmPass.Text + "' WHERE user_id = '" + userid + "'", con);
+                SqlCommand uppass = new SqlCommand("UPDATE [User] SET password='" + tbConfirmPass.Text + "' WHERE user_id = '" + userid + "'", con);
+                uppass.ExecuteNonQuery();
             }
 
             if (dt2.Rows.Count == 0) //Normal user
             {
                 //storing city in city table and assigning its id
-                SqlCommand com1 = new SqlCommand("SELECT city_id FROM [City] WHERE city_name = '" + tbdcity.SelectedValue + "'", con);
-                int tbcity = (int)com1.ExecuteScalar();
-                com1.ExecuteNonQuery();
-                com1.Parameters.Clear();
+                if(tbdcity.SelectedValue != null && citydiv.Visible == true)
+                {
+                    SqlCommand com1 = new SqlCommand("SELECT city_id FROM [City] WHERE city_name = '" + tbdcity.SelectedValue + "'", con);
+                    int tbcity = (int)com1.ExecuteScalar();
+                    com1.ExecuteNonQuery();
+                    com1.Parameters.Clear();
 
-                SqlCommand com2 = new SqlCommand("UPDATE [User] SET f_name='" + tbfname.Text + "', l_name='" + tblname.Text + "', address='" + tbaddress.Text + "', city_id='" + tbcity + "', dob='" + tbdob.Text + "', phone_no='" + tbphone.Text + "' WHERE user_id = '" + userid + "'", con);
-                com2.ExecuteNonQuery();
+                    SqlCommand com2 = new SqlCommand("UPDATE [User] SET city_id='" + tbcity + "' WHERE user_id = '" + userid + "'", con);
+                    com2.ExecuteNonQuery();
+                }
+
+                //updating dob
+                if (tbdob != null)
+                {
+                    SqlCommand com3 = new SqlCommand("UPDATE [User] SET dob='" + tbdob.Text + "' WHERE user_id = '" + userid + "'", con);
+                    com3.ExecuteNonQuery();
+                }
+
+
+                SqlCommand com4 = new SqlCommand("UPDATE [User] SET f_name='" + tbfname.Text + "', l_name='" + tblname.Text + "', address='" + tbaddress.Text + "', phone_no='" + tbphone.Text + "' WHERE user_id = '" + userid + "'", con);
+                com4.ExecuteNonQuery();
             }
             else if (dt2.Rows.Count != 0)//Agent
             {
-                //getting agency_id recently inserted
-                SqlCommand com1 = new SqlCommand("SELECT agency_id FROM [Agency] ORDER BY[agency_id] DESC ", con);
+                //getting agency_id 
+                SqlCommand com1 = new SqlCommand("SELECT agency_id FROM [Agency] WHERE agency_id = '" + agentdt.Rows[0][1] + "'", con);
                 int agency_id = (int)com1.ExecuteScalar();
                 
 
                 SqlCommand com2 = new SqlCommand("UPDATE [User] SET f_name='" + tbfname.Text + "', l_name='" + tblname.Text + "', phone_no='" + tbphone.Text + "' WHERE user_id = '" + userid + "'", con);              
-                SqlCommand com3 = new SqlCommand("UPDATE [Agency] SET agency_name='" + tbfname.Text + "', agency_phone='" + tblname.Text + "', agency_email='" + tbphone.Text + "' WHERE agency_id = '" + agency_id + "'", con);
-                SqlCommand com4 = new SqlCommand("UPDATE [Agency_Branch] SET agency_address='" + tblname.Text + "' WHERE agency_id = '" + agency_id + "'", con);
-                //SqlCommand com5 = new SqlCommand("UPDATE [Agency_city] SET agency_address='" + tblname.Text + "' WHERE agency_id = '" + agency_id + "'", con);
-
+                SqlCommand com3 = new SqlCommand("UPDATE [Agency] SET agency_name='" + agencyname.Text + "', agency_phone='" + agencyphone.Text + "', agency_email='" + agencyemail.Text + "' WHERE agency_id = '" + agency_id + "'", con);
+                SqlCommand com4 = new SqlCommand("UPDATE [Agency_Branch] SET agency_address='" + agencyaddress.Text + "' WHERE agency_id = '" + agency_id + "'", con);
                 com1.ExecuteNonQuery();
                 com2.ExecuteNonQuery();
                 com3.ExecuteNonQuery();
                 com4.ExecuteNonQuery();
+
+                if(agentcitylist.SelectedValue != null && areadealdiv.Visible == true)
+                {
+                    SqlCommand com5 = new SqlCommand("DELETE FROM [Agent_city] WHERE agent_id = '" + agentdt.Rows[0][0] + "'", con);
+                    com5.ExecuteNonQuery();
+
+                    foreach (ListItem item in agentcitylist.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            //inserting in agent_city table
+                            SqlCommand com6 = new SqlCommand("INSERT INTO [Agent_city](agent_id, city_id) VALUES ('" + agentdt.Rows[0][0] + "','" + item.Value + "')", con);
+                            com6.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                if (agencycitylist.SelectedValue != null && agcyareadealdiv.Visible == true)
+                {
+                    SqlCommand com7 = new SqlCommand("DELETE FROM [Agency_city] WHERE agency_id = '" + agency_id + "'", con);
+                    com7.ExecuteNonQuery();
+
+                    foreach (ListItem item in agencycitylist.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            //inserting in agency_city table                         
+                            SqlCommand com8 = new SqlCommand("INSERT INTO [Agency_city](agency_id, city_id) VALUES ('" + agency_id + "','" + item.Value + "')", con);
+                            com8.ExecuteNonQuery();
+                        }
+                    }
+                }
+                    
             }
             
         }
 
         BindUserdata();
+        string alt = "Your changes have been saved!";
+        Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('"+ alt +"');", true);
     }
 
     protected void Cancel(object sender, EventArgs e)
@@ -521,6 +609,40 @@ public partial class User_Profile : System.Web.UI.Page
         passwordlabel.Visible = true;
         lblusrpassword.Visible = true;
         passeditbtn.Visible = true;
+
+        string userid = Session["user_id"].ToString();
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            //checking if the user id agent or normal user
+            SqlCommand cmd1 = new SqlCommand("SELECT user_type_id FROM [User] WHERE user_id =  '" + userid + "'", con);
+            con.Open();
+            string usertypeid = cmd1.ExecuteScalar().ToString();
+            cmd1.ExecuteNonQuery();
+
+            SqlCommand acmd = new SqlCommand("SELECT agent_id FROM [User_Type] WHERE agent_id = '" + usertypeid + "'", con);
+            SqlDataAdapter asda = new SqlDataAdapter(acmd);
+            DataTable adt = new DataTable();
+            asda.Fill(adt);
+
+            if (adt.Rows.Count != 0)//Agent
+            {
+                areadealdiv.Visible = false;
+                agcyareadealdiv.Visible = false;
+                agcyareadiv.Visible = true;
+                agntareadiv.Visible = true;
+            }
+            if (adt.Rows.Count == 0)//Normal
+            {
+                dobdiv.Visible = false;
+                lbldobdiv.Visible = true;
+                usrcitylbl.Visible = true;
+                citydiv.Visible = false;
+            }
+        }
+
         BindUserdata();
     }
 

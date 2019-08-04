@@ -24,6 +24,8 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
         }
         else if (Session["user_id"] != null)
         {
+            BindNotifications();
+
             //Get First Name
             string huserid = Session["user_id"].ToString();
             string firstName = "";
@@ -51,9 +53,48 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
             headerfaq.Visible = false;
             notifdropdown.Visible = true;
             dblink.Visible = true;
+
         }
 
     }
+
+    protected void Rptr_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+        string notificationid = Convert.ToString(e.CommandArgument);
+        HideNotif(notificationid);
+    }
+
+    protected void HideNotif(string notif_id)
+    {
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            SqlCommand hidenotifx = new SqlCommand("UPDATE dbo.[Notification] SET is_viewed = '" + 1 + "' WHERE notif_id = '" + notif_id + "'", con);
+            con.Open();
+            hidenotifx.ExecuteNonQuery();
+        }
+    }
+
+    private void BindNotifications()
+    {
+        string userid = Session["user_id"].ToString();
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.[Notification] WHERE receiver_id ='" + userid + "' and is_viewed = '"+ 0 +"' order by notif_id desc", con))
+            {
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dtnotif = new DataTable();
+                    sda.Fill(dtnotif);
+                    rptrnotif.DataSource = dtnotif;
+                    rptrnotif.DataBind();
+                }
+            }
+        }
+    }
+
     protected void Loginlinkbutton(object sender, EventArgs e)
     {
         if (Session["user_id"] == null)

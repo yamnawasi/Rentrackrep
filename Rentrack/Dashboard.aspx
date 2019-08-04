@@ -20,9 +20,9 @@
             width: 100%;
             align-items: center;
             justify-content: center;
-            //background-color: #fafafa;
+            background-color: #fafafa;
         }
-        #btn-div{
+        #btndiv{
             display: flex;
             flex-direction: row;
             width: 50%;
@@ -85,10 +85,9 @@
             padding: 50px;
             box-shadow: 0px 0px 10px #aaa;
             border-radius: 5px;
-            margin-top: 40px;
-        }
-        #currently-listed{
-            margin-bottom: 50px;
+            margin-top: 25px;
+            background-color: white;
+            margin-bottom: 25px;
         }
     </style>
 </asp:Content>
@@ -99,13 +98,13 @@
             <hr />
         </div>
 
-        <div id="btn-div">
+        <div id="btndiv" runat="server">
             <a href="contract.aspx"><div class="btn db-btn" id="ccbtn"><i class="fa fa-pencil" id="ccicon"></i> Create Contract</div></a>
             <a href="AddProperty.aspx"><div class="btn db-btn" id="apbtn"><i class="fa fa-plus-circle" id="apicon"></i> Add Property</div></a>
-            <a href="#"><div class="btn db-btn" id="rrbtn"><i class="fa fa-paper-plane" id="rricon"></i> Request Resource</div></a>
+            <a href="Resource Request.aspx"><div class="btn db-btn" id="rrbtn"><i class="fa fa-paper-plane" id="rricon"></i> Request Resource</div></a>
         </div>
         
-        <div id="selling-history" class="db-table">
+        <div id="sellinghistory" class="db-table" runat="server">
             <h3 class="sub-headings">Buying and Selling History</h3>
             <hr />
             <p>This table has a record of all the properties you have sold or bought through Rentrack.</p>
@@ -200,7 +199,7 @@
 
         <!--Rented History-->
         
-        <div id="renting-history" class="db-table">
+        <div id="rentinghistory" class="db-table" runat="server">
 
             <h3 class="sub-headings">Renting History</h3>
                 <p>This table has a history of all the properties you have rented or are currently renting through Rentrack.</p>
@@ -300,7 +299,7 @@
 
 
         <!--Currently Listed-->        
-        <div id="currently-listed" class="db-table">
+        <div id="currentlylisted" class="db-table" runat="server">
 
             <h3 class="sub-headings">Current Listings</h3>
                 <p>All your properties that are currently listed on Rentrack.</p>
@@ -325,7 +324,9 @@
                                       <th scope="col">Property Title</th>
                                       <th scope="col">Property Code</th>  
                                       <th scope="col">Price</th>
+                                      <th scope="col">Agency</th>
                                       <th scope="col">Property Page</th>
+                                      
                                     </tr>
                                 </thead>
                             <tbody>
@@ -336,7 +337,8 @@
                               <td><%# Eval ("property_title") %></td>    
                               <td><%# Eval ("property_code") %></td>
                               <td><%# Eval ("property_price") %> </td>
-                              <td><a href="#">View Property Page</a></td>
+                              <td><%# Eval ("agency_id") %> </td>
+                              <td><a href="propertyviewpage.aspx?property_id=<%#Eval("property_id") %>" target="_blank">View Property Page</a></td>
                             </tr>
                         </ItemTemplate>
 
@@ -359,6 +361,7 @@
                                       <th scope="col">Property Title</th>
                                       <th scope="col">Property Code</th>  
                                       <th scope="col">Price</th>
+                                      <th scope="col">Agency</th>
                                       <th scope="col">Property Page</th>
                                     </tr>
                                 </thead>
@@ -370,7 +373,9 @@
                               <td><%# Eval ("property_title") %></td>    
                               <td><%# Eval ("property_code") %></td>
                               <td><%# Eval ("property_price") %> </td>
-                              <td><a href="#">View Property Page</a></td>
+                              <td><%# Eval ("agency_name") %> </td>
+                              <td><a href="propertyviewpage.aspx?property_id=<%#Eval("property_id") %>" target="_blank">View Property Page</a></td>
+
                             </tr>
                         </ItemTemplate>
 
@@ -386,6 +391,145 @@
             </div>
         </div>
         
+
+        <!--Agent Selling History-->        
+        <div id="agsellinghistory" class="db-table" runat="server">
+
+            <h3 class="sub-headings">Agent Selling History</h3>
+                <p>This table has a history of all the properties that you, as an agent, have sold or rented through Rentrack.</p>
+            <hr />
+            <nav>
+              <ul class="nav nav-tabs nav-justified" id="asnav-tab" role="tablist">
+                <li class="nav-item tabdesign">
+                    <a class="nav-link active tablink" id="agsold-tab" data-toggle="tab" href="#agsold" role="tab" aria-controls="agsold" aria-selected="true">Sold</a>
+                </li>
+                <li class="nav-item tabdesign">
+                    <a class="nav-link tablink" id="agrented-tab" data-toggle="tab" href="#agrented" role="tab" aria-controls="agrented" aria-selected="false">Rented</a>
+                </li>
+              </ul>
+            </nav>
+            <div class="tab-content" id="asnav-tabContent">
+              <div class="tab-pane fade show active" id="agsold" role="tabpanel" aria-labelledby="agsold-tab">
+                  <asp:Repeater ID="rptragsold" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Owner</th>
+                                      <th scope="col">Cost</th>
+                                      <th scope="col">Sold On</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %></td>
+                              <td><%# Eval ("cost") %></td>
+                              <td><%# Eval ("date_sold") %></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="agsoldmsg" class="empty-message"></asp:label>
+                    </div>
+              </div>
+
+              <div class="tab-pane fade" id="agrented" role="tabpanel" aria-labelledby="agrented-tab">
+                  <asp:Repeater ID="rptragrented" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Owner</th>
+                                      <th scope="col">Rent</th>
+                                      <th scope="col">Rented On</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %></td>
+                              <td><%# Eval ("rent") %></td>
+                              <td><%# Eval ("start_date") %></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="agsrentedmsg" class="empty-message"></asp:label>
+                    </div>
+              </div>
+            </div>
+        </div>
+
+
+        <!--Agent Current Listings-->        
+        <div id="aglistings" class="db-table" runat="server">
+
+            <h3 class="sub-headings">Current Listings</h3>
+                <p>This table has all the active property listings that you, as an agent, have posted on Rentrack.</p>
+            <hr />
+
+                  <asp:Repeater ID="rptraglistings" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-hover table-responsive-md">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Property Title</th>
+                                      <th scope="col">Property Code</th>  
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Owner</th>
+                                      <th scope="col">Property Purpose</th>
+                                      <th scope="col">Property Page</th>                                     
+                                    </tr>
+                                </thead>
+                            <tbody>
+                        </HeaderTemplate>
+
+                        <ItemTemplate>
+                            <tr class="rowdesign">
+                              <td><%# Eval ("property_title") %></td>    
+                              <td><%# Eval ("property_code") %></td>
+                              <td><%# Eval ("property_price") %> </td>
+                              <td><%# Eval ("f_name") %> <%# Eval ("l_name") %> </td>
+                              <td><%# Eval ("property_purpose") %> </td>
+                              <td><a href="propertyviewpage.aspx?property_id=<%#Eval("property_id") %>" target="_blank">View Property Page</a></td>
+                            </tr>
+                        </ItemTemplate>
+
+                        <FooterTemplate>
+                                </tbody>
+                            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+
+                    <div style="text-align: center">
+                        <asp:label runat="server" text="" ID="aglistingmsg" class="empty-message"></asp:label>
+                    </div>
+                    
+        </div>
+
 
     </div>
 </asp:Content>
