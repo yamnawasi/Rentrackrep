@@ -194,7 +194,7 @@ public partial class propertyviewpage : System.Web.UI.Page
             con.Open();
 
             //Get Owner/Agent's ID and Property Title
-            SqlCommand cmdd = new SqlCommand("SELECT B.user_id, A.property_title FROM dbo.[Property] A JOIN dbo.[User] B ON (A.user_id = B.user_id) WHERE property_id ='" + propid + "'", con);
+            SqlCommand cmdd = new SqlCommand("SELECT A.owner_id, A.property_title FROM dbo.[Property] A JOIN dbo.[User] B ON (A.user_id = B.user_id) WHERE property_id ='" + propid + "'", con);
             SqlDataReader reader = cmdd.ExecuteReader();
             while (reader.Read())
             {
@@ -250,7 +250,7 @@ public partial class propertyviewpage : System.Web.UI.Page
             con.Open();
 
             //Get Owner/Agent's ID and Property Title
-            SqlCommand cmdd = new SqlCommand("SELECT B.user_id, A.property_title FROM dbo.[Property] A JOIN dbo.[User] B ON (A.user_id = B.user_id) WHERE property_id ='" + propid + "'", con);
+            SqlCommand cmdd = new SqlCommand("SELECT A.owner_id, A.property_title FROM dbo.[Property] A JOIN dbo.[User] B ON (A.user_id = B.user_id) WHERE property_id ='" + propid + "'", con);
             SqlDataReader reader = cmdd.ExecuteReader();
             while (reader.Read())
             {
@@ -307,7 +307,7 @@ public partial class propertyviewpage : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(CS))
         {
             con.Open();
-            SqlCommand cmdd = new SqlCommand("SELECT B.email FROM dbo.[Property] A JOIN dbo.[User] B ON (A.user_id = B.user_id) WHERE property_id ='" + propid + "'", con);
+            SqlCommand cmdd = new SqlCommand("SELECT B.email FROM dbo.[Property] A JOIN dbo.[User] B ON (A.owner_id = B.user_id) WHERE property_id ='" + propid + "'", con);
             SqlDataReader reader = cmdd.ExecuteReader();
             while (reader.Read())
             {

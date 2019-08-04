@@ -90,6 +90,20 @@ public partial class HeaderandFooter : System.Web.UI.MasterPage
                     sda.Fill(dtnotif);
                     rptrnotif.DataSource = dtnotif;
                     rptrnotif.DataBind();
+
+                    if(dtnotif.Rows.Count == 0)
+                    {
+                        notifemptymsg.Text = "You have no notifications at the moment.";
+                        notifnumber.Visible = false;
+                    }
+                    else
+                    {
+                        //Get number of unread notifs
+                        SqlCommand getnum = new SqlCommand("SELECT COUNT(*) FROM [Notification] WHERE receiver_id ='" + userid + "' and is_viewed = '" + 0 + "'", con);
+                        int num = Convert.ToInt32(getnum.ExecuteScalar().ToString());
+                        //Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('"+ num +"');", true);
+                        notifnumber.Text = num.ToString();
+                    }
                 }
             }
         }
