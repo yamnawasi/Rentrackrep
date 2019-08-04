@@ -3,31 +3,41 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style>
 
-        #maindiv {
-    		background-color: white;
-    	}
-        #box {
-			font-family: 'Roboto', sans-serif;
-            padding-top:70px;
-            padding-bottom:70px;
-            margin: 0px;
-            width:100%;
-            height:100%;
+        #centerdiv {
+            padding: 0px;
+            box-shadow: 0px 0px 15px #AAA;
+            border-radius: 5px;
+            margin-top: 5%;
+            margin-bottom: 5%;
         }
-        #usrdiv {
-	        
-            padding:50px 70px 50px 70px;           
-			color:black;
+        .formdiv {
+            width: 100%;
+            padding: 6% 10% 5% 10%;
+        }
+        .leftmargin {               
+            margin-left: 20%;
         }
         .heading{
+            width: 100%;
+            background-color: #11172D ; /*Dark blue*/
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5% 0% 5% 0%;
+        }
+        .title{
             font-size: 40px;
             font-weight: 300;
             font-family: Calibri;
+            text-align: center;
+            color: orange;
         }
-        .revtitle{
-            font-size: 25px;
-            font-weight: 300;
-            font-family: Calibri;
+        .names{
+            color: orange;
+        }
+        .usrbold{
+            font-weight: 500;
         }
         .narrower{
             font-size: 14px;
@@ -51,15 +61,6 @@
              grid-gap: 20px;
              grid-template-columns: 1fr 1fr;
         }
-        .revusr{
-            border:0.3px solid black;
-            border-radius: 3px;
-            margin: 5px;
-            padding:10px;
-        }
-        .revbox{
-            margin: 10px;
-        }
         #accbtn{
             background-color: #2ca344; /*Green*/
             color: white;
@@ -81,67 +82,75 @@
             text-align: center;
             color: darkgray;
         }
+        /*Extra Small Screen*/
+        @media (max-width: 576px) {
+            #centerdiv {
+                margin-top: 0%;
+                margin-bottom: 0%;
+            }
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div id="maindiv">
-        <div class="container-fluid col-lg-12 col-md-12 col-sm-12 col-12">
-            <div id="box" class="col-lg-12 col-md-12 col-sm-12 col-12">
+    <div style="width:100%">
+        <div class="offset-lg-2 col-lg-8 offset-sm-1 col-sm-10 col-12 container-fluid" id="centerdiv">
 
-                <h3 class="heading align-content-center">Rental Resume</h3>
+            <div class="heading">    
+                <h3 class="title align-content-center">Tenant Resume</h3>
+            </div>
 
                 <div class="align-content-center">
-                    <asp:Label ID="lblfavid" runat="server" CssClass="lblnores align-content-center"></asp:Label>
+                    <asp:Label ID="lbltntid" runat="server" CssClass="lblnores align-content-center"></asp:Label>
                 </div>
 
-                <div id="usrdiv" class="align-content-center">
+                <div id="usrdiv" class="formdiv">
                     <asp:Repeater ID="rptrusr" runat="server">
                         <ItemTemplate>    
                 
                             <div class="align-content-center">
-                                <h5 class="align-content-center"><%#Eval("f_name")%> <%#Eval("l_name")%></h5>
+                                <h5 class="align-content-center names"><%#Eval("f_name")%> <%#Eval("l_name")%></h5>
                             </div>
 
                             <br />
 
-                            <div>
-                                <div class="align-inline">
-                                <label>Move-in Date</label>
+                            <div class="leftmargin">
+                                <div class="align-inline ">
+                                <label class="usrbold">Move-in Date</label>
                                 <p class="useradd"><%#Eval("move_in_date")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                <label>No. of Tenants</label>
+                                <label class="usrbold">No. of Tenants</label>
                                 <p class="useradd"><%#Eval("number_of_tenants")%></p>
                                 </div>
                                     
                                 <div class="align-inline">
-                                <label>Moving From</label>
+                                <label class="usrbold">Moving From</label>
                                 <p class="usrdob"><%#Eval("move_in_from")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                <label>Do you have any pets?</label>
+                                <label class="usrbold">Do you have any pets?</label>
                                 <p class="usrphone"><%#Eval("pets")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                <label>Do you smoke?</label>
+                                <label class="usrbold">Do you smoke?</label>
                                 <p class="usremail"><%#Eval("smoking")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                <label>Employer</label>
+                                <label class="usrbold">Employer</label>
                                 <p class="usremail"><%#Eval("employer")%></p>
                                 </div>
 
                                 <div class="align-inline">
-                                <label>Job Title</label>
+                                <label class="usrbold">Job Title</label>
                                 <p class="usremail"><%#Eval("job_title")%></p>
                                 </div>
                             </div>
 
-                                <div>
+                                <div class="align-content-center">
                                   <a href="contract.aspx"><div class="btn trbtn" id="accbtn"><i class="fa fa-check"></i> Accept</div></a>
                                   <a href="#"><div class="btn trbtn" id="rejbtn"><i class="fa fa-times"></i> Reject</div></a>                            
                                 </div>
@@ -150,7 +159,6 @@
                             <br />   
                                        
                 </div>    
-            </div>
         </div>
     </div>
 </asp:Content>
