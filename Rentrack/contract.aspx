@@ -188,6 +188,9 @@
             }
         }
 
+        label{
+            margin-top: 15px;
+        }
     </style>
 </asp:Content>
 
@@ -208,15 +211,15 @@
                     <div>
                         <label>First Name</label>
                         <asp:TextBox ID="tblndfname" runat="server" Class="form-control narrower" InitialValue="0"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator18" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndfname" ValidationGroup="lndlrd" ></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndfname" ValidationGroup="generate" ></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator18" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndfname" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndfname" ValidationGroup="generate" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
 
                     <div>
                         <label>Last Name</label>
                         <asp:TextBox ID="tblndlname" runat="server" Class="form-control narrower"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator19" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndlname" ValidationGroup="lndlrd" ></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndlname"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator19" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndlname" ValidationGroup="lndlrd" Display="Dynamic" ></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndlname" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                 </div>
 
@@ -224,8 +227,8 @@
                     <div>
                         <label>Son/Daughter of</label>
                         <asp:TextBox ID="lndlrdparent" runat="server" Class="form-control narrower"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator20" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdparent" ValidationGroup="lndlrd" ></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdparent"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator20" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdparent" ValidationGroup="lndlrd" Display="Dynamic" ></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdparent" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                     
                     <div>
@@ -235,23 +238,23 @@
 			                ErrorMessage="Enter CNIC in correct format"  ControlToValidate="lndlrdcnicnum" Display="Dynamic" 
 			                ValidationExpression="^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$" ValidationGroup="lndlrd"> 
                         </asp:RegularExpressionValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator21" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdcnicnum" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdcnicnum"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator21" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdcnicnum" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="lndlrdcnicnum" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                 </div>
 
                 <div>
                     <label>Landlord's Address</label>
                     <asp:TextBox ID="tblndaddress" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
-                     <asp:RequiredFieldValidator ID="RequiredFieldValidator23" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndaddress" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndaddress"></asp:RequiredFieldValidator>
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator23" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndaddress" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tblndaddress" Display="Dynamic"></asp:RequiredFieldValidator>
                 </div>
 
                 <div>
                     <label>Rent Property Address</label>
                     <asp:TextBox ID="tbrntaddress" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
-                     <asp:RequiredFieldValidator ID="RequiredFieldValidator24" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrntaddress" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrntaddress"></asp:RequiredFieldValidator>
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator24" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrntaddress" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrntaddress" Display="Dynamic"></asp:RequiredFieldValidator>
                 </div>
 
                 <hr />
@@ -262,15 +265,15 @@
                     <div>
                         <label>First Name</label>
                         <asp:TextBox ID="tbtntfname" runat="server" Class="form-control narrower" InitialValue="0"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator25" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntfname" ValidationGroup="tnt"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntfname" ValidationGroup="generate" ></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator25" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntfname" ValidationGroup="tnt" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntfname" ValidationGroup="generate" Display="Dynamic" ></asp:RequiredFieldValidator>
                     </div>
 
                     <div>
                         <label>Last Name</label>
                         <asp:TextBox ID="tbtntlname" runat="server" Class="form-control narrower"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator26" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntlname" ValidationGroup="tnt"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntlname"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator26" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntlname" ValidationGroup="tnt" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbtntlname" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                 </div>
 
@@ -278,8 +281,8 @@
                     <div>
                         <label>Son/Daughter of</label>
                         <asp:TextBox ID="tntparent" runat="server" Class="form-control narrower"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator27" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntparent" ValidationGroup="tnt"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntparent"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator27" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntparent" ValidationGroup="tnt" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntparent" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
 
                     <div>
@@ -289,16 +292,16 @@
 			                ErrorMessage="Enter CNIC in correct format"  ControlToValidate="tntcnicnum" Display="Dynamic" 
 			                ValidationExpression="^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$" ValidationGroup="tnt"> 
                         </asp:RegularExpressionValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator28" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntcnicnum" ValidationGroup="tnt"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntcnicnum"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator28" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntcnicnum" ValidationGroup="tnt" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntcnicnum" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                 </div>
 
                 <div>
                     <label>Tenant's Address</label>
                     <asp:TextBox ID="tntaddress" runat="server" Class="form-control narrower"  TextMode="MultiLine"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator30" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntaddress" ValidationGroup="tnt"></asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntaddress"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator30" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntaddress" ValidationGroup="tnt" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tntaddress" Display="Dynamic"></asp:RequiredFieldValidator>
                 </div>
 
                 <hr />
@@ -310,22 +313,22 @@
                     <div>
                         <label>Rent (in PKR)</label>
                         <asp:TextBox ID="tbrent" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator31" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrent" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator31" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrent" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator14" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbrent" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
 
                     <div>
                         <label>Fixed Deposit (in PKR)</label>
                         <asp:TextBox ID="tbfxd" runat="server" Class="form-control narrower" onkeypress="return isNumberKey(event)"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator34" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbfxd" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbfxd"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator34" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbfxd" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" ValidationGroup="generate" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbfxd" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                 </div>
                 <div>
                     <label>Rent Pay Day</label>
                     <asp:TextBox ID="rntpay" runat="server" Class="form-control narrower"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator35" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="rntpay" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator36" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="rntpay" ValidationGroup="generate" EnableClientScript="True"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator35" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="rntpay" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator36" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="rntpay" ValidationGroup="generate" EnableClientScript="True" Display="Dynamic"></asp:RequiredFieldValidator>
                 </div>
                 <hr />
 
@@ -338,8 +341,8 @@
                         <asp:TextBox ID="tbstart" runat="server" Class="form-control narrower" TextMode="Date"></asp:TextBox>
                         <asp:TextBox ID="txttbstart" Visible="false" Class="form-control narrower" runat="server"></asp:TextBox>
                         <asp:RangeValidator ID="RangeValidator1" runat="server" CssClass="text-danger error-design" Type="Date" Format="DD/MM/YYYY" ControlToValidate="tbstart" ErrorMessage="The date can not be in the past or out of range" Display="Dynamic" SetFocusOnError="true"></asp:RangeValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator32" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbstart" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator16" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbstart" ValidationGroup="generate" EnableClientScript="True"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator32" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbstart" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator16" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbstart" ValidationGroup="generate" EnableClientScript="True" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
 
                     <div>
@@ -347,8 +350,8 @@
                         <asp:TextBox ID="tbend" runat="server" Class="form-control narrower" TextMode="Date"></asp:TextBox>
                         <asp:TextBox ID="tbendtxt" Visible="false" Class="form-control narrower" runat="server"></asp:TextBox>
                         <asp:RangeValidator ID="DateRangeValidator" runat="server" CssClass="text-danger error-design" Type="Date" Format="DD/MM/YYYY" ControlToValidate="tbend" ErrorMessage="The date can not be in the past or out of range" Display="Dynamic" SetFocusOnError="true"></asp:RangeValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator33" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbend" ValidationGroup="lndlrd"></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator17" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbend" ValidationGroup="generate" EnableClientScript="True"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator33" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbend" ValidationGroup="lndlrd" Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator17" runat="server" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbend" ValidationGroup="generate" EnableClientScript="True" Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
                 </div> 
                 <div>

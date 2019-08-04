@@ -149,7 +149,6 @@ public partial class contract : System.Web.UI.Page
                         var edate = (DateTime)condt.Rows[0][12];
 
 
-
                         tblndfname.Text = lfname;
                         tblndlname.Text = llname;
                         lndlrdparent.Text = condt.Rows[0][2].ToString();
@@ -177,6 +176,156 @@ public partial class contract : System.Web.UI.Page
    
     }
 
+    //Send the Tenant Notification
+    private void SendContractToTenantNotif()
+    {
+        string propid = "", lfname = "", llname = "", tenantuserid = "", landlorduserid = "";
+        string notifid = Request.QueryString["notifid"];
+
+        string tenantid = Request.QueryString["tenantid"];
+        string landlordid = Request.QueryString["landlordid"];
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+
+            //Get Property ID
+            SqlCommand cmdd = new SqlCommand("SELECT A.property_id FROM dbo.[Property] A JOIN dbo.[Notification] B ON (A.property_id = B.property_id) WHERE B.notif_id ='" + Convert.ToInt32(notifid) + "'", con);
+            SqlDataReader reader = cmdd.ExecuteReader();
+            while (reader.Read())
+            {
+                propid = reader[0].ToString();;
+            }
+            reader.Close();
+
+            //Get Tenant's User ID
+            SqlCommand gettenuserid = new SqlCommand("SELECT A.user_id FROM dbo.[USER] A JOIN dbo.[USER_TYPE] B ON (A.user_type_id = B.user_type_id) WHERE B.tenant_id ='" + tenantid + "'", con);
+            SqlDataReader nreader = gettenuserid.ExecuteReader();
+            while (nreader.Read())
+            {
+                tenantuserid = nreader[0].ToString();
+            }
+            nreader.Close();
+
+            //Get Landlord's User ID, Fname and Lname
+            SqlCommand getllstuff = new SqlCommand("SELECT A.l_name, A.f_name, A.user_id FROM dbo.[USER] A JOIN dbo.[USER_TYPE] B ON (A.user_type_id = B.user_type_id) WHERE B.landlord_id ='" + landlordid + "'", con);
+            SqlDataReader lreader = getllstuff.ExecuteReader();
+            while (lreader.Read())
+            {
+                llname = lreader[0].ToString();
+                lfname = lreader[1].ToString();
+                landlorduserid = lreader[2].ToString();
+            }
+            lreader.Close();
+
+            //Notification Text
+            string notiftext = lfname + " " + llname + " has sent you a Tenancy Agreement (incomplete). Kindly fill in your information.";
+
+            //Store in Notification Table
+            DateTime today = DateTime.Today;
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text) VALUES ('" + "Send Contract (Tenant)" + "','" + today + "','" + 0 + "','" + landlorduserid + "','" + tenantuserid + "','" + notiftext + "','" + propid + "','" + "View Contract Form" + "')", con);
+            createnotif.ExecuteNonQuery();
+
+            //Get Notif ID
+            SqlCommand getrdid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Notification] ORDER BY notif_id DESC", con);
+            getrdid.ExecuteNonQuery();
+            int notifidtab;
+            notifidtab = (int)getrdid.ExecuteScalar();
+
+            //Create link
+            string btnlink = "contract.aspx?tenantid=" + tenantid + "&landlordid=" + landlordid + "&notifid=" + notifidtab;
+
+            //Add Button Link
+            SqlCommand updatenotif = new SqlCommand("UPDATE dbo.[Notification] SET btn_link = '" + btnlink + "' WHERE notif_id = '" + notifidtab + "'", con);
+            updatenotif.ExecuteNonQuery();
+        }
+
+        //Hide Landlord's Create Contract Notif
+        HideNotifi(notifid);
+    }
+
+    //Hide Notification
+    protected void HideNotifi(string notifi_id)
+    {
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            SqlCommand hidenotifx = new SqlCommand("UPDATE dbo.[Notification] SET is_viewed = '" + 1 + "' WHERE notif_id = '" + notifi_id + "'", con);
+            con.Open();
+            hidenotifx.ExecuteNonQuery();
+        }
+    }
+
+    //Send the Landlord Notification
+    private void SendLandlordNotif()
+    {
+        string propid = "", tfname = "", tlname = "", tenantuserid = "", landlorduserid = "";
+        string notifid = Request.QueryString["notifid"];
+
+        string tenantid = Request.QueryString["tenantid"];
+        string landlordid = Request.QueryString["landlordid"];
+
+        //Hide Tenant's Create Contract Notif
+        HideNotifi(notifid);
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+
+            //Get Property ID
+            SqlCommand cmdd = new SqlCommand("SELECT A.property_id FROM dbo.[Property] A JOIN dbo.[Notification] B ON (A.property_id = B.property_id) WHERE B.notif_id ='" + Convert.ToInt32(notifid) + "'", con);
+            SqlDataReader reader = cmdd.ExecuteReader();
+            while (reader.Read())
+            {
+                propid = reader[0].ToString(); ;
+            }
+            reader.Close();
+
+            //Get Landlord's User ID
+            SqlCommand gettenuserid = new SqlCommand("SELECT A.user_id FROM dbo.[USER] A JOIN dbo.[USER_TYPE] B ON (A.user_type_id = B.user_type_id) WHERE B.landlord_id ='" + landlordid + "'", con);
+            SqlDataReader nreader = gettenuserid.ExecuteReader();
+            while (nreader.Read())
+            {
+                landlorduserid = nreader[0].ToString();
+            }
+            nreader.Close();
+
+            //Get Tenant's User ID, Fname and Lname
+            SqlCommand getllstuff = new SqlCommand("SELECT A.l_name, A.f_name, A.user_id FROM dbo.[USER] A JOIN dbo.[USER_TYPE] B ON (A.user_type_id = B.user_type_id) WHERE B.tenant_id ='" + tenantid + "'", con);
+            SqlDataReader lreader = getllstuff.ExecuteReader();
+            while (lreader.Read())
+            {
+                tlname = lreader[0].ToString();
+                tfname = lreader[1].ToString();
+                tenantuserid = lreader[2].ToString();
+            }
+            lreader.Close();
+
+            //Notification Text
+            string notiftext = tfname + " " + tlname + " has sent the Tenancy Agreement (complete) back to you. You can now generate a complete Tenancy Agreement.";
+
+            //Store in Notification Table
+            DateTime today = DateTime.Today;
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text) VALUES ('" + "Send Contract (Landlord)" + "','" + today + "','" + 0 + "','" + tenantuserid + "','" + landlorduserid + "','" + notiftext + "','" + propid + "','" + "View Contract Form" + "')", con);
+            createnotif.ExecuteNonQuery();
+
+            //Get Notif ID
+            SqlCommand getrdid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Notification] ORDER BY notif_id DESC", con);
+            getrdid.ExecuteNonQuery();
+            int notifidtab;
+            notifidtab = (int)getrdid.ExecuteScalar();
+
+            //Create link
+            string btnlink = "contract.aspx?tenantid=" + tenantid + "&landlordid=" + landlordid + "&notifid=" + notifidtab;
+
+            //Add Button Link
+            SqlCommand updatenotif = new SqlCommand("UPDATE dbo.[Notification] SET btn_link = '" + btnlink + "' WHERE notif_id = '" + notifidtab + "'", con);
+            updatenotif.ExecuteNonQuery();
+        }
+    }
+
     //Sending Tenant (storing Landlord's details)
     protected void Sndtnt(object sender, EventArgs e)
     {
@@ -194,6 +343,8 @@ public partial class contract : System.Web.UI.Page
 
         string msg = "Your data has been stored and sent to Tenant";
         Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('" + msg + "');", true);
+
+        SendContractToTenantNotif();
     }
 
     //Sending Landlord (storing Tenant's details)
@@ -213,6 +364,8 @@ public partial class contract : System.Web.UI.Page
 
         string msg = "Your data has been stored and sent to Landlord";
         Page.ClientScript.RegisterStartupScript(GetType(), "msgbox", "alert('" + msg + "');", true);
+
+        SendLandlordNotif();
     }
 
     //Generating contract 
@@ -220,6 +373,10 @@ public partial class contract : System.Web.UI.Page
     {
         string tenantid = Request.QueryString["tenantid"];
         string tname = tbtntfname.Text + " " + tbtntlname.Text;
+        string notifid = Request.QueryString["notifid"];
+
+        //Hide Tenant's Create Contract Notif
+        HideNotifi(notifid);
 
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
         using (SqlConnection con = new SqlConnection(CS))
