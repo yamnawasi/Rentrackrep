@@ -31,6 +31,7 @@ public partial class Dashboard : System.Web.UI.Page
                 using (SqlConnection con = new SqlConnection(CS))
                 {
                     con.Open();
+
                     //Get User Type ID
                     SqlCommand getusertypeid = new SqlCommand("SELECT user_type_id FROM [USER] WHERE user_id = '" + userid + "'", con);
                     SqlDataReader reader = getusertypeid.ExecuteReader();
@@ -71,6 +72,17 @@ public partial class Dashboard : System.Web.UI.Page
                         BindAgentSoldPropRptr();
                         BindAgentRentedPropRptr();
                         BindAgentListingsRptr();
+                    }
+
+                    //checking
+                    SqlCommand contcmd = new SqlCommand("SELECT * FROM [Contract_Form] WHERE landlord_id = '" + usertypeid + "'", con);
+                    SqlDataAdapter contsda = new SqlDataAdapter(contcmd);
+                    DataTable contdt = new DataTable();
+                    contsda.Fill(contdt);
+                    if (contdt.Rows[0][1] != null && contdt.Rows[0][7] != null && contdt.Rows[0][16] != null)
+                    {
+                        ccbtn.Visible = true;
+                        apbtn.Visible = false;
                     }
                 }
                 
@@ -354,5 +366,19 @@ public partial class Dashboard : System.Web.UI.Page
         }
     }
 
+    protected void Uploadcnt_click(object sender, EventArgs e)
+    {
+        Response.Redirect("Document Upload.aspx");
+    }
+
+    protected void Addprop_click(object sender, EventArgs e)
+    {
+        Response.Redirect("AddProperty.aspx");
+    }
+
+    protected void Reqres_click(object sender, EventArgs e)
+    {
+        Response.Redirect("Resource Request.aspx");
+    }
 
 }

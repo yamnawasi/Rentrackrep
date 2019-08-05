@@ -355,10 +355,6 @@
                         <p class="offset-xl-1 col-xl-4 offset-lg-1 col-lg-4 offset-md-1 col-md-4 offset-sm-1 col-sm-4 offset-1 col-4" id="buybutton" onclick="showBuyOptions()">Buy</p>
                         <p class="offset-xl-2 col-xl-4 offset-lg-2 col-lg-4 offset-md-2 col-md-4 offset-sm-2 col-sm-4 offset-2 col-4" id="rentbutton" onclick="showRentOptions()">Rent</p>
                     </div>
-                    <div class="row">
-                        <input id="search-bar" class="offset-1 col-8 offset-md-1 col-md-8 offset-sm-1 col-sm-7 offset-1 col-10" type="text" placeholder="Enter Location"/>
-                        <button class="btn offset-xl-0 col-xl-2 offset-lg-0 col-lg-2 offset-md-0 col-md-2 offset-sm-0 col-sm-3 offset-4 col-4" id="search-button">Search</button>
-                    </div>
             </div>
         </div>
         

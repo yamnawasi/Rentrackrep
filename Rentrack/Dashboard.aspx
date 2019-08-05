@@ -99,9 +99,9 @@
         </div>
 
         <div id="btndiv" runat="server">
-            <a href="#"><div class="btn db-btn" id="ccbtn"><i class="fa fa-pencil" id="ccicon"></i> Upload Contract</div></a>
-            <a href="AddProperty.aspx"><div class="btn db-btn" id="apbtn"><i class="fa fa-plus-circle" id="apicon"></i> Add Property</div></a>
-            <a href="Resource Request.aspx"><div class="btn db-btn" id="rrbtn"><i class="fa fa-paper-plane" id="rricon"></i> Request Resource</div></a>
+            <asp:LinkButton ID="ccbtn" Visible="false" Class="btn db-btn"  runat="server" OnClick="Uploadcnt_click"><i class="fa fa-pencil" id="ccicon"></i> Upload Contract</asp:LinkButton>
+            <asp:LinkButton ID="apbtn" Class="btn db-btn" runat="server" OnClick="Addprop_click"><i class="fa fa-plus-circle" id="apicon"></i> Add Property</asp:LinkButton>
+            <asp:LinkButton ID="rrbtn" Class="btn db-btn" runat="server" OnClick="Reqres_click"><i class="fa fa-paper-plane" id="rricon"></i> Request Resource</asp:LinkButton>
         </div>
         
         <div id="sellinghistory" class="db-table" runat="server">

@@ -368,8 +368,8 @@
                 <div style="width: 100%; text-align: center; margin-top: 30px">
                     <asp:Button ID="cancelbtn" runat="server" Text="Cancel" class="btn btn-light cancelbtn" CausesValidation="false"/>
                     <asp:Button ID="sndtnt" runat="server" Text="Send Tenant" class="btn submitbtn finbtn" ValidationGroup="lndlrd" OnClick="Sndtnt"/>
-                    <asp:Button ID="sndlnd" runat="server" Visible="true" Text="Send Landlord" class="btn submitbtn finbtn" ValidationGroup="tnt" OnClick="Sndlnd"/>
-                    <asp:Button ID="submitbtn" runat="server" Text="Generate" class="btn submitbtn finbtn" ValidationGroup="generate" OnClick="Generate_Click"/>
+                    <asp:Button ID="sndlnd" runat="server" Visible="false" Text="Send Landlord" class="btn submitbtn finbtn" ValidationGroup="tnt" OnClick="Sndlnd"/>
+                    <asp:Button ID="submitbtn" Visible="false" runat="server" Text="Generate" class="btn submitbtn finbtn" ValidationGroup="generate" OnClick="Generate_Click"/>
                 </div>
 
             </div>
