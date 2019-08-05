@@ -20,18 +20,23 @@ public partial class contract : System.Web.UI.Page
         {
             if (Session["user_id"] == null)
             {
-                //Response.Redirect("Login.aspx");
+                Response.Redirect("Login.aspx");
             }
             else if (Session["user_id"] != null)
             {
                 string tenantid = Request.QueryString["tenantid"];
                 string landlordid = Request.QueryString["landlordid"];
 
-                DateRangeValidator.MinimumValue = DateTime.Today.ToShortDateString();
-                DateRangeValidator.MaximumValue = DateTime.Today.AddMonths(6).ToShortDateString();
+                if (tenantid == null && landlordid == null)
+                {
+                    Response.Redirect("Dashboard.aspx");
+                }
 
                 RangeValidator1.MinimumValue = DateTime.Today.ToShortDateString();
-                RangeValidator1.MaximumValue = DateTime.Today.AddYears(1).ToShortDateString();
+                RangeValidator1.MaximumValue = DateTime.Today.AddMonths(11).ToShortDateString();
+
+                DateRangeValidator.MinimumValue = DateTime.Today.AddMonths(11).ToShortDateString();
+                DateRangeValidator.MaximumValue = DateTime.Today.AddYears(1).ToShortDateString();
 
                 String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(CS))
@@ -76,6 +81,10 @@ public partial class contract : System.Web.UI.Page
                                 tntparent.Text = contdt.Rows[0][7].ToString();
                                 tntcnicnum.Text = contdt.Rows[0][8].ToString();
                                 tntaddress.Text = contdt.Rows[0][9].ToString();
+
+                                sndtnt.Visible = true;
+                                sndlnd.Visible = false;
+                                submitbtn.Visible = false;
                             }
                             if(contdt.Rows[0][10] != null && contdt.Rows[0][12] != null && contdt.Rows[0][13] != null)
                             {
@@ -83,7 +92,10 @@ public partial class contract : System.Web.UI.Page
                                 tbend.Visible = false;
                                 txttbstart.Visible = true;
                                 tbendtxt.Visible = true;
+
                                 sndtnt.Visible = false;
+                                sndlnd.Visible = false;
+                                submitbtn.Visible = true;
 
                                 tblndfname.Attributes.Add("readonly", "readonly");
                                 tblndlname.Attributes.Add("readonly", "readonly");
@@ -109,6 +121,9 @@ public partial class contract : System.Web.UI.Page
                     if (usrtypeid == tenantid)
                     {
                         sndtnt.Visible = false;
+                        sndlnd.Visible = true;
+                        submitbtn.Visible = false;
+
                         tblndfname.Attributes.Add("readonly", "readonly");
                         tblndlname.Attributes.Add("readonly", "readonly");
                         lndlrdparent.Attributes.Add("readonly", "readonly");
@@ -372,16 +387,8 @@ public partial class contract : System.Web.UI.Page
     protected void Generate_Click(object sender, EventArgs e)
     {
         string tenantid = Request.QueryString["tenantid"];
-        string tname = tbtntfname.Text + " " + tbtntlname.Text;
-        string notifid = Request.QueryString["notifid"];
+        string landlordid = Request.QueryString["landlordid"];
 
-        //Hide Tenant's Create Contract Notif
-        HideNotifi(notifid);
-
-        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
-        using (SqlConnection con = new SqlConnection(CS))
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
+        Response.Redirect("Generated Contract.aspx?tenantid=" + tenantid + "&landlordid=" + landlordid);
     }
 }
