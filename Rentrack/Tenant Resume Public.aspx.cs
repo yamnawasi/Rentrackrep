@@ -101,7 +101,7 @@ public partial class Tenant_Resume_Public : System.Web.UI.Page
             //Generate Create Contract Notification
             SendContractNotification(tenantid, landlordid);
 
-            Response.Redirect("contract.aspx?tenantid=" + tenantid + "&landlordid=" + landlordid);           
+            Response.Redirect("contract.aspx?tenantid=" + tenantid + "&landlordid=" + landlordid + "&notifid=" + notifid);           
         }
 
         
