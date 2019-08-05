@@ -314,7 +314,7 @@ public partial class Dashboard : System.Web.UI.Page
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
         using (SqlConnection con = new SqlConnection(CS))
         {
-            using (SqlCommand cmd = new SqlCommand("Select A.*, B.* FROM [Property] A FULL JOIN [AGENCY] B ON (A.agency_id = B.agency_id) WHERE property_purpose = 'Sell' and owner_id ='" + userid + "'", con))
+            using (SqlCommand cmd = new SqlCommand("Select A.*, B.* FROM [Property] A FULL JOIN [AGENCY] B ON (A.agency_id = B.agency_id) WHERE property_purpose = 'Sell' and owner_id ='" + userid + "' and A.is_sold = '" + 0 + "'", con))
             {
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
@@ -337,7 +337,7 @@ public partial class Dashboard : System.Web.UI.Page
         String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
         using (SqlConnection con = new SqlConnection(CS))
         {
-            using (SqlCommand cmd = new SqlCommand("Select A.*, B.* FROM [Property] A FULL JOIN [AGENCY] B ON (A.agency_id = B.agency_id) WHERE property_purpose = 'Rent' and owner_id ='" + userid + "'", con))
+            using (SqlCommand cmd = new SqlCommand("Select A.*, B.* FROM [Property] A FULL JOIN [AGENCY] B ON (A.agency_id = B.agency_id) WHERE property_purpose = 'Rent' and owner_id ='" + userid + "' and A.is_sold = '" + 0 + "'", con))
             {
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {

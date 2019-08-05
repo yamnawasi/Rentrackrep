@@ -51,7 +51,7 @@ public partial class propertyviewpage : System.Web.UI.Page
                 {
                     formmsg.Visible = true;
                     showform.Visible = false;
-                    formtext.Text = "Kindly log in to inquire about this property.";
+                    formtext.Text = "Kindly log in to enquire about this property.";
                 }
             }
         }
@@ -133,7 +133,8 @@ public partial class propertyviewpage : System.Web.UI.Page
 
         }
     }
-     protected string GetActiveClass(int ItemIndex)
+
+    protected string GetActiveClass(int ItemIndex)
     {
         if(ItemIndex==0)
         {
@@ -171,8 +172,10 @@ public partial class propertyviewpage : System.Web.UI.Page
                 purposereader.Close();
             }
 
-            if(proppurpose == "Sell"){
+            if(proppurpose == "Sell")
+            {
                 SendBuyerNotification();
+                SendSellingConfirmNotif();
             }
             else
             {
@@ -180,6 +183,60 @@ public partial class propertyviewpage : System.Web.UI.Page
             }
         }
         
+    }
+
+    private void SendSellingConfirmNotif()
+    {
+        string posterid = "", propertytitle = "", fname = "", lname = "";
+        int userid = Convert.ToInt32(Session["user_id"].ToString());
+        Int64 propid = Convert.ToInt64(Request.QueryString["property_id"]);
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+
+            //Get Owner's ID and Property Title
+            SqlCommand cmdd = new SqlCommand("SELECT A.owner_id, A.property_title FROM dbo.[Property] A JOIN dbo.[User] B ON (A.user_id = B.user_id) WHERE property_id ='" + propid + "'", con);
+            SqlDataReader reader = cmdd.ExecuteReader();
+            while (reader.Read())
+            {
+                posterid = reader[0].ToString();
+                propertytitle = reader[1].ToString();
+            }
+            reader.Close();
+
+            //Get User's Name
+            SqlCommand getname = new SqlCommand("SELECT l_name, f_name FROM dbo.[USER] WHERE user_id ='" + userid + "'", con);
+            SqlDataReader nreader = getname.ExecuteReader();
+            while (nreader.Read())
+            {
+                fname = nreader[1].ToString();
+                lname = nreader[0].ToString();
+            }
+            nreader.Close();
+
+            //Notification Text
+            string notiftext = "Confirm status for property, " + propertytitle + ".";
+
+            //Store in Notification Table
+            DateTime today = DateTime.Today;
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, property_id, btn_text) VALUES ('" + "Selling Confirmation" + "','" + today + "','" + 0 + "','" + userid + "','" + posterid + "','" + notiftext + "','" + propid + "','" + "Confirm Status" + "')", con);
+            createnotif.ExecuteNonQuery();
+
+            //Get Notif ID
+            SqlCommand getrdid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Notification] ORDER BY notif_id DESC", con);
+            getrdid.ExecuteNonQuery();
+            int notifid;
+            notifid = (int)getrdid.ExecuteScalar();
+
+            //Create link
+            string btnlink = "SellingStatus.aspx?propid=" + propid + "&buyerusrid=" + userid + "&sellerusrid=" + posterid + "&notifid=" + notifid;
+
+            //Add Button Link
+            SqlCommand updatenotif = new SqlCommand("UPDATE dbo.[Notification] SET btn_link = '" + btnlink + "' WHERE notif_id = '" + notifid + "'", con);
+            updatenotif.ExecuteNonQuery();
+        }
     }
 
     private void SendBuyerNotification()
