@@ -227,14 +227,7 @@ public partial class propertylist : System.Web.UI.Page
                     sda.Fill(Property);
                     rptrProperty.DataSource = Property;
                     rptrProperty.DataBind();
-<<<<<<< HEAD
                     
-=======
-                    if (Property.Rows.Count == 0)
-                    {
-                        propemptymsg.Text = "No properties found.";
-                    }
->>>>>>> upstream/master
                 }
             }
         }
@@ -255,14 +248,7 @@ public partial class propertylist : System.Web.UI.Page
                     sda.Fill(Property);
                     rptrProperty.DataSource = Property;
                     rptrProperty.DataBind();
-<<<<<<< HEAD
                     
-=======
-                    if (Property.Rows.Count == 0)
-                    {
-                        propemptymsg.Text = "No properties found.";
-                    }
->>>>>>> upstream/master
                 }
             }
         }
@@ -284,14 +270,7 @@ public partial class propertylist : System.Web.UI.Page
                     sda.Fill(Property);
                     rptrProperty.DataSource = Property;
                     rptrProperty.DataBind();
-<<<<<<< HEAD
                     
-=======
-                    if (Property.Rows.Count == 0)
-                    {
-                        propemptymsg.Text = "No properties found.";
-                    }
->>>>>>> upstream/master
                 }
             }
         }
