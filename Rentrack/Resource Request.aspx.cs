@@ -42,6 +42,7 @@ public partial class Resource_Request : System.Web.UI.Page
             DataTable dt1 = new DataTable();
             sda1.Fill(dt1);
 
+            
             string userid = Session["user_id"].ToString();
 
             if (dt1.Rows.Count == 0) //if email does not exist
@@ -75,16 +76,74 @@ public partial class Resource_Request : System.Web.UI.Page
                     if(recipientid != userid)
                     {
                         //storing in Request_Resource table
-                        SqlCommand cmd2 = new SqlCommand("INSERT INTO [Request_Resource](res_sender_id, date, res_recipient_id, service, description, negotiation_on_date, request_accepted, request_fulfilled) VALUES ('" + userid + "','" + tbdate.Text + "','" + recipientid + "','" + serv.SelectedItem.Value + "','" + tbdes.Text + "','" + nego.SelectedItem.Value + "', '" + 0 + "', '" + 0 + "')", con);
+                        SqlCommand cmd2 = new SqlCommand("INSERT INTO [Request_Resource](res_sender_id, date, res_recipient_id, service, description, request_accepted, request_fulfilled) VALUES ('" + userid + "','" + tbdate.Text + "','" + recipientid + "','" + serv.SelectedItem.Value + "','" + tbdes.Text + "','" + 0 + "', '" + 0 + "')", con);
                         cmd2.ExecuteNonQuery();
 
+                        //Get Resource ID
+                        int resid;
+                        SqlCommand getrid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Request_Resource] ORDER BY request_id DESC", con);
+                        getrid.ExecuteNonQuery();
+                        resid = (int)getrid.ExecuteScalar();
 
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language = 'javascript'>alert('Your request has been submitted')</script>");
+                        SendResReqNotif(userid, recipientid, resid);
                     }
                     
                 }
+                
             }
+            
+        }
+    }
 
+    private void SendResReqNotif(string userid, string recipid, int resid)
+    {
+        string service = "", resdate = "", fname = "", lname = "";
+
+        String CS = ConfigurationManager.ConnectionStrings["RentrackdbConnectionString"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(CS))
+        {
+            con.Open();
+
+            //Get Resource ID, Service
+            SqlCommand cmdd = new SqlCommand("SELECT service, date FROM dbo.[Request_Resource] WHERE request_id ='" + resid + "'", con);
+            SqlDataReader reader = cmdd.ExecuteReader();
+            while (reader.Read())
+            {
+                service = reader[0].ToString();
+                resdate = reader[1].ToString();
+            }
+            reader.Close();
+
+            //Get Sender's Name
+            SqlCommand getname = new SqlCommand("SELECT l_name, f_name FROM dbo.[USER] WHERE user_id ='" + userid + "'", con);
+            SqlDataReader nreader = getname.ExecuteReader();
+            while (nreader.Read())
+            {
+                fname = nreader[1].ToString();
+                lname = nreader[0].ToString();
+            }
+            nreader.Close();
+
+            //Notification Text
+            string notiftext = fname + " " + lname + " has requested a resource, " + service + " on " + resdate + ".";
+
+            //Store in Notification Table
+            DateTime today = DateTime.Today;
+            SqlCommand createnotif = new SqlCommand("INSERT INTO dbo.[Notification] (notif_type, creation_date, is_viewed, sender_id, receiver_id, notification_text, resource_id, btn_text) VALUES ('" + "Resource Request" + "','" + today + "','" + 0 + "','" + userid + "','" + recipid + "','" + notiftext + "','" + resid + "','" + "View Resource" + "')", con);
+            createnotif.ExecuteNonQuery();
+
+            //Get Notif ID
+            SqlCommand getrdid = new SqlCommand("SELECT TOP 1 * FROM dbo.[Notification] ORDER BY notif_id DESC", con);
+            getrdid.ExecuteNonQuery();
+            int notifidtab;
+            notifidtab = (int)getrdid.ExecuteScalar();
+
+            //Create link
+            string btnlink = "ResourceDisplay.aspx";
+
+            //Add Button Link
+            SqlCommand updatenotif = new SqlCommand("UPDATE dbo.[Notification] SET btn_link = '" + btnlink + "' WHERE notif_id = '" + notifidtab + "'", con);
+            updatenotif.ExecuteNonQuery();
         }
     }
 

@@ -175,16 +175,7 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="req" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="tbdes"></asp:RequiredFieldValidator>
                 </div>
 
-                <div>
-                    <label>Allow Negotiation on date?</label>
-                    <div>
-                    <asp:RadioButtonList ID="nego" runat="server" RepeatDirection="Horizontal">
-                        <asp:ListItem Class="rad" Value="1"> Yes</asp:ListItem>
-                        <asp:ListItem Class="rad" Value="0"> No</asp:ListItem>
-                    </asp:RadioButtonList>
-                    </div>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="req" ErrorMessage="This field is required" CssClass="text-danger error-design" ControlToValidate="nego"></asp:RequiredFieldValidator>
-                </div>              
+            
 
                 <div style="width: 100%; text-align: center; margin-top: 30px">
                         <asp:Button ID="cancelbtn" runat="server" Text="Cancel" class="btn btn-light cancelbtn" OnClick="Cancel_btn"/>
