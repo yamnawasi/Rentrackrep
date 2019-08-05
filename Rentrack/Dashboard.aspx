@@ -99,7 +99,7 @@
         </div>
 
         <div id="btndiv" runat="server">
-            <a href="contract.aspx"><div class="btn db-btn" id="ccbtn"><i class="fa fa-pencil" id="ccicon"></i> Create Contract</div></a>
+            <a href="#"><div class="btn db-btn" id="ccbtn"><i class="fa fa-pencil" id="ccicon"></i> Upload Contract</div></a>
             <a href="AddProperty.aspx"><div class="btn db-btn" id="apbtn"><i class="fa fa-plus-circle" id="apicon"></i> Add Property</div></a>
             <a href="Resource Request.aspx"><div class="btn db-btn" id="rrbtn"><i class="fa fa-paper-plane" id="rricon"></i> Request Resource</div></a>
         </div>
